@@ -1,0 +1,27 @@
+[user]
+	name = Brian Hicks
+	email = brian@brianthicks.com
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	sourcetree = !open -a SourceTree .
+	ctags = !.git/hooks/ctags
+[color]
+  ui = true
+[core]
+	editor = /usr/bin/vim
+	excludesfile = ~/.gitignore
+[help]
+	autocorrect = 1
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[init]
+	templatedir = ~/.git_template
