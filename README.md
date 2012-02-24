@@ -13,6 +13,8 @@
 >
 > So be it, until victory is ours and there is no bugs, but speed!
 
+Adapted from *[Rifleman's Creed][creed]*
+
 ## Software I like
 
  - ZSH
@@ -23,3 +25,5 @@
  - git-flow
  - Oh-my-zsh
  - git-pair
+
+[creed]: http://en.wikipedia.org/wiki/Rifleman's_Creed
