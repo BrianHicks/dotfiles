@@ -99,5 +99,7 @@ nmap <F8> :NERDTreeToggle
 
 set pastetoggle=<F2>
 
-" Turn on the statusline
+" Statusline/powerline
 set laststatus=2
+set guifont=Menlo\ for\ Powerline
+let g:Powerline_symbols='fancy'
