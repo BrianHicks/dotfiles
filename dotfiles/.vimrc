@@ -98,3 +98,6 @@ nmap <F7> :TagbarToggle
 nmap <F8> :NERDTreeToggle
 
 set pastetoggle=<F2>
+
+" Turn on the statusline
+set laststatus=2
