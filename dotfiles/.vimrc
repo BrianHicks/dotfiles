@@ -93,4 +93,8 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap <S-k> <nop>
 vnoremap <S-k> <nop>
 
+" Function keys
+nmap <F7> :TagbarToggle
+nmap <F8> :NERDTreeToggle
+
 set pastetoggle=<F2>
