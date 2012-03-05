@@ -1,6 +1,6 @@
 [user]
 	name = Brian Hicks
-	email = brian@brianthicks.com
+	email = brian.hicks@rockfishinteractive.com
 [alias]
   st = status
   ci = commit
@@ -14,7 +14,7 @@
   ui = true
 [core]
 	editor = /usr/bin/vim
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/brian.hicks/.gitignore_global
 [help]
 	autocorrect = 1
 [difftool "sourcetree"]
