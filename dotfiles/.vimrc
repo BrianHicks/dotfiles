@@ -1,35 +1,71 @@
-set wrap
-set linebreak
-set nolist
-set textwidth=0
-set wrapmargin=0
-set vb t_vb=
+set nocompatible
 
-nmap <c-cr> i<cr><Esc>
-inoremap <S-CR> <Esc>
+" Use pathogen to easily modify the runtime path to include all plugins
+" under the ~/.vim/bundle directory
+filetype off " force reloading after pathogen loaded
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+filetype plugin indent on
 
-" to save on shifting...
-vnoremap ; :
-vnoremap : ;
+" General custom Stuff
+
+" It's easier for me to press than \
+let mapleader=","
+
+" Edit and source ~/.vimrc
+nmap <silent> <leader>ev :e ~/.vimrc<CR>
+nmap <silent> <leader>sv :so ~/.vimrc<CR>
+
+" I save often enough and use different change detection scripts. YMMV.
+set nobackup
+set noswapfile
+
+" extra characters are helpful. I don't like extra characters. HULK SMASH.
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
+" ... except for HTML
+autocmd filetype html,xml set listchars-=tab:>.
+
+" Colors
+if &t_Co >= 256 || has("gui_running")
+  colorscheme mustang
+endif
+
+" (slightly) modify some frequently used keys
 nnoremap ; :
+vnoremap ; :
 nnoremap : ;
+nnoremap j gj
+nnoremap gj j
+nnoremap k gk
+nnoremap gk k
 
-" increment under screen/tmux
-noremap <C-=> <C-A>
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+nnoremap <leader>w <C-w>s
 
-" Toggle lists of various kinds
-nnoremap <silent> <F8> :NERDTreeToggle<CR>
-nnoremap <silent> <F7> :TagbarToggle<CR>
+" better yank/paste to OS clipboard
+nmap <leader>y "+y
+nmap <leader>Y "+Y
+nmap <leader>p "+p
+nmap <leader>P "+P
 
-" Tagbar options
-let g:tagbar_left = 1
-let g:tagbar_autoclose = 1
-let g:tagbar_compact = 1
-let g:tagbar_expand = 1
-let g:tagbar_iconchars = ['▸', '▾']  " Defaults are HUGE
+" Formatting for the current par or selection
+vmap Q gq
+nmap Q gqap
 
-" Stop highlighting search results. I can use N just fine, thank you
-map <silent> <C-N> :se invhlsearch<CR>
+" Get out of insertmode free
+inoremap jj <Esc>
+inoremap jk <Esc>
 
-" Snippets
-let g:snips_author = 'Brian Hicks <brian@brianthicks.com>'
+" Folding
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Sometimes I forget to sudo.
+cmap w!! w !sudo tee % >/dev/null
+
+set pastetoggle=<F2>
