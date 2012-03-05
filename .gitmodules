@@ -25,3 +25,6 @@
 [submodule "dotfiles/.vim/bundle/vim-easymotion"]
 	path = dotfiles/.vim/bundle/vim-easymotion
 	url = git://github.com/Lokaltog/vim-easymotion
+[submodule "dotfiles/.vim/bundle/syntastic"]
+	path = dotfiles/.vim/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic
