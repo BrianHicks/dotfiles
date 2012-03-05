@@ -45,7 +45,7 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-nnoremap <leader>w <C-w>s<C-w>k
+nnoremap <leader>w <C-w>s<C-w>j
 
 " better yank/paste to OS clipboard
 nmap <leader>y "+y
@@ -94,8 +94,8 @@ nnoremap <S-k> <nop>
 vnoremap <S-k> <nop>
 
 " Function keys
-nmap <F7> :TagbarToggle
-nmap <F8> :NERDTreeToggle
+nnoremap <F7> :TagbarToggle<cr>
+nnoremap <F8> :NERDTreeToggle<cr>
 
 set pastetoggle=<F2>
 
