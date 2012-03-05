@@ -103,3 +103,6 @@ set pastetoggle=<F2>
 set laststatus=2
 set guifont=Menlo\ for\ Powerline
 let g:Powerline_symbols='fancy'
+
+" Remove toolbar from gui
+set guioptions-=T
