@@ -1,27 +1,29 @@
 [user]
-	name = Brian Hicks
-	email = brian.hicks@rockfishinteractive.com
+  name = Brian Hicks
+  email = brian.hicks@rockfishinteractive.com
 [alias]
   st = status
   ci = commit
   br = branch
   co = checkout
+  fco = flow feature checkout
+  rco = flow release checkout
   df = diff
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	sourcetree = !open -a SourceTree .
-	ctags = !.git/hooks/ctags
+  sourcetree = !open -a SourceTree .
+  ctags = !.git/hooks/ctags
 [color]
   ui = true
 [core]
-	editor = /usr/bin/vim
-	excludesfile = /Users/brian.hicks/.gitignore_global
+  editor = /usr/bin/vim
+  excludesfile = /Users/brian.hicks/.gitignore_global
 [help]
-	autocorrect = 1
+  autocorrect = 1
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [init]
-	templatedir = ~/.git_template
+  templatedir = ~/.git_template
