@@ -15,6 +15,10 @@
 
 Adapted from *[Rifleman's Creed][creed]*
 
+## Other things you'll need
+
+ - [Powerline font](https://gist.github.com/1627888)
+
 ## Software I like
 
  - ZSH
@@ -22,8 +26,8 @@ Adapted from *[Rifleman's Creed][creed]*
 
 ## Addons
 
- - git-flow
+ - git-flow (brew)
+ - gas (gem)
  - Oh-my-zsh
- - git-pair
 
 [creed]: http://en.wikipedia.org/wiki/Rifleman's_Creed
