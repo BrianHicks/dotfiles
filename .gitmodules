@@ -1,0 +1,24 @@
+[submodule "dotfiles/.vim/bundle/ack.vim"]
+	path = dotfiles/.vim/bundle/ack.vim
+	url = git://github.com/mileszs/ack.vim
+[submodule "dotfiles/.vim/bundle/nerdtree"]
+	path = dotfiles/.vim/bundle/nerdtree
+	url = git://github.com/scrooloose/nerdtree
+[submodule "dotfiles/.vim/bundle/sparkup"]
+	path = dotfiles/.vim/bundle/sparkup
+	url = git://github.com/rstacruz/sparkup
+[submodule "dotfiles/.vim/bundle/vim-css-color"]
+	path = dotfiles/.vim/bundle/vim-css-color
+	url = git://github.com/ap/vim-css-color
+[submodule "dotfiles/.vim/bundle/vim-repeat"]
+	path = dotfiles/.vim/bundle/vim-repeat
+	url = git://github.com/tpope/vim-repeat
+[submodule "dotfiles/.vim/bundle/nerdcommenter"]
+	path = dotfiles/.vim/bundle/nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter
+[submodule "dotfiles/.vim/bundle/snipmate.vim"]
+	path = dotfiles/.vim/bundle/snipmate.vim
+	url = git://github.com/msanders/snipmate.vim
+[submodule "dotfiles/.vim/bundle/tagbar"]
+	path = dotfiles/.vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar
