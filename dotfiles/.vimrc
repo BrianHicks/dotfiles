@@ -89,4 +89,8 @@ nnoremap <leader>v V`]
 " Sometimes I forget to sudo.
 cmap w!! w !sudo tee % >/dev/null
 
+" Shift-K is really annoying.
+nnoremap <S-k> <nop>
+vnoremap <S-k> <nop>
+
 set pastetoggle=<F2>
