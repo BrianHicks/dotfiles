@@ -17,6 +17,8 @@ set scrolloff=4 " stay kind of off the edge of the screen
 set history=1000
 set undolevels=1000
 set wildignore=*.swp,*.bak,*.pyc,*.class
+set cul
+set encoding=utf-8
 
 set title
 
