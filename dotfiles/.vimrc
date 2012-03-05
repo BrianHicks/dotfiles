@@ -45,7 +45,7 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-nnoremap <leader>w <C-w>s
+nnoremap <leader>w <C-w>s<C-w>k
 
 " better yank/paste to OS clipboard
 nmap <leader>y "+y
@@ -64,6 +64,27 @@ inoremap jk <Esc>
 " Folding
 nnoremap <Space> za
 vnoremap <Space> za
+
+" Make searching better
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
+nnoremap / /\v
+vnoremap / /\v
+set gdefault
+
+" matching characters. Tab is easier than %. Steve Losh again.
+nnoremap <tab> %
+vnoremap <tab> %
+
+" SHUT. UP. HELP.
+inoremap <F1> <Esc>
+nnoremap <F1> <Esc>
+vnoremap <F1> <Esc>
+
+" save on lost focus
+au FocusLost * :wa
+
+" select last pasted text (for indenting, etc)
+nnoremap <leader>v V`]
 
 " Sometimes I forget to sudo.
 cmap w!! w !sudo tee % >/dev/null
