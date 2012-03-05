@@ -31,3 +31,9 @@
 [submodule "dotfiles/.vim/bundle/vim-unimpaired"]
 	path = dotfiles/.vim/bundle/vim-unimpaired
 	url = git://github.com/tpope/vim-unimpaired
+[submodule "dotfiles/.vim/bundle/vim-surround"]
+	path = dotfiles/.vim/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround
+[submodule "dotfiles/.vim/bundle/vim-fugitive"]
+	path = dotfiles/.vim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive
