@@ -43,3 +43,6 @@
 [submodule "dotfiles/.vim/bundle/vim-abolish"]
 	path = dotfiles/.vim/bundle/vim-abolish
 	url = git://github.com/tpope/vim-abolish
+[submodule "dotfiles/.vim/bundle/vim-speeddating"]
+	path = dotfiles/.vim/bundle/vim-speeddating
+	url = git://github.com/tpope/vim-speeddating.git
