@@ -60,6 +60,8 @@ nmap Q gqap
 " Get out of insertmode free
 inoremap jj <Esc>
 inoremap jk <Esc>
+inoremap <s-cr> <Esc>
+vnoremap <s-cr> <Esc>
 
 " Folding
 nnoremap <Space> za
@@ -106,3 +108,6 @@ let g:Powerline_symbols='fancy'
 
 " Remove toolbar from gui
 set guioptions-=T
+
+" I need to stop using <Esc> and use my shortcuts
+inoremap <Esc> <nop>
