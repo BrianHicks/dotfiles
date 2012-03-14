@@ -115,3 +115,6 @@ inoremap <Esc> <nop>
 " python-mode options
 let g:pymode_doc = 0
 let g:pymode_lint = 0
+
+" zencoding
+let g:user_zen_settings = {'indentation': '  '}
