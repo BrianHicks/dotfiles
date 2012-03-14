@@ -49,3 +49,6 @@
 [submodule "dotfiles/.vim/bundle/vim-markdown"]
 	path = dotfiles/.vim/bundle/vim-markdown
 	url = git://github.com/plasticboy/vim-markdown.git
+[submodule "zencoding-vim"]
+	path = dotfiles/.vim/bundle/zencoding-vim
+	url = git://github.com/mattn/zencoding-vim.git
