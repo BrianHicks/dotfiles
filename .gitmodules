@@ -55,3 +55,9 @@
 [submodule "dotfiles/.vim/bundle/ColorV"]
 	path = dotfiles/.vim/bundle/ColorV
 	url = git://github.com/Rykka/ColorV.git
+[submodule "dotfiles/.vim/bundle/vim-javascript"]
+	path = dotfiles/.vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "dotfiles/.vim/bundle/nginx.vim"]
+	path = dotfiles/.vim/bundle/nginx.vim
+	url = git://github.com/mutewinter/nginx.vim.git
