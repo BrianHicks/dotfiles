@@ -1,0 +1,36 @@
+# [Created by task 2.0.0 4/3/2012 14:03:16]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/Dropbox/task
+include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
+color=on
+
+nag=''
+
+# inbox report
+report.inbox.description="Tasks in the inbox"
+report.inbox.columns=id,entry.age,description
+report.inbox.filter=+inbox
+report.inbox.sort=-entry.age
+
+# work report
+report.work.description="Work tasks"
+report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
+report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
+report.work.filter=+work status:pending depends.none:
+report.work.sort=urgency-,id+
+
+# change some defaults in next
+report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
+report.next.filter=status:pending limit:page -inbox depends.none:
+report.next.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
