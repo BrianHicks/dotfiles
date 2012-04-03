@@ -30,6 +30,12 @@ report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
 report.work.filter=+work status:pending depends.none:
 report.work.sort=urgency-,id+
 
+# home report
+report.home.description="Home Tasks"
+report.home.columns=id,project,due,start.active,recur,entry.age,urgency.real,description
+report.home.filter=+home status:pending depends.none:
+report.home.sort=urgency-,id+
+
 # change some defaults in next
 report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
 report.next.filter=status:pending limit:page -inbox depends.none:
