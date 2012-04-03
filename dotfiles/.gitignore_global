@@ -1,3 +1,5 @@
 *~
 .DS_Store
 .ropeproject/*
+*static_banners*
+media/template*
