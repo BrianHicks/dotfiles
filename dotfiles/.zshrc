@@ -56,3 +56,14 @@ alias less='less -FrX'
 function burndown(){task burndown.daily $@ rc._forcecolor=yes | less}
 function burndown.weekly(){task burndown.weekly $@ rc._forcecolor=yes | less}
 function burndown.monthly(){task burndown.monthly $@ rc._forcecolor=yes | less}
+
+# virtualenv in prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=false # or any non-empty value
+function get_virtualenv(){
+    if [[ $VIRTUAL_ENV != "" ]] then
+        echo "(`basename $VIRTUAL_ENV`)"
+    fi
+}
+export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)'
+
+[[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
