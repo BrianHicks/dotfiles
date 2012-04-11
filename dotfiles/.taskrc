@@ -12,7 +12,6 @@
 
 # Files
 data.location=~/Dropbox/task
-include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
 color=on
 
 nag=''
@@ -27,16 +26,23 @@ report.inbox.sort=-entry.age
 report.work.description="Work tasks"
 report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
 report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
-report.work.filter=+work status:pending depends.none:
+#report.work.filter=+work status:pending depends.none:
+report.work.filter=+work status:pending
 report.work.sort=urgency-,id+
 
 # home report
 report.home.description="Home Tasks"
 report.home.columns=id,project,due,start.active,recur,entry.age,urgency.real,description
-report.home.filter=+home status:pending depends.none:
+#report.home.filter=+home status:pending depends.none:
+report.home.filter=+home status:pending
 report.home.sort=urgency-,id+
 
 # change some defaults in next
 report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
 report.next.filter=status:pending limit:page -inbox depends.none:
 report.next.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
+
+# colors and overrides
+include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
+
+color.due=color12
