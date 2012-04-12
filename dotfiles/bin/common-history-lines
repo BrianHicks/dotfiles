@@ -1,5 +1,16 @@
 #!/usr/bin/env python
-'get common history lines and spit them out with count'
+'''get common history lines and spit them out with count
+
+Use the history command! Use it like this:
+
+    history | common-history-lines
+
+Or to see just your last 1000 commands:
+
+    history | head -n 1000 | common-history-lines
+
+The possibilities are endless!
+'''
 from collections import defaultdict
 import os, sys
 
