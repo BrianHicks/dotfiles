@@ -28,7 +28,7 @@ autocmd filetype html,xml set listchars-=tab:>.
 
 " Colors
 if &t_Co >= 256 || has("gui_running")
-  colorscheme mustang
+  colorscheme solarized
 endif
 
 " (slightly) modify some frequently used keys
@@ -58,8 +58,10 @@ vmap Q gq
 nmap Q gqap
 
 " Get out of insertmode free
+" ... on the terminal
 inoremap jj <Esc>
 inoremap jk <Esc>
+" ... in graphical mode
 inoremap <s-cr> <Esc>
 vnoremap <s-cr> <Esc>
 
