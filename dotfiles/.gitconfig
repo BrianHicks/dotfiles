@@ -14,11 +14,13 @@
   df = diff
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   sourcetree = !open -a SourceTree .
+  so = !git sourcetree
   ctags = !.git/hooks/ctags
   amend = commit --amend
   aa = add --all
   gh1 = diff HEAD~1
   ds = diff --stat=160/120
+  sync = !git pull && git push
 [color]
   ui = true
 [core]
