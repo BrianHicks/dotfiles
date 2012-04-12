@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+'get common history lines and spit them out with count'
+from collections import defaultdict
+import os, sys
+
+DEFAULT_LIMIT = 25
+COLUMN_HEADERS = ['count', 'command']
+SPACE_CHAR = ' '
+
+commands = defaultdict(int)
+# read piped-in file
+for line in sys.stdin.readlines():
+    fields = line.strip().split(' ')
+    value = ' '.join(fields[1:]).strip()
+    if value != '':
+        commands[value] += 1
+
+commands = sorted(commands.items(), key=lambda x: x[1], reverse=True)
+
+# get passed-in limit
+try:
+    limit = int(sys.argv[-1])
+except ValueError:
+    limit = DEFAULT_LIMIT
+
+# determine width of first column
+widest_num = len(str(commands[0][1]))
+col_width = widest_num if widest_num > len(COLUMN_HEADERS[0]) else len(COLUMN_HEADERS[0])
+
+# print headers
+COLUMN_HEADERS[0] = COLUMN_HEADERS[0].rjust(col_width, SPACE_CHAR)
+print SPACE_CHAR.join(COLUMN_HEADERS)
+
+# get commands
+command_set = commands[:limit] if len(commands) > limit else commands
+
+# print history
+for command in command_set:
+    print '%s%s%s' % (
+        str(command[1]).rjust(col_width, SPACE_CHAR),
+        SPACE_CHAR,
+        command[0]
+    )
