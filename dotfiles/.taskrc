@@ -16,14 +16,17 @@ color=on
 
 nag=''
 
+# Defaults
+default.priority=M
+
 # inbox report
-report.inbox.description="Tasks in the inbox"
+report.inbox.description=Tasks in the inbox
 report.inbox.columns=id,entry.age,description
 report.inbox.filter=+inbox
 report.inbox.sort=-entry.age
 
 # work report
-report.work.description="Work tasks"
+report.work.description=Work tasks
 report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
 report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
 #report.work.filter=+work status:pending depends.none:
@@ -31,7 +34,7 @@ report.work.filter=+work status:pending
 report.work.sort=urgency-,id+
 
 # home report
-report.home.description="Home Tasks"
+report.home.description=Home tasks
 report.home.columns=id,project,due,start.active,recur,entry.age,urgency.real,description
 #report.home.filter=+home status:pending depends.none:
 report.home.filter=+home status:pending
@@ -39,7 +42,8 @@ report.home.sort=urgency-,id+
 
 # change some defaults in next
 report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
-report.next.filter=status:pending limit:page -inbox depends.none:
+#report.next.filter=status:pending limit:page -inbox depends.none:
+report.next.filter=status:pending limit:page -inbox
 report.next.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
 
 # colors and overrides
