@@ -33,6 +33,7 @@ source $ZSH/oh-my-zsh.sh
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 export WORKON_HOME=~/Envs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
