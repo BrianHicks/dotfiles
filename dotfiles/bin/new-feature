@@ -1,0 +1,71 @@
+#!/usr/bin/env/ ruby
+# This is a template to make a checklist for parts of a project.
+def get_freeform(question)
+    puts "#{question} (freeform):"
+    gets.strip()
+end
+
+def get_yn(question)
+    answer = nil
+    while not ['y', 'n'].member? answer do
+        puts "#{question} (yn):"
+        answer = gets[0].downcase
+    end
+
+    case answer
+    when 'y'
+        true
+    when 'f'
+        false
+    end
+end
+
+tags = get_freeform 'tags'
+project = "pro:#{get_freeform 'project'}"
+pull_request = get_yn 'Will you need to create a pull request?'
+if get_yn 'Does this project have a due date?'
+    due = "due:#{ get_freeform 'What is it'}"
+else
+    due = ''
+end
+
+puts tags
+puts project
+puts pull_request
+puts due
+
+tasks = {
+    # name: ['task text', dependencies-or-nil]
+    create: ['create workflow doc', nil],
+    add: ['add tasks to taskwarrior', [:create]],
+    create_indices: ['create indices', [:add]],
+    integration: ['write integration tests', [:add]],
+    deploy: ['deploy the code', nil],
+    verify_indices: ['observe usage and verify indices', [:deploy]],
+}
+if pull_request
+    tasks[:pull] = ['create a pull-request', nil]
+end
+
+created = { }
+num_re = /\d+/
+tasks.each_pair do |id, task|
+    text, deps = task
+
+    if deps
+        reqs = []
+        deps.each do |dep|
+            reqs << created[dep]
+        end
+        reqs = "dep:#{reqs.join ','}"
+    else
+        reqs = ''
+    end
+
+
+    out = `task add #{text} #{due} #{tags} #{project} #{reqs}`
+    puts out
+    created[id] = num_re.match(out)
+end
+
+puts "created tasks with ids #{created.values.join(',')}"
