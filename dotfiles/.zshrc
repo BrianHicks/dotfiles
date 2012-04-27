@@ -68,3 +68,5 @@ function get_virtualenv(){
 export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)'
 
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+
+[ -s "/Users/brian.hicks/.scm_breeze/scm_breeze.sh" ] && source "/Users/brian.hicks/.scm_breeze/scm_breeze.sh"
