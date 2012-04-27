@@ -1,0 +1,3 @@
+#!/bin/sh
+easy_install readline
+pip install ipython
