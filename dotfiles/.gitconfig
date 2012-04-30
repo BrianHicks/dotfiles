@@ -20,7 +20,7 @@
   aa = add --all
   gh1 = diff HEAD~1
   ds = diff --stat=160/120
-  sync = !git pull && git push
+  sync = !git smart-pull && git push
 [color]
   ui = true
 [core]
