@@ -1,12 +1,15 @@
 #!/bin/sh
 # I'll do a smart pull. I promise to do my best, but I only do fast-forward
 # merges!
-set -e
-
 CURRENT_BRANCH=`git branch | grep "*" | cut -c 3-`
+
 git fetch --all
 for branch in `git branch | cut -c 3-`; do
     git checkout "$branch"
     git merge --ff-only --stat "origin/$branch"
+    EXIT=$?
+    if test $EXIT -gt 0 && test $EXIT -ne 128; then
+        exit 1
+    fi
 done
 git checkout "$CURRENT_BRANCH"
