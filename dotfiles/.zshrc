@@ -59,7 +59,7 @@ function burndown.weekly(){task burndown.weekly $@ rc._forcecolor=yes | less}
 function burndown.monthly(){task burndown.monthly $@ rc._forcecolor=yes | less}
 
 # virtualenv in prompt
-export VIRTUAL_ENV_DISABLE_PROMPT=false # or any non-empty value
+export VIRTUAL_ENV_DISABLE_PROMPT=true # or any non-empty value
 function get_virtualenv(){
     if [[ $VIRTUAL_ENV != "" ]] then
         echo "(`basename $VIRTUAL_ENV`)"
