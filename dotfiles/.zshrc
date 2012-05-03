@@ -43,7 +43,7 @@ function git(){hub "$@"}
 
 # tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/local/bin/mvim
 
 # pythonbrew
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc

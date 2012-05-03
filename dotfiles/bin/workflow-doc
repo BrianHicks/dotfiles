@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+WORKFLOW_DIR=~/Dropbox/workflow-docs
+if [ ! -e $WORKFLOW_DIR ]; then
+    mkdir $WORKFLOW_DIR
+fi
+
+FILENAME=$WORKFLOW_DIR/$1.md
+if [ ! -e $FILENAME ]; then
+    echo "#workflow for: $1\n\n##goal\n\n##steps\n\n##result" >> $FILENAME
+fi
+
+$EDITOR $FILENAME
