@@ -120,3 +120,6 @@ let g:pymode_lint = 0
 
 " zencoding
 let g:user_zen_settings = {'indentation': '  '}
+
+" fix for vim-css-color, which is having some odd runtime bugs
+let b:color_pattern = {}
