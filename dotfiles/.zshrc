@@ -68,3 +68,6 @@ function get_virtualenv(){
 export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)'
 
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+
+#pyqt and others from brew
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
