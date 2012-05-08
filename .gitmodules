@@ -61,3 +61,6 @@
 [submodule "dotfiles/.vim/bundle/handlebars"]
 	path = dotfiles/.vim/bundle/handlebars
 	url = git://github.com/nono/vim-handlebars.git
+[submodule "dotfiles/.vim/bundle/IndentAnything"]
+	path = dotfiles/.vim/bundle/IndentAnything
+	url = git://github.com/vim-scripts/IndentAnything.git
