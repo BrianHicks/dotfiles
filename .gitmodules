@@ -4,9 +4,6 @@
 [submodule "dotfiles/.vim/bundle/nerdtree"]
 	path = dotfiles/.vim/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree
-[submodule "dotfiles/.vim/bundle/vim-css-color"]
-	path = dotfiles/.vim/bundle/vim-css-color
-	url = git://github.com/ap/vim-css-color
 [submodule "dotfiles/.vim/bundle/vim-repeat"]
 	path = dotfiles/.vim/bundle/vim-repeat
 	url = git://github.com/tpope/vim-repeat
