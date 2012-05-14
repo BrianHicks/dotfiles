@@ -44,7 +44,7 @@ tasks = {
     verify_indices: ['observe usage and verify indices', [:deploy]],
 }
 if pull_request
-    tasks[:pull] = ['create a pull-request', nil]
+    tasks[:pull] = ['create a pull request', nil]
 end
 
 created = { }
