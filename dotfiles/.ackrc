@@ -1,0 +1,2 @@
+--type-add=ruby=haml
+--type-set=doc=.md,.mkd,.markdown,.rst,.txt
