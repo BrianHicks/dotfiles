@@ -1,13 +1,10 @@
 set hidden " hide open buffers in bg, so can edit multiple easily
 set nowrap " stop it.
-set tabstop=4 " python!
-set shiftwidth=4
 set expandtab
 set backspace=indent,eol,start
 set autoindent
-set copyindent
+"set copyindent
 set number " duh.
-set shiftwidth=4
 set shiftround
 set showmatch
 set ignorecase
