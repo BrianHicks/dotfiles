@@ -1,0 +1,6 @@
+#!/bin/bash
+NEW=`/usr/local/bin/notmuch new`
+if [ "$NEW" != 'No new mail.' ]; then
+    echo $NEW | growlnotify 'Mail Changed';
+fi
+echo $NEW

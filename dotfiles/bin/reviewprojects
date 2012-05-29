@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+'add projects to review'
+from subprocess import Popen, PIPE
+
+def call_taskwarrior(cmd):
+    'call taskwarrior, returning output and error'
+    tw = Popen(['task'] + cmd.split(), stdout=PIPE, stderr=PIPE)
+    return tw.communicate()
+
+if __name__ == '__main__':
+    out, err = call_taskwarrior('projects')
+    projects = out.strip().split('\n')[2:-2] # remove header and footer
+
+    for project in projects:
+        name = project[0:project.find(' ')]
+        if name == '(none)':
+            print 'Not reviewing (none)'
+        else:
+            out, err = call_taskwarrior('add review project: %s +review +meta +home +work' % name)
+
+        print 'Review project %s: %s' % (name, out.strip())
+        if err != '':
+            print err.strip()

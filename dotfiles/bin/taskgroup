@@ -1,0 +1,116 @@
+#!/usr/bin/env python
+'make a task group'
+from subprocess import call, Popen, PIPE
+import re
+import os
+import tempfile
+from collections import defaultdict
+
+EDITOR = os.environ.get('EDITOR', 'vim')
+
+def call_taskwarrior(cmd):
+    'call taskwarrior, returning output and error'
+    tw = Popen(['task'] + cmd.split(), stdout=PIPE, stderr=PIPE)
+    return tw.communicate()
+
+def get_config():
+    'get configuration from temporary file'
+    configs = defaultdict(str)
+    with tempfile.NamedTemporaryFile(suffix='.tmp') as tmp:
+        tmp.write('Project:\nTags:\nDue:\nWait:')
+        tmp.flush()
+        call([EDITOR, tmp.name])
+
+        with open(tmp.name, 'rb') as modified:
+            for line in modified.readlines():
+                key, value = line.split(':')
+                configs[key.strip().lower()] = value.strip()
+
+    return configs
+
+def get_tasks():
+    'get tasks'
+    tasks = []
+    with tempfile.NamedTemporaryFile(suffix='.tasks') as tmp:
+        call([EDITOR, tmp.name])
+
+        with open(tmp.name, 'rb') as modified:
+            lines = modified.readlines()
+            tasks = [line.strip() for line in lines]
+
+    return tasks
+
+if __name__ == '__main__':
+    configs = get_config()
+    tasks = get_tasks()
+
+    # process tasks
+    dep = 'depends'
+    deps = reversed([dep[0:n] for n in xrange(2, len(dep) + 1)])
+    dependency_re = re.compile('(%s):[@\d\-,]+' % '|'.join(deps))
+
+    pro = 'project'
+    pros = reversed([pro[0:n] for n in xrange(2, len(pro) + 1)])
+    pro_re = re.compile('(%s)' % '|'.join(pros))
+
+    due_re = re.compile('(due|du)')
+    wait_re = re.compile('(wait|wai|wa)')
+
+    add_re = re.compile('Created task (?P<id>\d+)')
+
+    ids = []
+
+    for i, task in enumerate(tasks):
+        # pop dependencies out
+        found = dependency_re.search(task)
+        if found is not None:
+            dependencies = task[found.start():found.end()]
+        else:
+            dependencies = None
+
+        task = dependency_re.sub('', task)
+
+        if len(pro_re.findall(task)) == 0 and configs['project'] is not '':
+            task = ' '.join([task, 'project:%s' % configs['project']])
+
+        if len(due_re.findall(task)) == 0 and configs['due'] is not '':
+            task = ' '.join([task, 'due:%s' % configs['due']])
+
+        if len(wait_re.findall(task)) == 0 and configs['wait'] is not '':
+            task = ' '.join([task, 'wait:%s' % configs['wait']])
+
+        if configs['tags'] is not '':
+            task = ' '.join([task, configs['tags']])
+
+        out, err = call_taskwarrior('add %s' % task)
+        print out.strip()
+        if err != '':
+            print err.strip()
+
+        task_id = add_re.match(out)
+        if task_id is not None:
+            ids.append((task_id.groupdict()['id'], dependencies))
+
+    # process dependencies
+    for _id, deps in ids:
+        if deps is None:
+            continue
+
+        _, deps = deps.split(':')
+        deps = deps.split(',')
+
+        resolved = []
+        for dep in deps:
+            if dep[0] == '@':
+                if dep[1:].isdigit():
+                    resolved.append(ids[int(dep[1:]) - 1][0])
+                else:
+                    print 'Error resolving deps %s on task %s' % (dep, _id)
+            else:
+                resolved.append(dep)
+
+        print 'Resolving dependencies for %s: %s' % (_id, ', '.join(resolved))
+        out, err = call_taskwarrior('%s mod dep:%s' % (_id, ','.join(resolved)))
+        print out.strip()
+        if err != '':
+            print err.strip()

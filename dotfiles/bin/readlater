@@ -1,0 +1,125 @@
+#!/usr/bin/env python
+'add and retrieve list of articles stored in taskwarrior'
+from subprocess import Popen, PIPE, call
+import argparse
+import json
+
+class TaskWarriorBackend(object):
+    'taskwarrior backend'
+    def __init__(self):
+        self.tag = '+readlater'
+
+    def getjson(self, query):
+        'get json data from taskwarrior'
+        out, err = call_taskwarrior('export %s' % query)
+
+        err = self.handle_output(None, err)
+        if err != '':
+            print err
+
+        out = '[%s]' % out
+        return json.loads(out)
+
+
+    def handle_output(self, out, err):
+        'handle output from taskwarrior'
+        output = []
+
+        if out is not None:
+            output.append(out.strip())
+
+        if err != '':
+            output += [
+                'Error calling taskwarrior:',
+                err.strip()
+            ]
+
+        return '\n'.join(output)
+
+    def add(self, url):
+        'add a task'
+        return self.handle_output(*call_taskwarrior('add %s %s' % (url, self.tag)))
+
+    def ls(self):
+        'list tasks'
+        return self.handle_output(*call_taskwarrior(self.tag))
+
+    def oldest(self):
+        'oldest single task'
+        tasks = self.getjson('status:pending %s' % self.tag)
+        return sorted(tasks, key=lambda task: task['entry'])[0]
+
+    def get(self, _id):
+        'get the url of a single reading item'
+        task = self.getjson(_id)
+        if len(task) == 0:
+            print 'No tasks returned for id %s' % _id
+            return None
+        if len(task) != 1:
+            print 'Multiple tasks returned for id %s' % _id
+            return None
+
+        return task[0]['description']
+
+    def mark(self, _id):
+        'mark a task as read'
+        task = self.getjson(_id)
+        if len(task) == 0:
+            print 'No tasks returned for id %s' % _id
+            return None
+        if len(task) != 1:
+            print 'Multiple tasks returned for id %s' % _id
+            return None
+
+        return self.handle_output(*call_taskwarrior('%s done' % _id))
+
+def call_taskwarrior(cmd):
+    'call taskwarrior, returning output and error'
+    tw = Popen(['task'] + cmd.split(), stdout=PIPE, stderr=PIPE)
+    return tw.communicate()
+
+parser = argparse.ArgumentParser(description='Manage a reading list')
+subs = parser.add_subparsers(help='issue a sub-command')
+
+# add
+add = subs.add_parser('add', help='add to the reading list')
+add.set_defaults(func=lambda b, n: b.add(n.url))
+add.add_argument('url', help='URL to add')
+
+# list
+ls = subs.add_parser('list', help='list items in the reading list')
+ls.set_defaults(func=lambda b, _: b.ls())
+
+# read
+def process_read(backend, namespace):
+    'process a read action'
+    url = backend.get(namespace.id)
+    if url is not None: # expect backend to print error
+        call(('open %s' % url).split())
+
+read = subs.add_parser('read', help='read an item on the list')
+read.set_defaults(func=process_read)
+read.add_argument('id', help='ID to read')
+
+# pop
+def process_pop(backend, namespace):
+    'process a pop action'
+    target = backend.oldest()
+    namespace.id = target['id']
+    process_read(backend, namespace)
+    backend.mark(target['id'])
+
+pop = subs.add_parser('pop', help='read the top item from the list, marking it as read')
+pop.set_defaults(func=process_pop)
+
+# mark
+mark = subs.add_parser('mark', help='mark an item as read')
+mark.set_defaults(func=lambda b, n: b.mark(n.id))
+mark.add_argument('id', help='ID to read')
+
+if __name__ == '__main__':
+    namespace = parser.parse_args()
+    backend = TaskWarriorBackend()
+    ret = namespace.func(backend, namespace)
+    if ret is not None:
+        print ret

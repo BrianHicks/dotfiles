@@ -14,10 +14,16 @@
 data.location=~/Dropbox/task
 color=on
 
-nag=''
+nag=""
 
 # Defaults
 default.priority=M
+
+# Urgencies
+urgency.user.tag.work.coefficient=2.0
+urgency.user.tag.home.coefficient=1.25
+urgency.user.tag.request.coefficient=3.0
+urgency.user.tag.support.coefficient=1.0
 
 # inbox report
 report.inbox.description=Tasks in the inbox
@@ -32,6 +38,7 @@ report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
 #report.work.filter=+work status:pending depends.none:
 report.work.filter=+work status:pending
 report.work.sort=urgency-,id+
+alias.w=work
 
 # home report
 report.home.description=Home tasks
@@ -39,12 +46,27 @@ report.home.columns=id,project,due,start.active,recur,entry.age,urgency.real,des
 #report.home.filter=+home status:pending depends.none:
 report.home.filter=+home status:pending
 report.home.sort=urgency-,id+
+alias.h=home
 
 # change some defaults in next
 report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
 #report.next.filter=status:pending limit:page -inbox depends.none:
-report.next.filter=status:pending limit:page -inbox
+report.next.filter=status:pending limit:page -inbox -readlater
 report.next.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
+
+# dependencies report
+report.deps.description=Verbose Dependencies
+report.deps.columns=id,description.desc,depends.list
+report.deps.labels=ID,Description,Dependencies
+report.deps.filter=status:pending
+report.deps.sort=urgency-,id+
+
+# finished today
+report.finished.description=Verbose Dependencies
+report.finished.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
+report.finished.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
+report.finished.filter=status:completed end.after:yesterday
+report.finished.sort=urgency-,id+
 
 # colors and overrides
 include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
