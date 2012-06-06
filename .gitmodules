@@ -64,3 +64,9 @@
 [submodule "dotfiles/.vim/bundle/IndentAnything"]
 	path = dotfiles/.vim/bundle/IndentAnything
 	url = git://github.com/vim-scripts/IndentAnything.git
+[submodule "dotfiles/.vim/bundle/vim-jade"]
+	path = dotfiles/.vim/bundle/vim-jade
+	url = git://github.com/digitaltoad/vim-jade.git
+[submodule "dotfiles/.vim/bundle/vim-stylus"]
+	path = dotfiles/.vim/bundle/vim-stylus
+	url = git://github.com/wavded/vim-stylus.git
