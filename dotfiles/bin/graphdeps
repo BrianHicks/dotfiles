@@ -34,7 +34,7 @@ if __name__ == '__main__':
     lines = [HEADER]
     print 'Printing Labels'
     for datum in data:
-        lines.append('"%s"[label="%s"];' % (datum['uuid'], datum['description']))
+        lines.append('"%s"[label="%s"];' % (datum['uuid'], datum['description'].replace('"', "'")))
 
     # second pass: dependencies
     print 'Resolving Dependencies'
@@ -44,8 +44,6 @@ if __name__ == '__main__':
                 lines.append('"%s" -> "%s";' % (dep, datum['uuid']))
 
     lines.append(FOOTER)
-
-    print '\n'.join(lines)
 
     print 'Calling dot'
     png, err = call_dot('\n'.join(lines))

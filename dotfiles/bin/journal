@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+'journaling'
+from datetime import datetime
+import os
+from subprocess import call
+
+JOURNAL_ROOT = '~/Dropbox/journal/'
+
+if __name__ == '__main__':
+    now = datetime.now()
+    filename = 'journal-%s.md' % now.strftime('%Y-%m-%d')
+    filepath = os.path.join(os.path.expanduser(JOURNAL_ROOT), filename)
+    if not os.path.exists(filepath):
+        title = 'Journal for %s' % now.strftime('%A, %B %d, %Y')
+        with open(filepath, 'w') as journal:
+            journal.write('\n'.join([
+                title,
+                '=' * len(title),
+            ]))
+
+    with open(filepath, 'a') as journal:
+        subtitle = now.strftime('%I:%M %p')
+        journal.write('\n'.join([
+            '',
+            subtitle,
+            '-' * len(subtitle),
+            '', '', # blank line
+        ]))
+
+    # open file in vim
+    call(['vim', filepath])
