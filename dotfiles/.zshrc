@@ -72,3 +72,7 @@ export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)'
 
 #pyqt and others from brew
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+
+# set nocorrect for certain commands
+alias knife="nocorrect knife"
+alias j="nocorrect j"
