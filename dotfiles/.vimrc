@@ -120,3 +120,6 @@ let g:pymode_lint = 0
 
 " zencoding
 let g:user_zen_settings = {'indentation': '  '}
+
+" tags
+set tags=.git/tags
