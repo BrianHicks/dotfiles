@@ -1,0 +1,2 @@
+#!/bin/sh
+knife ec2 amis ubuntu precise $@
