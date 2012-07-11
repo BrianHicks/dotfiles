@@ -1,4 +1,5 @@
 #!/bin/sh
 rm -f .git/tags
-/usr/local/bin/ctags --tag-relative -Rf.git/tags --exclude=.git --languages=-javascript,sql 2>/dev/null && echo "Built tags for project"
-[[ $VIRTUAL_ENV ]] && /usr/local/bin/ctags --append -Rf.git/tags --languages=-javascript,sql $VIRTUAL_ENV 2>/dev/null && echo "Built tags for environment"
+/usr/local/bin/ctags --tag-relative -Rf.git/tags --exclude=.git --languages=-javascript,sql 2>/dev/null && echo "Built project tags"
+[[ $VIRTUAL_ENV ]] && /usr/local/bin/ctags --append -Rf.git/tags --languages=-javascript,sql,html $VIRTUAL_ENV 2>/dev/null && echo "Built virtualenv tags"
+[[ $GEM_HOME ]] && /usr/local/bin/ctags --append -Rf.git/tags --languages=-javascript,sql,html $GEM_HOME 2>/dev/null && echo "Built rvm ruby tags"
