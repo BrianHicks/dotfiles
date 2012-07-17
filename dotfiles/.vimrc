@@ -75,9 +75,8 @@ nnoremap / /\v
 vnoremap / /\v
 set gdefault
 
-" matching characters. Tab is easier than %. Steve Losh again.
-nnoremap <tab> %
-vnoremap <tab> %
+" change tab to omnicompletion
+nnoremap <tab> <C-N>
 
 " SHUT. UP. HELP.
 inoremap <F1> <Esc>
