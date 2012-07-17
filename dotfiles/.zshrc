@@ -66,7 +66,12 @@ function get_virtualenv(){
         echo "(`basename $VIRTUAL_ENV`)"
     fi
 }
-export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)'
+function get_rvm_gemset(){
+    if [[ $GEM_HOME != "" ]] then
+        echo "(`basename $GEM_HOME`)"
+    fi
+}
+export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)$(get_rvm_gemset)'
 
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
