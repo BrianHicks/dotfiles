@@ -1,38 +1,39 @@
 [user]
-	name = Brian Hicks
-	email = brian.hicks@rockfishinteractive.com
+        name = Brian Hicks
+        email = brian.hicks@rockfishinteractive.com
 [alias]
-  st = status
-  ci = commit
-  br = branch
-  di = diff
-  dc = diff --cached
-  div = divergence
-  wtf = what-the-hell-just-happened
-  co = checkout
-  fco = flow feature checkout
-  df = diff
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  sourcetree = !open -a SourceTree .
-  so = !git sourcetree
-  ctags = !.git/hooks/ctags
-  amend = commit --amend
-  aa = add --all
-  gh1 = diff HEAD~1
-  ds = diff --stat=160/120
-  sync = !git smart-pull && git push
+        st = status
+        ci = commit
+        br = branch
+        di = diff
+        dc = diff --cached
+        div = divergence
+        wtf = what-the-hell-just-happened
+        co = checkout
+        fco = flow feature checkout
+        f = flow feature
+        df = diff
+        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+        sourcetree = !open -a SourceTree .
+        so = !git sourcetree
+        ctags = !.git/hooks/ctags
+        amend = commit --amend
+        aa = add --all
+        gh1 = diff HEAD~1
+        ds = diff --stat=160/120
+        sync = !git smart-pull && git push
 [color]
-  ui = true
+        ui = true
 [core]
-  editor = /usr/local/bin/vim
-	excludesfile = /Users/brian.hicks/.gitignore_global
+        editor = /usr/local/bin/vim
+        excludesfile = /Users/brian.hicks/.gitignore_global
 [help]
-  autocorrect = 1
+        autocorrect = 1
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+        cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+        path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+        cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+        trustExitCode = true
 [init]
-  templatedir = ~/.git_template
+        templatedir = ~/.git_template
