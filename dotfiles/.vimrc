@@ -75,9 +75,6 @@ nnoremap / /\v
 vnoremap / /\v
 set gdefault
 
-" change tab to omnicompletion
-nnoremap <tab> <C-N>
-
 " SHUT. UP. HELP.
 inoremap <F1> <Esc>
 nnoremap <F1> <Esc>
