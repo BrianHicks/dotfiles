@@ -76,3 +76,6 @@
 [submodule "dotfiles/.vim/bundle/vim-less"]
 	path = dotfiles/.vim/bundle/vim-less
 	url = https://github.com/groenewege/vim-less.git
+[submodule "dotfiles/.vim/bundle/minibufexpl.vim"]
+	path = dotfiles/.vim/bundle/minibufexpl.vim
+	url = git://github.com/fholgado/minibufexpl.vim.git
