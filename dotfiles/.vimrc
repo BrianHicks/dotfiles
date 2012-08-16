@@ -119,3 +119,6 @@ let g:user_zen_settings = {'indentation': '  '}
 
 " tags
 set tags=.git/tags
+
+" I don't need to see .pyc or .pyo files in NERDTree
+let NERDTreeIgnore = ['\.pyc$']
