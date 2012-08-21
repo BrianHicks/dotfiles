@@ -79,3 +79,6 @@
 [submodule "dotfiles/.vim/bundle/minibufexpl.vim"]
 	path = dotfiles/.vim/bundle/minibufexpl.vim
 	url = git://github.com/fholgado/minibufexpl.vim.git
+[submodule "dotfiles/.vim/bundle/tabular.git"]
+	path = dotfiles/.vim/bundle/tabular.git
+	url = git://github.com/godlygeek/tabular.git
