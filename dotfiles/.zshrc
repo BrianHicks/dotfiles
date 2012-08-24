@@ -81,3 +81,9 @@ export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 # set nocorrect for certain commands
 alias knife="nocorrect knife"
 alias j="nocorrect j"
+
+# get NVM
+source ~/nvm/nvm.sh
+
+# various aliases
+alias dimensions="sips -g pixelWidth -g pixelHeight"
