@@ -9,6 +9,11 @@ call vundle#rc()
 " Let vundle manage vundle
 Bundle 'gmarik/vundle'
 
+" VUNDLES!
+Bundle "mileszs/ack"
+Bundle "scrooloose/nerdtree"
+Bundle "tpope/vim-repeat"
+
 filetype plugin indent on
 
 " General custom Stuff
