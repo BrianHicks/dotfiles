@@ -87,3 +87,4 @@ source ~/nvm/nvm.sh
 
 # various aliases
 alias dimensions="sips -g pixelWidth -g pixelHeight"
+alias f="git f"
