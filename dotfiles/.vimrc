@@ -38,6 +38,7 @@ Bundle "godlygeek/tabular"
 Bundle "jnwhiteh/vim-golang"
 Bundle "benmills/vimux"
 Bundle "jiangmiao/auto-pairs"
+Bundle "joonty/vdebug"
 
 filetype plugin indent on
 
@@ -156,3 +157,13 @@ set tags=.git/tags
 
 " I don't need to see .pyc or .pyo files in NERDTree
 let NERDTreeIgnore = ['\.pyc$']
+
+" Vimux mappings
+nnoremap <leader>vp :VimuxPromptCommand<cr>
+nnoremap <leader>vl :VimuxRunLastCommand<cr>
+nnoremap <leader>vi :VimuxInspectRunner<cr>
+nnoremap <leader>vq :VimuxCloseRunner<cr>
+nnoremap <leader>vx :VimuxCLosePanes<cr>
+nnoremap <leader>vs :VimuxInterruptRunner<cr>
+nnoremap <leader>vc :VimuxClearRunnerHistory<cr>
+vnoremap <LocalLeader>vs "vy :call VimuxRunCommand(@v . "\n")<CR>
