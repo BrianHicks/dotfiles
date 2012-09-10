@@ -37,6 +37,7 @@ Bundle "fholgado/minibufexpl.vim"
 Bundle "godlygeek/tabular"
 Bundle "jnwhiteh/vim-golang"
 Bundle "benmills/vimux"
+Bundle "jiangmiao/auto-pairs"
 
 filetype plugin indent on
 
