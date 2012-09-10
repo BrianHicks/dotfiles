@@ -10,9 +10,33 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " VUNDLES!
-Bundle "mileszs/ack"
+Bundle "mileszs/ack.vim"
 Bundle "scrooloose/nerdtree"
+Bundle "scrooloose/nerdcommenter"
+Bundle "scrooloose/syntastic"
 Bundle "tpope/vim-repeat"
+Bundle "msanders/snipmate.vim"
+Bundle "majutsushi/tagbar"
+Bundle "Lokaltog/vim-easymotion"
+Bundle "tpope/vim-unimpaired"
+Bundle "tpope/vim-fugitive"
+Bundle "Lokaltog/vim-powerline"
+Bundle "tpope/vim-speeddating"
+Bundle "klen/python-mode"
+Bundle "plasticboy/vim-markdown"
+Bundle "mattn/zencoding-vim"
+Bundle "mutewinter/nginx.vim"
+Bundle "altercation/vim-colors-solarized"
+Bundle "kchmck/vim-coffee-script.git"
+Bundle "nono/vim-handlebars"
+Bundle "IndentAnything"
+Bundle "digitaltoad/vim-jade"
+Bundle "wavded/vim-stylus"
+Bundle "groenewege/vim-less"
+Bundle "fholgado/minibufexpl.vim"
+Bundle "godlygeek/tabular"
+Bundle "jnwhiteh/vim-golang"
+Bundle "benmills/vimux"
 
 filetype plugin indent on
 
