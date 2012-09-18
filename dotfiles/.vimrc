@@ -39,6 +39,9 @@ Bundle "jnwhiteh/vim-golang"
 Bundle "benmills/vimux"
 Bundle "jiangmiao/auto-pairs"
 Bundle "joonty/vdebug"
+Bundle "ervandew/supertab"
+Bundle "tpope/vim-surround"
+Bundle "derekwyatt/vim-scala"
 
 filetype plugin indent on
 
@@ -167,3 +170,6 @@ nnoremap <leader>vx :VimuxCLosePanes<cr>
 nnoremap <leader>vs :VimuxInterruptRunner<cr>
 nnoremap <leader>vc :VimuxClearRunnerHistory<cr>
 vnoremap <LocalLeader>vs "vy :call VimuxRunCommand(@v . "\n")<CR>
+
+let VimuxUseNearestPane = 1
+let g:VimuxOrientation = "v"
