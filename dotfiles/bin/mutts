@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+'launch multiple mutt configurations'
+import difflib
+import os
+import sys
+from subprocess import call
+import argparse
+import re
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    'config', default='', nargs='?',
+    type=str, help='full or partial match to launch'
+)
+parser.add_argument(
+    '--config-dir', '-c', default=os.path.expanduser('~/.mutt'),
+    type=str, help='location to look for config files (default: ~/.mutt)'
+)
+parser.add_argument(
+    '--config-re', '-r', default='^.+-.+\..+\.muttrc$',
+    type=str, help='regex to match config files (default: "^.+-.+\..+\.muttrc$")'
+)
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+
+    files = [
+        name for name in os.listdir(args.config_dir)
+        if re.match(args.config_re, name)
+    ]
+    if args.config == '':
+        selections = dict([(str(i + 1), name) for i, name in enumerate(files)])
+        selected = ''
+        while selected not in selections:
+            if selected == 'q':
+                print 'exiting'
+                sys.exit(0)
+
+            if selected != '':
+                print '"%s" is not a valid selection' % selected
+                print
+
+            print 'Select from these:'
+            for selection in selections.items():
+                print '\t%s) %s' % selection
+
+            selected = raw_input('Your selection: ')
+
+        selected = selections[selected]
+    else:
+        selected = None
+
+        possible = [name for name in files if name.startswith(args.config)]
+        if len(possible) == 1:
+            selected = possible[0]
+
+        if selected is None: # we're gonna have to find string similarities
+            cutoff = 0.05
+            matches = []
+            while len(matches) != 1:
+                matches = difflib.get_close_matches(args.config, files, cutoff=cutoff)
+
+                # raise the cutoff, but not by too much. We want to get just over
+                # the threshold of only having one match, but quickly get to 1.0
+                cutoff *= 1.25
+
+                if cutoff > 1:
+                    print 'Could not find a good match for "%s". Be more specific?' % args.config
+                    sys.exit(1)
+
+            selected = matches[0]
+
+    fullpath = os.path.join(args.config_dir, selected)
+
+    # call mutt and we'll exit
+    call(['mutt', '-F', fullpath])
