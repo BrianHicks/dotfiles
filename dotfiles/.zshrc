@@ -25,7 +25,7 @@ DISABLE_AUTO_TITLE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump brew bundler fabric gem git-flow github pip rvm django taskwarrior extract heroku osx)
+plugins=(git autojump brew bundler fabric gem git-flow github pip rvm django taskwarrior extract heroku osx vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -35,9 +35,12 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X1
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-export WORKON_HOME=~/Envs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-source /usr/local/bin/virtualenvwrapper.sh # virtualenvwrapper
+#export WORKON_HOME=~/Envs
+#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+#source /usr/local/bin/virtualenvwrapper.sh # virtualenvwrapper
+
+# pythonz
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 
 function git(){hub "$@"}
 
@@ -71,7 +74,7 @@ function get_rvm_gemset(){
         echo "(`basename $GEM_HOME`)"
     fi
 }
-export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)$(get_rvm_gemset)'
+export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)$(get_rvm_gemset)$(vi_mode_prompt_info)'
 
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
@@ -82,9 +85,15 @@ export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 alias knife="nocorrect knife"
 alias j="nocorrect j"
 
-# get NVM
-source ~/nvm/nvm.sh
-
 # various aliases
 alias dimensions="sips -g pixelWidth -g pixelHeight"
 alias f="git f"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+[[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+
+### Vim bindings
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey '^R' history-incremental-search-backward
