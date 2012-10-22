@@ -43,6 +43,7 @@ Bundle "ervandew/supertab"
 Bundle "tpope/vim-surround"
 Bundle "derekwyatt/vim-scala"
 Bundle "VimClojure"
+Bundle "davidhalter/jedi-vim"
 
 filetype plugin indent on
 
