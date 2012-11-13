@@ -53,7 +53,6 @@ export EDITOR=/usr/bin/vim
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 
 # aliases
-alias pydj='python manage.py'
 alias less='less -FrX'
 
 # taskwarrior's burndown functions are TOO BIG. Let's pipe them through less to
@@ -76,8 +75,6 @@ function get_rvm_gemset(){
 }
 export RPROMPT=$'%(?..[ %B%?%b ] )$(get_virtualenv)$(get_rvm_gemset)$(vi_mode_prompt_info)'
 
-[[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
-
 #pyqt and others from brew
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
@@ -89,11 +86,11 @@ alias j="nocorrect j"
 alias dimensions="sips -g pixelWidth -g pixelHeight"
 alias f="git f"
 
-### Added by the Heroku Toolbelt
+# Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
-### Vim bindings
+# Vim bindings
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
