@@ -26,7 +26,7 @@
         ui = true
 [core]
         editor = /usr/local/bin/vim
-        excludesfile = /Users/brian.hicks/.gitignore_global
+        excludesfile = ~/.gitignore_global
 [help]
         autocorrect = 1
 [difftool "sourcetree"]
@@ -37,3 +37,5 @@
 	trustExitCode = true
 [init]
         templatedir = ~/.git_template
+[push]
+	default = simple
