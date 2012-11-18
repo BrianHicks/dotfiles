@@ -25,7 +25,7 @@ DISABLE_AUTO_TITLE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump brew bundler fabric gem git-flow github pip rvm django taskwarrior extract heroku osx vi-mode)
+plugins=(git brew bundler fabric gem git-flow github pip rvm django taskwarrior extract heroku osx vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -94,3 +94,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # Vim bindings
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
+
+# autojump
+[[ -f `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
