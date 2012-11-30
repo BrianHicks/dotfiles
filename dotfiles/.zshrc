@@ -51,6 +51,7 @@ export EDITOR=/usr/bin/vim
 
 # pythonbrew
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+alias pb=pythonbrew
 
 # aliases
 alias less='less -FrX'
