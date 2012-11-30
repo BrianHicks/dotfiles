@@ -10,28 +10,28 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " VUNDLES!
-Bundle "IndentAnything"           " indenting with crazy syntaxes
-Bundle "mileszs/ack.vim"          " search ack from vim
-Bundle "fholgado/minibufexpl.vim" " buffer list at the top of the vim window
-Bundle "scrooloose/nerdcommenter" " comment, well, anything
-Bundle "scrooloose/nerdtree"      " file browser (mine is bound to F8)
-Bundle "ervandew/supertab"        " use tabs to do neat things
-Bundle "scrooloose/syntastic"     " syntax checking
-Bundle "majutsushi/tagbar"        " alphabetized list of tags in a file (F7 for me)
-Bundle "Lokaltog/vim-easymotion"  " <leader><leader> and a motion
-Bundle "Lokaltog/vim-powerline"   " status bar at the bottom, includes git branch
-Bundle "tpope/vim-repeat"         " repeat things in plugins with .
-Bundle "tpope/vim-surround"       " surround text objects with parens, braces, etc.
-Bundle "mattn/zencoding-vim"      " write out a css specifier and get HTML back
+Bundle "IndentAnything"
+Bundle "mileszs/ack.vim"
+Bundle "fholgado/minibufexpl.vim"
+Bundle "scrooloose/nerdcommenter"
+Bundle "scrooloose/nerdtree"
+Bundle "ervandew/supertab"
+Bundle "scrooloose/syntastic"
+Bundle "majutsushi/tagbar"
+Bundle "Lokaltog/vim-easymotion"
+Bundle "Lokaltog/vim-powerline"
+Bundle "tpope/vim-repeat"
+Bundle "tpope/vim-surround"
+Bundle "mattn/zencoding-vim"
 
 " TODO: make flashcards for
-Bundle "godlygeek/tabular"        " align lines on arbitrary characters
-Bundle "tpope/vim-abolish"        " common text-substitution stuff
-Bundle "tpope/vim-fugitive"       " git wrapper (so good, it should be illegal)
-Bundle "tpope/vim-unimpaired"     " brackets for common tasks
+Bundle "godlygeek/tabular"
+Bundle "tpope/vim-abolish"
+Bundle "tpope/vim-fugitive"
+Bundle "tpope/vim-unimpaired"
 
 " TODO: try slimux
-Bundle "benmills/vimux"           " tmux + vim goodness
+Bundle "benmills/vimux"
 
 " Syntax / highlighting / colors
 Bundle "VimClojure"
