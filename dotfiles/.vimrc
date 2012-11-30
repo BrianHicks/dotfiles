@@ -10,40 +10,46 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " VUNDLES!
-Bundle "mileszs/ack.vim"
 Bundle "scrooloose/nerdtree"
 Bundle "scrooloose/nerdcommenter"
-Bundle "scrooloose/syntastic"
-Bundle "tpope/vim-repeat"
+Bundle "Lokaltog/vim-powerline"
+Bundle "mattn/zencoding-vim"
+Bundle "fholgado/minibufexpl.vim"
+Bundle "tpope/vim-surround"
+
+" TODO: make really sure I need or make flashcards for
+Bundle "mileszs/ack.vim"
+Bundle "ervandew/supertab"
+Bundle "joonty/vdebug"
+Bundle "jiangmiao/auto-pairs"
 Bundle "msanders/snipmate.vim"
 Bundle "majutsushi/tagbar"
 Bundle "Lokaltog/vim-easymotion"
 Bundle "tpope/vim-unimpaired"
 Bundle "tpope/vim-fugitive"
-Bundle "Lokaltog/vim-powerline"
 Bundle "tpope/vim-speeddating"
-Bundle "klen/python-mode"
-Bundle "plasticboy/vim-markdown"
-Bundle "mattn/zencoding-vim"
-Bundle "mutewinter/nginx.vim"
+Bundle "IndentAnything"
+Bundle "godlygeek/tabular"
+Bundle "VimClojure"
+Bundle "tpope/vim-repeat"
+
+" TODO: try slimux
+Bundle "benmills/vimux"
+
+" TODO: find out how to disable/enable specific checkers in syntastic
+Bundle "scrooloose/syntastic"
+
+" Syntax / highlighting / colors
 Bundle "altercation/vim-colors-solarized"
+Bundle "derekwyatt/vim-scala"
+Bundle "plasticboy/vim-markdown"
+Bundle "mutewinter/nginx.vim"
 Bundle "kchmck/vim-coffee-script.git"
 Bundle "nono/vim-handlebars"
-Bundle "IndentAnything"
 Bundle "digitaltoad/vim-jade"
 Bundle "wavded/vim-stylus"
 Bundle "groenewege/vim-less"
-Bundle "fholgado/minibufexpl.vim"
-Bundle "godlygeek/tabular"
 Bundle "jnwhiteh/vim-golang"
-Bundle "benmills/vimux"
-Bundle "jiangmiao/auto-pairs"
-Bundle "joonty/vdebug"
-Bundle "ervandew/supertab"
-Bundle "tpope/vim-surround"
-Bundle "derekwyatt/vim-scala"
-Bundle "VimClojure"
-Bundle "davidhalter/jedi-vim"
 
 filetype plugin indent on
 
@@ -99,11 +105,16 @@ nmap Q gqap
 
 " Get out of insertmode free
 " ... on the terminal
-inoremap jj <Esc>
+"inoremap jj <Esc>
 inoremap jk <Esc>
+inoremap kj <Esc>
 " ... in graphical mode
 inoremap <s-cr> <Esc>
 vnoremap <s-cr> <Esc>
+
+" Custom movement commands
+noremap <leader>l $
+noremap <leader>h ^
 
 " Folding
 nnoremap <Space> za
@@ -176,6 +187,8 @@ vnoremap <LocalLeader>vs "vy :call VimuxRunCommand(@v . "\n")<CR>
 let VimuxUseNearestPane = 1
 let g:VimuxOrientation = "v"
 
-" jedi-vim settings
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
+" edit vimrc
+nmap <leader>ec :e $MYVIMRC<CR>
+
+" bring repeat into visual mode
+vnoremap . :normal .<cr>
