@@ -32,27 +32,13 @@ report.inbox.filter=+inbox
 report.inbox.sort=-entry.age
 
 # work report
-report.work.description=Work tasks
-report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
-report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
+#report.work.description=Work tasks
+#report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
+#report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
 #report.work.filter=+work status:pending depends.none:
-report.work.filter=+work status:pending
-report.work.sort=urgency-,id+
-alias.w=work
-
-# home report
-report.home.description=Home tasks
-report.home.columns=id,project,due,start.active,recur,entry.age,urgency.real,description
-#report.home.filter=+home status:pending depends.none:
-report.home.filter=+home status:pending
-report.home.sort=urgency-,id+
-alias.h=home
-
-# change some defaults in next
-report.next.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
-#report.next.filter=status:pending limit:page -inbox depends.none:
-report.next.filter=status:pending limit:page -inbox -readlater
-report.next.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
+#report.work.filter=+work status:pending
+#report.work.sort=urgency-,id+
+#alias.w=work
 
 # dependencies report
 report.deps.description=Verbose Dependencies
@@ -69,6 +55,8 @@ report.finished.filter=status:completed end.after:yesterday
 report.finished.sort=urgency-,id+
 
 # colors and overrides
-include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
+include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/solarized-dark-256.theme
 
 color.due=color12
+color.blocked=color10
+color.active=bold color2
