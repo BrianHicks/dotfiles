@@ -23,6 +23,7 @@ Bundle "Lokaltog/vim-powerline"
 Bundle "tpope/vim-repeat"
 Bundle "tpope/vim-surround"
 Bundle "mattn/zencoding-vim"
+Bundle "vimwiki"
 
 " TODO: make flashcards for
 Bundle "godlygeek/tabular"
@@ -86,7 +87,7 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-nnoremap <leader>w <C-w>s<C-w>j
+nnoremap <leader>x <C-w>s<C-w>j
 
 " better yank/paste to OS clipboard
 nmap <leader>y "+y
@@ -190,3 +191,10 @@ vnoremap . :normal .<cr>
 
 " turn of dang pylint
 let g:syntastic_python_checker = 'flake8'
+
+" wildmode/menu
+set wildmenu
+set wildmode=list:longest,full
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
