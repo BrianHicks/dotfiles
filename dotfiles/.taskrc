@@ -1,4 +1,4 @@
-# [Created by task 2.0.0 4/3/2012 14:03:16]
+# [Created by task 2.1.2 12/3/2012 08:42:46]
 # Taskwarrior program configuration file.
 # For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
 # 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
@@ -16,29 +16,12 @@ color=on
 
 nag=""
 
-# Defaults
 default.priority=M
 
-# Urgencies
-urgency.user.tag.work.coefficient=2.0
-urgency.user.tag.home.coefficient=1.25
-urgency.user.tag.request.coefficient=3.0
-urgency.user.tag.support.coefficient=1.0
-
-# inbox report
-report.inbox.description=Tasks in the inbox
-report.inbox.columns=id,entry.age,description
-report.inbox.filter=+inbox
-report.inbox.sort=-entry.age
-
-# work report
-#report.work.description=Work tasks
-#report.work.columns=id,project,due,start.active,recur.indicator,entry.age,urgency.real,description
-#report.work.labels=ID,Project,Due,A,R,Age,Urgency,Description
-#report.work.filter=+work status:pending depends.none:
-#report.work.filter=+work status:pending
-#report.work.sort=urgency-,id+
-#alias.w=work
+include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
+color.due=color12
+color.blocking=bright white
+color.active=color2
 
 # dependencies report
 report.deps.description=Verbose Dependencies
@@ -47,16 +30,10 @@ report.deps.labels=ID,Description,Dependencies
 report.deps.filter=status:pending
 report.deps.sort=urgency-,id+
 
-# finished today
-report.finished.description=Verbose Dependencies
-report.finished.columns=id,project,due,start.active,recur.indicator,depends.indicator,entry.age,urgency.real,description,tags
-report.finished.labels=ID,Project,Due,A,R,D,Age,Urgency,Description,tags
-report.finished.filter=status:completed end.after:yesterday
-report.finished.sort=urgency-,id+
+# change order of next and active columns, and show urgency on active
+report.next.columns=id,description,urgency,project,priority,due,start.active,entry.age
+report.next.labels=ID,Description,Urgency,Project,Pri,Due,A,Age
 
-# colors and overrides
-include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/solarized-dark-256.theme
-
-color.due=color12
-color.blocked=color10
-color.active=bold color2
+report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
+report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
+report.active.sort=due+,urgency-,priority-,project+
