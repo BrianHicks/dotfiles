@@ -18,7 +18,7 @@ nag=""
 
 default.priority=M
 
-include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/solarized-dark-256.theme
+include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/solarized-dark-256.theme
 color.due=color12
 color.blocking=bright white
 color.active=color2
@@ -37,3 +37,8 @@ report.next.labels=ID,Description,Urgency,Project,Pri,Due,A,Age
 report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
 report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
 report.active.sort=due+,urgency-,priority-,project+
+
+# UDAs
+uda.energy.type=string
+uda.energy.label=Energy
+uda.energy.values=H,M,L
