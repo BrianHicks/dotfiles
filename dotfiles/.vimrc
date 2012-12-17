@@ -191,7 +191,7 @@ vnoremap . :normal .<cr>
 
 " turn of dang pylint
 let g:syntastic_python_checker = 'flake8'
-let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_python_checker_args='--ignore=E501,E302'
 
 " wildmode/menu
 set wildmenu
