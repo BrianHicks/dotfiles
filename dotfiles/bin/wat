@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+from os import path, getcwd
+import sys
+from subprocess import call
+
+USER_HOME = path.expanduser('~')
+CONFIG_NAME = '.watrc'
+CONFIG_PATH = path.join(USER_HOME, CONFIG_NAME)
+
+def call_task(args):
+    call(['task'] + args)
+
+def get_combined_config():
+    try:
+        with open(CONFIG_PATH, 'r') as config_file:
+            global_config = config_file.read().split(' ')
+    except IOError:
+        global_config = []
+
+    current = getcwd()
+    local_config = []
+
+    while current != USER_HOME:
+        current_name = path.join(current, CONFIG_NAME)
+
+        if path.exists(current_name):
+            with open(current_name, 'r') as config_file:
+                local_config = config_file.read().split(' ')
+
+            break
+
+        current = path.split(current)[0]
+
+    return global_config + local_config
+
+def write(configtext, local=False):
+    filename = path.join(getcwd(), CONFIG_NAME) if local else CONFIG_PATH
+    with open(filename, 'w') as config_file:
+        config_file.write(configtext)
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    try:
+        command = args[0]
+    except IndexError:
+        command = ''
+
+    if command == 'set':
+        write(' '.join(args[1:]))
+
+    elif command == 'setlocal':
+        write(' '.join(args[1:]), local=True)
+
+    else:
+        config = get_combined_config()
+        call_task(config)
