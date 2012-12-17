@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+"""do pending tasks later.
+
+Run every morning, and afterwards you'll have a fresh
+view of the day"""
+from __future__ import unicode_literals, print_function
+
+import json
+from subprocess import Popen, PIPE
+import sys
+
+
+def call_task(arg_list, allow_err=False):
+    'call task with args'
+    task_export = Popen(
+        ['task'] + arg_list,
+        stdout=PIPE, stderr=PIPE
+    )
+    out, err = task_export.communicate()
+    if err:
+        print(err.strip())
+        if not allow_err:
+            print('Exiting, task printed to stderr')
+            sys.exit(1)
+
+    return out
+
+
+def get_export_with_filter(filter_args):
+    'get export with filter. Returns a Python object'
+    if not isinstance(filter_args, list):
+        filter_args = filter_args.split()
+
+    raw_tasks = call_task('export'.split() + filter_args)
+
+    return json.loads('[%s]' % raw_tasks.strip())
+
+
+def get_modifications_for(task):
+    'send an individual task through user input cycle'
+    print('-' * 40)
+    print('%s (%s) %s' % (
+        task['description'], task.get('project', 'no project'),
+        ', '.join('+%s' % tag for tag in task.get('tags', []))
+    ))
+    return raw_input('action > ')
+
+
+def main(args):
+    tasks = get_export_with_filter(args if len(args) > 0 else 'status:pending')
+
+    for task in tasks:
+        try:
+            mods = get_modifications_for(task)
+        except KeyboardInterrupt:
+            print("We'll pick up here later")
+            sys.exit(0)
+
+        if mods != '':
+            print(call_task([task['uuid']] + mods.split(), allow_err=True))
+
+    return tasks
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
