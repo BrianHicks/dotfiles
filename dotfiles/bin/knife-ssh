@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+import sys
+from subprocess import call
+
+if __name__ == '__main__':
+    name = '"%s"' % sys.argv[1]
+    command = '"%s"' % sys.argv[2]
+    total_command = ["knife", "ssh"] + sys.argv[1:] + ['-x', 'ubuntu', '-a', 'ec2.public_hostname']
+    call(total_command)
