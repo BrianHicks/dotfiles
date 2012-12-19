@@ -25,9 +25,7 @@ def get_combined_config():
 
         if path.exists(current_name):
             with open(current_name, 'r') as config_file:
-                local_config = config_file.read().split(' ')
-
-            break
+                local_config += config_file.read().split(' ')
 
         current = path.split(current)[0]
 
