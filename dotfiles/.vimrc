@@ -46,6 +46,7 @@ Bundle "groenewege/vim-less"
 Bundle "plasticboy/vim-markdown"
 Bundle "derekwyatt/vim-scala"
 Bundle "wavded/vim-stylus"
+Bundle "juvenn/mustache.vim"
 
 filetype plugin indent on
 
