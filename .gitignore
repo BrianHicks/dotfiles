@@ -1,3 +1,4 @@
 .netrwhist
 *.DS_Store
 dotfiles/.vim/bundle/*
+dotfiles/.maid/maid.log
