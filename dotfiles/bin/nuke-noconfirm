@@ -1,0 +1,4 @@
+#!/bin/sh
+knife-ssh "name:$@" "sudo shutdown -h now"
+knife client delete $@
+knife node delete $@
