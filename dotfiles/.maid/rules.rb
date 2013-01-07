@@ -87,6 +87,30 @@ Maid.rules do
     end
   end
 
+  rule "Organize bank statements" do
+    qif_archive = "~/Downloads/archive/bank"
+    mkdir(qif_archive)
+
+    dir('~/Downloads/*.qif').each do |path|
+      if 1.week.since? modified_at(path)
+        prefix = 'unknown'
+        downloaded_from(path).each do |source|
+          if source.include? 'bankofamerica.com'
+            prefix = 'boa'
+            break
+          end
+        end
+        filename = "#{prefix}-#{modified_at(path).strftime('%Y-%m-%d')}.qif"
+
+        move(path, File.join(qif_archive, filename))
+      end
+    end
+
+    dir(File.join(qif_archive, '*.qif')).each do |path|
+      trash(path) if 12.weeks.since? modified_at(path)
+    end
+  end
+
   archive_and_retain('~/Downloads', 'keys', %w(pem pub cer), 1.week, 1000.weeks)
 
   # last rule since it touches everything
