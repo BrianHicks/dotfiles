@@ -47,6 +47,7 @@ Bundle "plasticboy/vim-markdown"
 Bundle "derekwyatt/vim-scala"
 Bundle "wavded/vim-stylus"
 Bundle "juvenn/mustache.vim"
+Bundle "saltstack/salt-vim"
 
 filetype plugin indent on
 
