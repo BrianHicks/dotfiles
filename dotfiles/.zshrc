@@ -98,3 +98,6 @@ bindkey '^R' history-incremental-search-backward
 
 # autojump
 [[ -f `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+# workaround for git completion breaking in homebrew
+zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
