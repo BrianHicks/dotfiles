@@ -23,7 +23,7 @@ def get_config():
 
         with open(tmp.name, 'rb') as modified:
             for line in modified.readlines():
-                key, value = line.split(':')
+                key, value = line.split(':', 1)
                 configs[key.strip().lower()] = value.strip()
 
     return configs
