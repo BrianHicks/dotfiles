@@ -30,7 +30,7 @@ plugins=(git brew bundler fabric gem git-flow github pip rvm django taskwarrior 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/share/npm/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin
+export PATH=/usr/local/share/npm/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:~/.cabal/bin
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
@@ -101,3 +101,6 @@ bindkey '^R' history-incremental-search-backward
 
 # workaround for git completion breaking in homebrew
 zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
+
+# simple aliases
+alias resetdns="sudo killall -HUP mDNSResponder"
