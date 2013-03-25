@@ -10,43 +10,45 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " VUNDLES!
+" Some bundles I feel are slowing vim down or I don't use - trial period
+" before removal.
+"Bundle "Lokaltog/vim-easymotion"
+"Bundle "godlygeek/tabular"
+"Bundle "majutsushi/tagbar"
+"Bundle "scrooloose/nerdtree"
+"Bundle "scrooloose/syntastic"
+"Bundle "tpope/vim-abolish"
+"Bundle "tpope/vim-fugitive"
+
+" bundles which I actually use on a fairly regular basis.
 Bundle "IndentAnything"
-Bundle "mileszs/ack.vim"
-Bundle "fholgado/minibufexpl.vim"
-Bundle "scrooloose/nerdcommenter"
-Bundle "scrooloose/nerdtree"
-Bundle "ervandew/supertab"
-Bundle "scrooloose/syntastic"
-Bundle "majutsushi/tagbar"
-Bundle "Lokaltog/vim-easymotion"
 Bundle "Lokaltog/vim-powerline"
+Bundle "airblade/vim-gitgutter"
+Bundle "benmills/vimux"
+Bundle "ervandew/supertab"
+Bundle "fholgado/minibufexpl.vim"
+Bundle "mattn/zencoding-vim"
+Bundle "mileszs/ack.vim"
+Bundle "scrooloose/nerdcommenter"
+Bundle "tpope/vim-eunuch"
 Bundle "tpope/vim-repeat"
 Bundle "tpope/vim-surround"
-Bundle "mattn/zencoding-vim"
-
-" TODO: make flashcards for
-Bundle "godlygeek/tabular"
-Bundle "tpope/vim-abolish"
-Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-unimpaired"
-
-" TODO: try slimux
-Bundle "benmills/vimux"
 
 " Syntax / highlighting / colors
 Bundle "VimClojure"
-Bundle "mutewinter/nginx.vim"
-Bundle "kchmck/vim-coffee-script.git"
 Bundle "altercation/vim-colors-solarized"
-Bundle "jnwhiteh/vim-golang"
-Bundle "nono/vim-handlebars"
+Bundle "derekwyatt/vim-scala"
 Bundle "digitaltoad/vim-jade"
 Bundle "groenewege/vim-less"
-Bundle "plasticboy/vim-markdown"
-Bundle "derekwyatt/vim-scala"
-Bundle "wavded/vim-stylus"
+Bundle "jnwhiteh/vim-golang"
 Bundle "juvenn/mustache.vim"
+Bundle "kchmck/vim-coffee-script.git"
+Bundle "mutewinter/nginx.vim"
+Bundle "nono/vim-handlebars"
+Bundle "plasticboy/vim-markdown"
 Bundle "saltstack/salt-vim"
+Bundle "wavded/vim-stylus"
 
 filetype plugin indent on
 
@@ -56,8 +58,8 @@ filetype plugin indent on
 let mapleader=","
 
 " Edit and source ~/.vimrc
-nmap <silent> <leader>ev :e ~/.vimrc<CR>
-nmap <silent> <leader>sv :so ~/.vimrc<CR>
+nnoremap <leader>ev :e ~/.vimrc<CR>
+nnoremap <leader>sv :so ~/.vimrc<CR>
 
 " I save often enough and use different change detection scripts. YMMV.
 set nobackup
@@ -181,6 +183,9 @@ nnoremap <leader>vs :VimuxInterruptRunner<cr>
 nnoremap <leader>vc :VimuxClearRunnerHistory<cr>
 vnoremap <LocalLeader>vs "vy :call VimuxRunCommand(@v . "\n")<CR>
 
+" fugitive
+nnoremap <leader>gs :Gstatus<cr>
+
 let VimuxUseNearestPane = 1
 let g:VimuxOrientation = "v"
 
@@ -197,3 +202,10 @@ let g:syntastic_python_checker_args='--ignore=E501,E302'
 " wildmode/menu
 set wildmenu
 set wildmode=list:longest,full
+
+" defaults for all languages: 4 spaces, not tabs
+setlocal tabstop=4
+setlocal shiftwidth=4
+
+" turn off white background in SignColumn
+highlight clear SignColumn
