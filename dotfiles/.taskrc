@@ -30,9 +30,22 @@ report.deps.labels=ID,Description,Dependencies
 report.deps.filter=status:pending
 report.deps.sort=urgency-,id+
 
+# things to make timesheet entry a little more tolerable
+report.today.description=Done Today
+report.today.columns=end.age,description.combined,project.full,tags.list,priority.short,entry.age
+report.today.labels=Complete,Description,Project,Tags,Pri,Age
+report.today.filter=status:completed end.after:today -meta
+report.today.sort=end-
+
+report.yesterday.description=Done Yesterday
+report.yesterday.columns=end.age,description.combined,project.full,tags.list,priority.short,entry.age
+report.yesterday.labels=Complete,Description,Project,Tags,Pri,Age
+report.yesterday.filter=status:completed end.before:today end.after:yesterday -meta
+report.yesterday.sort=end-
+
 # change order of next and active columns, and show urgency on active
-report.next.columns=id,description,urgency,project,priority,due,start.active,entry.age
-report.next.labels=ID,Description,Urgency,Project,Pri,Due,A,Age
+report.next.columns=id,description,urgency,project,priority,issue,due,start.active,entry.age
+report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A,Age
 
 report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
 report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
@@ -42,3 +55,10 @@ report.active.sort=due+,urgency-,priority-,project+
 uda.energy.type=string
 uda.energy.label=Energy
 uda.energy.values=H,M,L
+
+uda.issue.type=numeric
+uda.issue.label=Issue
+
+# urgency coefficients for tags
+urgency.user.tag.bug.coefficient = 9.0 # same as blocking
+urgency.user.tag.client.coefficient = 5.0 # slighly less important than bugs
