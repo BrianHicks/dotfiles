@@ -18,7 +18,7 @@
         so = !git sourcetree
         ctags = !.git/hooks/ctags
         amend = commit --amend
-        aa = add --all
+        aa = add --all :/
         gh1 = diff HEAD~1
         ds = diff --stat=160/120
         sync = !git smart-pull && git push
