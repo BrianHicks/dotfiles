@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+"Hello there"
+import argparse
+from datetime import datetime
+import os
+import re
+from subprocess import call
+
+parser = argparse.ArgumentParser(__doc__)
+
+parser.add_argument('title', help='Title of the post')
+parser.add_argument(
+    '-d', '--date',
+    default=datetime.now().strftime('%Y-%m-%d'),
+    help='Date the post should be published',
+)
+parser.add_argument(
+    '-w', '--where',
+    default='~/Dropbox/code/love/_posts',
+    help='Which directory to post to'
+)
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+
+    # transform the parsed arguments
+    slug = re.sub('[^\w-]', '', re.sub('\s+', '-', args.title).lower())
+
+    title = '%s-%s.md' % (args.date, slug)
+    filename = os.path.expanduser(os.path.join(args.where, title))
+
+    text = "---\ntitle: %s\ndate: %s\nlayout: default\n---" % (args.title, args.date)
+
+    if not os.path.exists(filename):
+        with open(filename, 'w') as post:
+            post.write(text)
+
+    call([os.environ.get('EDITOR', '/usr/bin/vim'), filename])
