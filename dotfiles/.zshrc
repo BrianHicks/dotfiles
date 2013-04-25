@@ -20,6 +20,7 @@ antigen-bundle vi-mode
 
 # Others...
 antigen-bundle zsh-users/zsh-syntax-highlighting
+antigen-bundle sharat87/autoenv
 
 # Theme!
 antigen-theme miloshadzic
