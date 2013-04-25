@@ -4,3 +4,5 @@
 *static_banners*
 media/template*
 .watrc
+.env
+.glove.json

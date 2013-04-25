@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+'''a tool to wrap around API requests
+
+config files are loaded and combined from the root directory and combined. The
+options are as follows:
+
+ - curl_opts: arguments to ALWAYS pass to cURL (string)
+ - base_url: base URL to construct resultant URL with (string)
+
+This tool will pass in stdin, and release all stdout and stderr.
+'''
+from argparse import ArgumentParser, REMAINDER
+import json
+import os
+import subprocess
+from urlparse import urljoin
+import shlex
+import sys
+
+parser = ArgumentParser(__doc__)
+parser.add_argument(
+    'url', help='URL (or partial URL) to request'
+)
+parser.add_argument(
+    'args', nargs=REMAINDER,
+    help='Additional arguments to pass to cURL (remaining arguments)'
+)
+
+def reduce_build_path(paths, part):
+    new = os.path.join(paths[-1], part)
+    return paths + [new]
+
+def raw_configs(start):
+    paths = reduce(reduce_build_path, start.split('/'), ['/'])
+
+    for path in paths:
+        filename = os.path.join(path, '.glove.json')
+        try:
+            with open(filename, 'r') as raw_config:
+                yield raw_config.read()
+        except IOError:
+            continue
+
+def get_config():
+    base = {}
+    for config in raw_configs(os.getcwd()[1:]):
+        base.update(json.loads(config))
+
+    return base
+
+def main():
+    args = parser.parse_args()
+    config = get_config()
+
+    combined_opts = shlex.split(str(config.get('curl_opts', ''))) + args.args
+    combined_url = urljoin(str(config['base_url']), args.url) if 'base_url' in config else args.url
+
+    subprocess.call(
+        ['curl'] + combined_opts + [combined_url],
+        stdin=sys.stdin
+    )
+
+if __name__ == '__main__':
+    main()
