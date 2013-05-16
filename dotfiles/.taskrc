@@ -76,7 +76,8 @@ urgency.user.tag.bug.coefficient = 9.0 # same as blocking
 urgency.user.tag.client.coefficient = 5.0 # slighly less important than bugs
 urgency.user.tag.data.coefficient = 3.0 # slightly less important than client
 
-# exporting
+# misc
 json.array=on
+editor=/usr/local/bin/vim
 
 include ~/.pomodoro.taskrc
