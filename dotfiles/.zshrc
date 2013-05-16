@@ -100,7 +100,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 [[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
 # Vim bindings
-bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'kj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 
 # autojump
