@@ -1,6 +1,10 @@
 # Path manipulations...
-#           NPM global modules       Hombrew                        Standard Issue Path                              Cabal
-export PATH=/usr/local/share/npm/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:~/.cabal/bin
+#           NPM global modules       Hombrew                        Standard Issue Path                              Cabal        Homebrew python
+export PATH=/usr/local/share/npm/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:~/.cabal/bin:/usr/local/share/python
+
+# pythonbrew
+[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+alias pb=pythonbrew
 
 ### START ANTIGEN ###
 source ~/antigen/antigen.zsh
@@ -20,7 +24,28 @@ antigen-bundle vi-mode
 
 # Others...
 antigen-bundle zsh-users/zsh-syntax-highlighting
+antigen-bundle zsh-users/zsh-completions
 antigen-bundle sharat87/autoenv
+
+### History substring search - it'll blow your mind
+antigen-bundle zsh-users/zsh-history-substring-search
+
+# bind UP and DOWN arrow keys
+for keycode in '[' '0'; do
+  bindkey "^[${keycode}A" history-substring-search-up
+  bindkey "^[${keycode}B" history-substring-search-down
+done
+unset keycode
+
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+### end history substring search
 
 # Theme!
 antigen-theme miloshadzic
@@ -36,16 +61,12 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # wrap git in "hub" wrapper
 #function git(){hub "$@"}
 
-# pythonbrew
-[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
-alias pb=pythonbrew
-
 # aliases
 alias less='less -FrX'
 
 # taskwarrior's burndown functions are TOO BIG. Let's pipe them through less to
 # change the size!
-function burndown(){task burndown.daily $@ rc._forcecolor=yes | less}
+function burndown.daily(){task burndown.daily $@ rc._forcecolor=yes | less}
 function burndown.weekly(){task burndown.weekly $@ rc._forcecolor=yes | less}
 function burndown.monthly(){task burndown.monthly $@ rc._forcecolor=yes | less}
 
@@ -93,3 +114,11 @@ alias resetdns="sudo killall -HUP mDNSResponder"
 alias dimensions="sips -g pixelWidth -g pixelHeight"
 alias f="git flow feature"
 alias h="git flow hotfix"
+
+export DISABLE_AUTO_TITLE=true
+
+# pro cd function
+pd() {
+  local projDir=$(pro search $1)
+  cd ${projDir}
+}
