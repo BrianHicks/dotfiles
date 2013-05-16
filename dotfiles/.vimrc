@@ -22,7 +22,7 @@ Bundle "tpope/vim-surround"
 Bundle "tpope/vim-unimpaired"
 
 " Highlighting Bundles
-Bundle "altercation/vim-colors-solarized"
+Bundle "chriskempson/base16-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "plasticboy/vim-markdown"
 Bundle "python.vim"
@@ -34,7 +34,7 @@ filetype plugin indent on
 syntax on
 set number
 if &t_Co >= 256 || has("gui_running")
-    colorscheme solarized
+    colorscheme base16-tomorrow
 endif
 
 " Shortcuts
