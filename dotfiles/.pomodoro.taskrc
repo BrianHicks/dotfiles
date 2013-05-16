@@ -1,0 +1,16 @@
+# Maxims:
+#  - Once a pomodoro begins, it has to ring
+#  - The next pomodoro will go better
+#  - Protect the pomodoro
+
+uda.pomodoros.type=numeric
+uda.pomodoros.label=Pomodoros
+
+uda.distractions.type=numeric
+uda.distractions.label=Distractions
+
+uda.interruptions.type=numeric
+uda.interruptions.label=Interruptions
+
+# unplanned and urgent tag
+urgency.user.tag.uu.coefficient = 5.0 # slightly less important than blocking

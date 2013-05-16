@@ -18,10 +18,22 @@ nag=""
 
 default.priority=M
 
-include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/solarized-dark-256.theme
-color.due=color12
-color.blocking=bright white
-color.active=color2
+color.active=blue
+color.alternate=on black
+color.blocking=
+color.blocked=gray8
+color.due=yellow
+color.due.today=red on black
+color.overdue=bold red on grey
+color.pri.H=white on black
+color.pri.M=
+color.pri.L=
+color.pri.none=
+color.tagged=
+
+color.burndown.done=black on blue
+color.burndown.pending=black on red
+color.burndown.started=black on yellow
 
 # dependencies report
 report.deps.description=Verbose Dependencies
@@ -44,8 +56,8 @@ report.yesterday.filter=status:completed end.before:today end.after:yesterday -m
 report.yesterday.sort=end-
 
 # change order of next and active columns, and show urgency on active
-report.next.columns=id,description,urgency,project,priority,issue,due,start.active,entry.age
-report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A,Age
+report.next.columns=id,description,urgency,project,priority,issue,due,start.active,pomodoros
+report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A,Pom
 
 report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
 report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
@@ -62,3 +74,9 @@ uda.issue.label=Issue
 # urgency coefficients for tags
 urgency.user.tag.bug.coefficient = 9.0 # same as blocking
 urgency.user.tag.client.coefficient = 5.0 # slighly less important than bugs
+urgency.user.tag.data.coefficient = 3.0 # slightly less important than client
+
+# exporting
+json.array=on
+
+include ~/.pomodoro.taskrc
