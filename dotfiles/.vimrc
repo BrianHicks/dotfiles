@@ -12,6 +12,7 @@ Bundle 'gmarik/vundle'
 Bundle "LustyJuggler"
 Bundle "airblade/vim-gitgutter"
 Bundle "ddollar/nerdcommenter"
+Bundle "ervandew/supertab"
 Bundle "jszakmeister/vim-togglecursor"
 Bundle "kien/ctrlp.vim"
 Bundle "paredit.vim"
