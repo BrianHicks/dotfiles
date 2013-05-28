@@ -1,5 +1,5 @@
 #!/bin/sh
-cd ~/code/sandbox/funding
+cd ~/code/sideprojects/funding/funding
 new_session
 
 # editor window
@@ -10,10 +10,5 @@ send_keys 1.1 "vim" "Enter"
 tmux rename-window -t 1 editor
 
 ## server window
-#new_window -n server
-#send_keys 2.0 "pb venv use ffunding -p 2.7.2" "Enter"
-#send_keys 2.0 "python manage.py runserver" "Enter"
-
-## database window
-#new_window -n rethinkdb
-#send_keys 3.0 "rethinkdb" "Enter"
+new_window -n server
+send_keys 2.0 "../funding-manage.sh runserver" "Enter"
