@@ -63,7 +63,7 @@ if __name__ == '__main__':
         with open(filename, 'w') as post:
             post.write(text)
 
-    # call([os.environ.get('EDITOR', '/usr/local/bin/vim'), filename])
+    call([os.environ.get('EDITOR', '/usr/local/bin/vim'), filename])
     if args.commit_after:
         os.chdir(args.where)
         call(['git', 'add', title])
