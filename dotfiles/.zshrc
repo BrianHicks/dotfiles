@@ -122,3 +122,10 @@ pd() {
   local projDir=$(pro search $1)
   cd ${projDir}
 }
+
+# mail
+alias unread="notmuch search tag:unread"
+alias markread="notmuch tag -unread tag:unread"
+
+# go
+export GOPATH=~/code/gocode
