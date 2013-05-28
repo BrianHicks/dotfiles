@@ -12,9 +12,11 @@ Bundle 'gmarik/vundle'
 Bundle "LustyJuggler"
 Bundle "airblade/vim-gitgutter"
 Bundle "ddollar/nerdcommenter"
+Bundle "epeli/slimux"
 Bundle "ervandew/supertab"
 Bundle "jszakmeister/vim-togglecursor"
 Bundle "kien/ctrlp.vim"
+Bundle "mileszs/ack.vim"
 Bundle "paredit.vim"
 Bundle "terryma/vim-multiple-cursors"
 Bundle "tpope/vim-eunuch"
@@ -23,7 +25,9 @@ Bundle "tpope/vim-surround"
 Bundle "tpope/vim-unimpaired"
 
 " Highlighting Bundles
+Bundle "anzaika/go.vim"
 Bundle "chriskempson/base16-vim"
+Bundle "digitaltoad/vim-jade"
 Bundle "pangloss/vim-javascript"
 Bundle "plasticboy/vim-markdown"
 Bundle "python.vim"
@@ -36,6 +40,9 @@ syntax on
 set number
 if &t_Co >= 256 || has("gui_running")
     colorscheme base16-tomorrow
+
+    " lustyjuggler doesn't have enough differentiation in this scheme - BOLD!
+    highlight Question cterm=underline
 endif
 
 " Shortcuts
@@ -57,10 +64,6 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 nnoremap <leader>w <C-w>s<C-w>j
 
-" Folding
-set foldmethod=syntax
-set foldnestmax=2
-
 " Really quick buffer jumps
 nnoremap <Space> :LustyJugglePrevious<CR>
 nnoremap <leader><Space> :LustyJuggler<CR>
@@ -73,7 +76,7 @@ nnoremap <C-p><C-l> :CtrlPLine<CR>
 
 " Fugitive
 nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gc :GCommit<CR>
+nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gm :Gmove 
 nnoremap <leader>gd :Gremove<CR>
@@ -86,6 +89,11 @@ let g:multi_cursor_next_key="<C-n>"
 let g:multi_cursor_prev_key="<C-p>"
 let g:multi_cursor_skip_key="<C-x>"
 let g:multi_cursor_quit_key="<Esc>"
+
+" slimux
+nnoremap <Leader>a :SlimuxShellLast<CR>
+nnoremap <Leader>s :SlimuxREPLSendLine<CR>
+vnoremap <Leader>s :SlimuxREPLSendSelection<CR>
 
 " Make searching better
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
