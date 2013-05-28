@@ -1,23 +1,37 @@
 #!/usr/bin/env python
-"Hello there"
+"Wrapper for posting to a Jekyll blog from the command line"
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
+import operator
 import os
 import re
 from subprocess import call
 
 parser = argparse.ArgumentParser(__doc__)
 
+parser.add_argument(
+    'where',
+    help='Which directory to post to'
+)
 parser.add_argument('title', help='Title of the post')
 parser.add_argument(
     '-d', '--date',
     default=datetime.now().strftime('%Y-%m-%d'),
-    help='Date the post should be published',
+    help='Date the post should be published (ex: +2 or -5)',
 )
 parser.add_argument(
-    '-w', '--where',
-    default='~/Dropbox/code/love/_posts',
-    help='Which directory to post to'
+    '-o', '--offset',
+    help='Days to offset post by (based on latest post)',
+)
+parser.add_argument(
+    '-n', '--offset-now',
+    action='store_true',
+    help='If present, offset from current date instead of last post'
+)
+parser.add_argument(
+    '-c', '--commit-after',
+    action='store_true',
+    help='If present, add and commit to git afterward'
 )
 
 if __name__ == '__main__':
@@ -26,7 +40,21 @@ if __name__ == '__main__':
     # transform the parsed arguments
     slug = re.sub('[^\w-]', '', re.sub('\s+', '-', args.title).lower())
 
-    title = '%s-%s.md' % (args.date, slug)
+    date = args.date
+
+    # do relative posting dates, from the latest post. Override date if provided.
+    if args.offset:
+        if args.offset_now:
+            base = datetime.now()
+        else:
+            latest = sorted([x.split('-') for x in os.listdir(args.where)], reverse=True)[0]
+            base = datetime(int(latest[0]), int(latest[1]), int(latest[2]))
+
+        op = operator.sub if args.offset.startswith('-') else operator.add
+
+        date = datetime.strftime(op(base, timedelta(int(args.offset[1:]))), '%Y-%m-%d')
+
+    title = '%s-%s.md' % (date, slug)
     filename = os.path.expanduser(os.path.join(args.where, title))
 
     text = "---\ntitle: %s\ndate: %s\nlayout: default\n---" % (args.title, args.date)
@@ -35,4 +63,8 @@ if __name__ == '__main__':
         with open(filename, 'w') as post:
             post.write(text)
 
-    call([os.environ.get('EDITOR', '/usr/bin/vim'), filename])
+    # call([os.environ.get('EDITOR', '/usr/local/bin/vim'), filename])
+    if args.commit_after:
+        os.chdir(args.where)
+        call(['git', 'add', title])
+        call(['git', 'commit', '-m', 'Add %s' % title])
