@@ -57,7 +57,7 @@ if __name__ == '__main__':
     title = '%s-%s.md' % (date, slug)
     filename = os.path.expanduser(os.path.join(args.where, title))
 
-    text = "---\ntitle: %s\ndate: %s\nlayout: default\n---" % (args.title, args.date)
+    text = "---\ntitle: %s\ndate: %s\nlayout: default\n---" % (args.title, date)
 
     if not os.path.exists(filename):
         with open(filename, 'w') as post:
