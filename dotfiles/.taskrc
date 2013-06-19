@@ -56,12 +56,23 @@ report.yesterday.filter=status:completed end.before:today end.after:yesterday -m
 report.yesterday.sort=end-
 
 # change order of next and active columns, and show urgency on active
-report.next.columns=id,description,urgency,project,priority,issue,due,start.active,pomodoros
-report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A,Pom
+report.next.columns=id,description,urgency,project,priority,issue,due,start.active
+report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A
 
 report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
 report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
 report.active.sort=due+,urgency-,priority-,project+
+
+# final version
+report.fva.columns=id,description.count,project,tags,priority
+report.fva.labels=ID,Desc,Pro,Tags,Pri
+report.fva.sort=id+
+report.fva.filter=status:pending -BLOCKED
+
+report.fv.columns=id,description,project,tags
+report.fv.labels=ID,Desc,Pro,Tags
+report.fv.sort=id-
+report.fv.filter=status:pending start.any:
 
 # UDAs
 uda.energy.type=string
@@ -79,5 +90,3 @@ urgency.user.tag.data.coefficient = 3.0 # slightly less important than client
 # misc
 json.array=on
 editor=/usr/local/bin/vim
-
-include ~/.pomodoro.taskrc
