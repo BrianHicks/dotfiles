@@ -10,7 +10,6 @@ Bundle 'gmarik/vundle'
 
 " Useful bundles
 Bundle "LustyJuggler"
-Bundle "airblade/vim-gitgutter"
 Bundle "ddollar/nerdcommenter"
 Bundle "epeli/slimux"
 Bundle "ervandew/supertab"
@@ -23,15 +22,20 @@ Bundle "tpope/vim-eunuch"
 Bundle "tpope/vim-fugitive.git"
 Bundle "tpope/vim-surround"
 Bundle "tpope/vim-unimpaired"
+Bundle "tristen/vim-sparkup"
 
 " Highlighting Bundles
 Bundle "anzaika/go.vim"
+Bundle "cakebaker/scss-syntax.vim"
 Bundle "chriskempson/base16-vim"
+Bundle "derekwyatt/vim-scala"
 Bundle "digitaltoad/vim-jade"
 Bundle "pangloss/vim-javascript"
 Bundle "plasticboy/vim-markdown"
 Bundle "python.vim"
+Bundle "rdolgushin/play.vim"
 Bundle "saltstack/salt-vim"
+Bundle "yaml.vim"
 
 filetype plugin indent on
 
@@ -92,6 +96,7 @@ let g:multi_cursor_quit_key="<Esc>"
 
 " slimux
 nnoremap <Leader>a :SlimuxShellLast<CR>
+nnoremap <Leader>A :SlimuxShellPrompt<CR>
 nnoremap <Leader>s :SlimuxREPLSendLine<CR>
 vnoremap <Leader>s :SlimuxREPLSendSelection<CR>
 
