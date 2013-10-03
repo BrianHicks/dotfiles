@@ -19,6 +19,7 @@ Bundle "mileszs/ack.vim"
 Bundle "paredit.vim"
 Bundle "terryma/vim-multiple-cursors"
 Bundle "tpope/vim-eunuch"
+Bundle "tpope/vim-fireplace"
 Bundle "tpope/vim-fugitive.git"
 Bundle "tpope/vim-surround"
 Bundle "tpope/vim-unimpaired"
@@ -30,6 +31,8 @@ Bundle "cakebaker/scss-syntax.vim"
 Bundle "chriskempson/base16-vim"
 Bundle "derekwyatt/vim-scala"
 Bundle "digitaltoad/vim-jade"
+Bundle "guns/vim-clojure-static"
+Bundle "jaseg/jinja-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "plasticboy/vim-markdown"
 Bundle "python.vim"
@@ -43,7 +46,8 @@ filetype plugin indent on
 syntax on
 set number
 if &t_Co >= 256 || has("gui_running")
-    colorscheme base16-tomorrow
+    colorscheme base16-railscasts
+    set background=dark
 
     " lustyjuggler doesn't have enough differentiation in this scheme - BOLD!
     highlight Question cterm=underline

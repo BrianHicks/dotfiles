@@ -1,0 +1,16 @@
+#!/bin/sh
+cd ~/code/sideprojects/continuumgroup.github.io
+new_session
+
+# editor window
+split 1 -h
+send_keys 1.0 " tmux select-layout main-vertical" "Enter"
+send_keys 1.0 " clear" "Enter"
+send_keys 1.1 "vim" "Enter"
+tmux rename-window -t 1 editor
+
+# code and watching
+new_window -n watch
+split 2 -v
+send_keys 2.0 "rake watch" "Enter"
+send_keys 2.1 "jekyll serve --watch" "Enter"

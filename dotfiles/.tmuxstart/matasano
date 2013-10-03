@@ -1,0 +1,13 @@
+#!/bin/sh
+cd ~/code/sandbox/matasano/
+new_session
+
+# editor window
+split 1 -h
+send_keys 1.0 " tmux select-layout main-vertical" "Enter"
+send_keys 1.0 " clear" "Enter"
+send_keys 1.0 "lein repl" "Enter"
+send_keys 1.0 "(use 'midje.repl)" "Enter"
+send_keys 1.0 "(autotest)" "Enter"
+send_keys 1.1 "vim" "Enter"
+tmux rename-window -t 1 editor

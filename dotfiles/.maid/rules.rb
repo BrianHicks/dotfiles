@@ -1,118 +1,66 @@
-def archive_and_retain(base, name, exts, archive_after, retain_for)
+require 'uri'
+
+def archive_and_retain(base, name, exts, archive_after, trash_after)
   rule "Archive/retain #{name}" do
     archive = File.join base, 'archive', name
     file_matcher = "*.{#{exts.join(',')}}"
-    mkdir(archive)
+    mkdir(archive) if not File.directory?(archive)
 
-    # archive eligible files
-    dir(File.join(base, file_matcher)).each do |path|
-      move(path, archive) if archive_after.since?(modified_at(path))
+    # trash old files
+    if not trash_after.nil?
+      dir(File.join(archive, file_matcher)).each do |path|
+        trash(path) if trash_after.since?(accessed_at(path))
+      end
     end
 
-    # only retain a number of files
-    dir(File.join(archive, file_matcher)).each do |path|
-      trash(path) if retain_for.since?(accessed_at(path))
+    # archive files
+    dir(File.join(base, file_matcher)).each do |path|
+      move(path, archive) if archive_after.since?(modified_at(path))
     end
   end
 end
 
 Maid.rules do
-  archive_and_retain('~/Downloads', 'software', %w(dmg app pkg wdgt jar jnlp exe), 1.week, 52.weeks)
-  archive_and_retain('~/Downloads', 'documents', %w(csv, xslx, docx, pdf), 1.week, 52.weeks)
-  archive_and_retain('~/Downloads', 'movies', %w(m4v), 1.week, 52.weeks)
-  archive_and_retain('~/Downloads', 'pictures', %w(png jpg jpeg), 1.week, 52.weeks)
+  rule "Organize WTR PDFs in folders by week and month" do
+    dir("~/BTSync/Shared/WTRs/*.pdf").each do |f|
+      in_year = /(\d+).(\d+)/.match(f)
+      next if in_year.nil?
 
-  rule "Put font zips in Dropbox" do
-    font_archive = '~/Dropbox/fonts'
-    mkdir(font_archive)
+      destination = "~/BTSync/shared/WTRs/#{created_at(f).year}/#{in_year[1]}/#{in_year[2]}/"
+      mkdir(destination) if not File.directory? destination
+
+      move(f, destination)
+    end
+  end
+
+  # bank statements
+  archive_and_retain("~/Downloads", "financial", %w(qif), 2.days, nil)
+  rule "Rename bank statements" do
+    root = "~/Downloads"
+    dir(File.join root, "*.qif").each do |f|
+      source = URI(downloaded_from(f)[0])
+      created = created_at(f)
+
+      rename(f, File.join(root, "#{source.host}-#{created.year}-#{created.month}-#{created.day}.qif"))
+    end
+  end
+
+  # fonts
+  rule "Keep Fonts" do
+    font_archive = "~/Downloads/archive/fonts"
+    mkdir(font_archive) if not File.directory?(font_archive)
 
     font_exts = %w(.woff .ttf .otf .ps .webfont .eot)
-
-    dir('~/Downloads/*.zip').each do |zipfile|
-      has_fonts = false
-      can_archive = true
-
-      zipfile_contents(zipfile).each do |path|
-        if font_exts.member?(File.extname(path))
-          has_fonts = true
-        end
-
-        if File.exists?(File.expand_path(File.join('~/Downloads', path)))
-          can_archive = false
-        end
-      end
-
-      if has_fonts
-        if can_archive
-          move(zipfile, font_archive)
-        else
-          puts "#{zipfile} has fonts, but is expanded. Delete expanded archive to archive."
-        end
-      end
+    dir("~/Downloads/*.zip").each do |zipfile|
+      has_fonts = zipfile_contents(zipfile).any? { |path| font_exts.member?(File.extname(path)) }
+      
+      move(zipfile, font_archive) if has_fonts
     end
   end
 
-  rule "Archive/retain old zips" do
-    zip_archive = '~/Downloads/archive/zips'
-    mkdir(zip_archive)
-
-    # figure out whether or not to archive
-    dir('~/Downloads/*.zip').each do |zipfile|
-      latest_accessed = nil
-      any_expanded = false
-
-      zipfile_contents(zipfile).each do |path|
-        expanded_path = File.expand_path(File.join('~/Downloads', path))
-
-        if File.exists? expanded_path
-          any_expanded = true
-          last_accessed = modified_at(expanded_path)
-          if latest_accessed.nil? or last_accessed > latest_accessed
-            latest_accessed = last_accessed
-          end
-        end
-      end
-
-      if any_expanded
-        if 1.week.since? latest_accessed
-          zipfile_contents(zipfile).each do |path|
-            expanded_path = File.expand_path(File.join('~/Downloads', path))
-            trash(expanded_path)
-          end
-        end
-      end
-      if 2.weeks.since? modified_at(zipfile)
-        trash(zipfile)
-      end
-    end
-  end
-
-  rule "Organize bank statements" do
-    qif_archive = "~/Downloads/archive/bank"
-    mkdir(qif_archive)
-
-    dir('~/Downloads/*.qif').each do |path|
-      if 1.week.since? modified_at(path)
-        prefix = 'unknown'
-        downloaded_from(path).each do |source|
-          if source.include? 'bankofamerica.com'
-            prefix = 'boa'
-            break
-          end
-        end
-        filename = "#{prefix}-#{modified_at(path).strftime('%Y-%m-%d')}.qif"
-
-        move(path, File.join(qif_archive, filename))
-      end
-    end
-
-    dir(File.join(qif_archive, '*.qif')).each do |path|
-      trash(path) if 12.weeks.since? modified_at(path)
-    end
-  end
-
-  archive_and_retain('~/Downloads', 'keys', %w(pem pub cer), 1.week, 1000.weeks)
-
-  # last rule since it touches everything
-  archive_and_retain('~/Downloads', 'etc', %w(*), 5.weeks, 52.weeks)
+  # misc downloads
+  archive_and_retain("~/Downloads", "documents", %w(pdf doc docx xsl xslx csv), 1.week, 52.weeks)
+  archive_and_retain("~/Downloads", "software", %w(dmg app pkg wdgt jar jnlp exe), 1.day, nil)
+  archive_and_retain("~/Downloads", "video", %w(m4v mov), 2.days, 26.weeks)
+  archive_and_retain("~/Downloads", "pictures", %w(png jpg jpeg gif), 1.week, 52.weeks)
 end

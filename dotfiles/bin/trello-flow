@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+'move cards around on trello in a structured way'
+
+def parse_structure():
+    'parse structure from a directory'

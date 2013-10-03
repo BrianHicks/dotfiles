@@ -17,11 +17,11 @@ parser.add_argument('title', help='Title of the post')
 parser.add_argument(
     '-d', '--date',
     default=datetime.now().strftime('%Y-%m-%d'),
-    help='Date the post should be published (ex: +2 or -5)',
+    help='Date the post should be published (ex: 2013-06-19)',
 )
 parser.add_argument(
     '-o', '--offset',
-    help='Days to offset post by (based on latest post)',
+    help='Days to offset post by, based on latest post (ex: +2 or -5)',
 )
 parser.add_argument(
     '-n', '--offset-now',
@@ -32,6 +32,10 @@ parser.add_argument(
     '-c', '--commit-after',
     action='store_true',
     help='If present, add and commit to git afterward'
+)
+parser.add_argument(
+    '-p', '--post',
+    help='Extra command to run after hook, if committed'
 )
 
 if __name__ == '__main__':
@@ -68,3 +72,9 @@ if __name__ == '__main__':
         os.chdir(args.where)
         call(['git', 'add', title])
         call(['git', 'commit', '-m', 'Add %s' % title])
+
+        if args.post:
+            os.chdir(os.path.abspath(
+                os.path.join(args.where, '..') if '_posts' in args.where else args.where
+            ))
+            call(args.post.split())

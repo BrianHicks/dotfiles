@@ -6,3 +6,5 @@ media/template*
 .watrc
 .env
 .glove.json
+.pt
+.python-version
