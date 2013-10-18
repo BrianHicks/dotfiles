@@ -62,7 +62,7 @@ def tasks(addl=None):
 
         yield task
 
-def wait_by_day(coll):
+def scheduled_by_day(coll):
     groups = defaultdict(list)
     for item in coll:
         sched = item.get('scheduled', datetime.now())
@@ -166,5 +166,5 @@ if __name__ == '__main__':
         FormattedDay(day, tasks).format(
             now if day == today else start_time
         )
-        for day, tasks in wait_by_day(tasks(args.filters))
+        for day, tasks in scheduled_by_day(tasks(args.filters))
     ]))
