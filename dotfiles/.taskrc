@@ -56,23 +56,26 @@ report.yesterday.filter=status:completed end.before:today end.after:yesterday -m
 report.yesterday.sort=end-
 
 # change order of next and active columns, and show urgency on active
-report.next.columns=id,description,urgency,project,priority,issue,due,start.active
-report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A
+report.next.columns=id,description,urgency,project,priority,issue,due,start.active,duration
+report.next.labels=ID,Description,Urgency,Project,Pri,GH,Due,A,Duration
+report.next.filter=status:pending limit:page -BLOCKED
 
 report.active.columns=id,description,urgency,project,priority,due,start.active,entry.age
 report.active.labels=ID,Description,Urgency,Project,Pri,Due,Active,Age
 report.active.sort=due+,urgency-,priority-,project+
 
-# final version
-report.fva.columns=id,description.count,project,tags,priority
-report.fva.labels=ID,Desc,Pro,Tags,Pri
-report.fva.sort=id+
-report.fva.filter=status:pending -BLOCKED
+# gimme just one thing to do
+report.top.description=The Top Task - Do it now!
+report.top.columns=id,description,project,due
+report.top.labels=ID,Description,Project,Due
+report.top.sort=urgency-
+report.top.filter=limit:1 status:pending -BLOCKED
 
-report.fv.columns=id,description,project,tags
-report.fv.labels=ID,Desc,Pro,Tags
-report.fv.sort=id-
-report.fv.filter=status:pending start.any:
+report.bottom.description=The Bottom Task - Do it when you have low energy
+report.bottom.columns=id,description,project,due
+report.bottom.labels=ID,Description,Project,Due
+report.bottom.sort=urgency+
+report.bottom.filter=limit:1 status:pending -BLOCKED
 
 # UDAs
 uda.energy.type=string
@@ -81,6 +84,9 @@ uda.energy.values=H,M,L
 
 uda.issue.type=numeric
 uda.issue.label=Issue
+
+uda.duration.type=numeric
+uda.duration.label=Duration
 
 # urgency coefficients for tags
 urgency.user.tag.bug.coefficient = 9.0 # same as blocking

@@ -1,0 +1,170 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
+from collections import defaultdict
+from datetime import datetime, date, time, timedelta
+import json
+import re
+from subprocess import Popen, PIPE
+from textwrap import TextWrapper
+
+# taken from fabric's colors
+def _wrap_with(code):
+
+    def inner(text, bold=False):
+        c = code
+        if bold:
+            c = "1;%s" % c
+        return "\033[%sm%s\033[0m" % (c, text)
+    return inner
+
+red = _wrap_with('31')
+green = _wrap_with('32')
+yellow = _wrap_with('33')
+blue = _wrap_with('34')
+magenta = _wrap_with('35')
+cyan = _wrap_with('36')
+white = _wrap_with('37')
+
+# the rest of this is "original"
+start_time = time(hour=8)
+off_time = time(hour=17)
+breaks = [
+    (time(hour=12), time(hour=13)),
+]
+
+def re_color(color):
+    def inner(re):
+        return color(re.group())
+
+    return inner
+
+def parse_tw_date(d):
+    return datetime.strptime('%Y%m%dT%H%M%SZ', d)
+
+def tasks(addl=None):
+    addl = addl or []
+    task = Popen(['task', 'export', 'status:pending'] + addl, stdout=PIPE)
+    raw, _ = task.communicate()
+
+    for task in json.loads(raw):
+        for field in 'entry modified wait scheduled'.split():
+            try:
+                task[field] = datetime.strptime(task[field], '%Y%m%dT%H%M%SZ')
+            except KeyError:
+                continue
+
+        task['urgency'] = float(task['urgency'])
+
+        task['noduration'] = 'duration' not in task
+        task.setdefault('duration', 10)
+        task['duration'] = int(task['duration'])
+
+        yield task
+
+def wait_by_day(coll):
+    groups = defaultdict(list)
+    for item in coll:
+        sched = item.get('scheduled', datetime.now())
+        key = date(sched.year, sched.month, sched.day)
+        groups[key].append(item)
+
+    return sorted([
+        (k, sorted(
+            values, key=lambda item: item['urgency'],
+            reverse=True,
+        ))
+        for k, values in groups.items()
+    ], key=lambda pair: pair[0])
+
+
+class FormattedDay(object):
+    def __init__(self, day, tasks):
+        self.day, self.tasks = day, tasks
+        self.wrapper = TextWrapper(
+            width=80, initial_indent='', subsequent_indent=' ' * 19
+        )
+
+    def format_day(self):
+        return day.strftime('%A, %b %d')
+
+    def format_task(self, task):
+        fmt = '(%(id)d) %(description)s [%(urgency).2f]' % task
+        if task['noduration']:
+            fmt += ' {no duration}'
+        return fmt
+
+    def format(self, start_time=start_time):
+        header = [
+            self.format_day(),
+            '-' * len(self.format_day())
+        ]
+
+        current_time = datetime.combine(self.day, start_time)
+        todays_breaks = [
+            (datetime.combine(self.day, s), datetime.combine(self.day, e))
+            for s, e in breaks
+        ]
+        today_off = datetime.combine(self.day, off_time)
+
+        for task in self.tasks:
+            end_time = current_time + timedelta(minutes=task['duration'])
+
+            while True:
+                invalid = any([
+                    (current_time > s and current_time < e) or
+                    (end_time > s and current_time < e)
+                    for s, e in todays_breaks
+                ])
+                if invalid:
+                    current_time += timedelta(minutes=5)
+                    end_time += timedelta(minutes=5)
+                else:
+                    break
+
+            if current_time > today_off:
+                header.append(red('== end of day =='))
+
+            header.extend(self.wrapper.wrap('{start} - {end}: {task}'.format(
+                start=current_time.strftime('%I:%M%p'),
+                end=end_time.strftime('%I:%M%p'),
+                task=self.format_task(task)
+            )))
+
+            current_time = end_time
+
+        # colorify
+        # we're doing this here so the text still wraps to 80 characters.
+        header = '\n'.join(header)
+        header = re.sub('(?<=\()\d+(?=\))', re_color(blue), header)
+        header = re.sub('\d+\.\d+', re_color(yellow), header)
+        header = re.sub('\d\d:\d\d[AP]M - \d\d:\d\d[AP]M', re_color(green), header)
+        header = re.sub('\{no duration\}', re_color(red), header)
+
+        return header
+
+if __name__ == '__main__':
+    from argparse import ArgumentParser
+    today = date.today()
+    now = datetime.now()
+    now = time(now.hour, now.minute, now.second, now.microsecond)
+
+    parser = ArgumentParser(__name__)
+    parser.add_argument(
+        '-t', '--today-now',
+        help='use the current time for today',
+        default=False, action='store_true'
+    )
+    parser.add_argument(
+        'filters', nargs='*',
+        help='additional arguments to filter on from task',
+    )
+
+    args = parser.parse_args()
+
+    print('\n\n'.join([
+        FormattedDay(day, tasks).format(
+            now if day == today else start_time
+        )
+        for day, tasks in wait_by_day(tasks(args.filters))
+    ]))
