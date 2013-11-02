@@ -33,6 +33,7 @@ Bundle "chriskempson/base16-vim"
 Bundle "derekwyatt/vim-scala"
 Bundle "digitaltoad/vim-jade"
 Bundle "guns/vim-clojure-static"
+Bundle "honza/dockerfile.vim"
 Bundle "jaseg/jinja-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "plasticboy/vim-markdown"
@@ -40,6 +41,8 @@ Bundle "python.vim"
 Bundle "rdolgushin/play.vim"
 Bundle "saltstack/salt-vim"
 Bundle "yaml.vim"
+Bundle "hail2u/vim-css3-syntax"
+Bundle "groenewege/vim-less"
 
 filetype plugin indent on
 
@@ -135,3 +138,9 @@ augroup reload_vimrc " {
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
+
+" SquareSpace templates
+au BufRead,BufNewFile *.block set filetype=html
+au BufRead,BufNewFile *.item set filetype=html
+au BufRead,BufNewFile *.list set filetype=html
+au BufRead,BufNewFile *.conf set filetype=javascript
