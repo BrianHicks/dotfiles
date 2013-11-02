@@ -32,6 +32,7 @@ off_time = time(hour=17)
 breaks = [
     (time(hour=12), time(hour=13)),
 ]
+end_text = red('== end of day==')
 
 def re_color(color):
     def inner(re):
@@ -122,8 +123,8 @@ class FormattedDay(object):
                 else:
                     break
 
-            if current_time > today_off:
-                header.append(red('== end of day =='))
+            if current_time > today_off and end_text not in header:
+                header.append(end_text)
 
             header.extend(self.wrapper.wrap('{start} - {end}: {task}'.format(
                 start=current_time.strftime('%I:%M%p'),
@@ -164,7 +165,7 @@ if __name__ == '__main__':
 
     print('\n\n'.join([
         FormattedDay(day, tasks).format(
-            now if day == today else start_time
+            now if day == today and args.today_now else start_time
         )
         for day, tasks in scheduled_by_day(tasks(args.filters))
     ]))
