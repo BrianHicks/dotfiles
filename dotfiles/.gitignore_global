@@ -8,3 +8,4 @@ media/template*
 .glove.json
 .pt
 .python-version
+.vagrant
