@@ -10,6 +10,7 @@ Bundle 'gmarik/vundle'
 
 " Useful bundles
 Bundle "LustyJuggler"
+Bundle "ZoomWin"
 Bundle "ddollar/nerdcommenter"
 Bundle "epeli/slimux"
 Bundle "ervandew/supertab"
@@ -144,3 +145,6 @@ au BufRead,BufNewFile *.block set filetype=html
 au BufRead,BufNewFile *.item set filetype=html
 au BufRead,BufNewFile *.list set filetype=html
 au BufRead,BufNewFile *.conf set filetype=javascript
+
+" ZoomWin
+nmap <C-W>z <Plug>ZoomWin
