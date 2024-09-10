@@ -1,4 +1,5 @@
 # Personal Tools
+cask "bartender"
 cask "dash"
 cask "obsidian"
 cask "raycast"
