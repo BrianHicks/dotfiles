@@ -1,0 +1,48 @@
+{
+  "entries": {
+    "cask": {
+      "raycast": {
+        "version": "1.82.4",
+        "options": {
+          "full_name": "raycast"
+        }
+      },
+      "obsidian": {
+        "version": "1.6.7",
+        "options": {
+          "full_name": "obsidian"
+        }
+      },
+      "zed": {
+        "version": "0.151.2",
+        "options": {
+          "full_name": "zed"
+        }
+      },
+      "spotify": {
+        "version": "1.2.45.454",
+        "options": {
+          "full_name": "spotify"
+        }
+      },
+      "dash": {
+        "version": "7.3.0",
+        "options": {
+          "full_name": "dash"
+        }
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "sonoma": {
+        "HOMEBREW_VERSION": "4.3.20",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "api",
+        "CLT": "15.3.0.0.1.1708646388",
+        "Xcode": "15.4",
+        "macOS": "14.6.1"
+      }
+    }
+  }
+}
