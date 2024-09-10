@@ -8,6 +8,7 @@ cask "zed"
 
 # Git
 brew "gh"
+brew "lazygit"
 
 # Cloud
 brew "awscli"
