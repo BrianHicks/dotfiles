@@ -30,6 +30,12 @@
         "options": {
           "full_name": "dash"
         }
+      },
+      "docker": {
+        "version": "4.34.0,165256",
+        "options": {
+          "full_name": "docker"
+        }
       }
     },
     "brew": {

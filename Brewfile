@@ -29,3 +29,6 @@ brew "fluxcd/tap/flux"
 tap "nats-io/nats-tools"
 brew "nats-io/nats-tools/nats"
 brew "nats-io/nats-tools/nsc"
+
+# Containers
+cask "docker"
