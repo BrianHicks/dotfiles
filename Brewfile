@@ -1,9 +1,11 @@
+# Personal Tools
 cask "dash"
 cask "obsidian"
 cask "raycast"
 cask "spotify"
 cask "zed"
 
+# Git
 brew "gh"
 
 # Cloud
