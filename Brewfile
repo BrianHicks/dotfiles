@@ -1,4 +1,5 @@
 # Personal Tools
+cask "1password-cli"
 cask "bartender"
 cask "dash"
 cask "obsidian"
