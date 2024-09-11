@@ -10,6 +10,7 @@ cask "zed"
 # Git
 brew "gh"
 brew "lazygit"
+brew "difftastic"
 
 # Cloud
 brew "awscli"
