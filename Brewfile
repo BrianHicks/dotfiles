@@ -6,6 +6,7 @@ cask "obsidian"
 cask "raycast"
 cask "spotify"
 cask "zed"
+brew "zsh"
 
 # Git
 brew "gh"
