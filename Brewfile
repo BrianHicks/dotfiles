@@ -1,6 +1,7 @@
 # Personal Tools
 cask "1password-cli"
 cask "bartender"
+brew "coreutils"
 cask "dash"
 cask "obsidian"
 cask "raycast"
