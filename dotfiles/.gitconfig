@@ -1,0 +1,38 @@
+[user]
+	email = "brian@brianthicks.com"
+	name = "Brian Hicks"
+
+[alias]
+	aa = "add --all"
+	amend = "commit --amend"
+	ci = "commit"
+	co = "checkout"
+	dc = "diff --cached"
+	di = "diff"
+	root = "rev-parse --show-toplevel"
+	st = "status"
+	yoda = "push --force-with-lease"
+
+[core]
+	fsmonitor = "true"
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	smudge = "git-lfs smudge -- %f"
+	required = true
+
+[init]
+	defaultBranch = "main"
+
+[push]
+	autoSetupRemote = true
+
+[rerere]
+	enabled = true
+
+; [commit]
+; 	gpgSign = true
+
+; [tag]
+; 	gpgSign = true
