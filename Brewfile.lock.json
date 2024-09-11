@@ -48,6 +48,12 @@
         "options": {
           "full_name": "1password-cli"
         }
+      },
+      "gpg-suite": {
+        "version": "2023.3",
+        "options": {
+          "full_name": "gpg-suite"
+        }
       }
     },
     "brew": {
