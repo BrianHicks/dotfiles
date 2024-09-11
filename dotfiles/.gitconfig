@@ -1,6 +1,7 @@
 [user]
 	email = "brian@brianthicks.com"
 	name = "Brian Hicks"
+	signingkey = "417346963AB1D084CDCCFD35D969F6FA4CC8ABD6"
 
 [alias]
 	aa = "add --all"
@@ -31,8 +32,8 @@
 [rerere]
 	enabled = true
 
-; [commit]
-; 	gpgSign = true
+[commit]
+	gpgSign = true
 
-; [tag]
-; 	gpgSign = true
+[tag]
+	gpgSign = true
