@@ -48,16 +48,47 @@ def do_import(args):
     ensure_link(in_dotfiles, args.source)
 
 
+def do_apply(args):
+    if os.path.isfile(args.checkpoint_file):
+        with open(args.checkpoint_file) as fh:
+            current = fh.read().strip()
+
+        deleted_files = [
+            filename for filename
+            in subprocess.check_output(['git', 'diff', current, '--name-only', '--diff-filter=D']).decode('utf-8').split('\n')
+            if os.path.commonpath([os.path.abspath(filename), args.dotfiles]) == args.dotfiles
+        ]
+
+        for deleted_file in deleted_files:
+            deleted_file_home = os.path.join(args.home, os.path.relpath(deleted_file, args.dotfiles))
+            if os.path.islink(deleted_file_home):
+                os.unlink(deleted_file_home)
+
+    for root, _, files in os.walk(args.dotfiles):
+        for dotfile_name in files:
+            dotfile = os.path.join(root, dotfile_name)
+            dotfile_home = os.path.join(args.home, os.path.relpath(dotfile, args.dotfiles))
+
+            ensure_link(dotfile, dotfile_home)
+
+    with open(args.checkpoint_file, 'wb') as fh:
+        fh.write(subprocess.check_output(['git', 'rev-parse', 'HEAD']))
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--home", default=os.environ["HOME"])
     parser.add_argument("--dotfiles", default=os.path.normpath(os.path.join(os.path.dirname(__file__), "dotfiles")))
+    parser.add_argument("--checkpoint-file", default=os.path.normpath(os.path.join(os.path.dirname(__file__), ".checkpoint")))
 
     sub = parser.add_subparsers(dest="command", required=True)
 
     import_ = sub.add_parser("import")
     import_.add_argument("source")
     import_.set_defaults(func=do_import)
+
+    apply = sub.add_parser("apply")
+    apply.set_defaults(func=do_apply)
 
     args = parser.parse_args()
     args.func(args)
