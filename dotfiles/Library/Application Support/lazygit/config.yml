@@ -1,0 +1,16 @@
+git:
+  overrideGpg: true
+  paging:
+    colorArg: always
+    externalDiffCommand: "difft --color=always"
+
+  # 1Password will randomly prompt with these off, so I turn them off
+  autoFetch: false
+  autoRefresh: false
+
+keybinding:
+  branches:
+    mergeIntoCurrentBranch: m
+  universal:
+    createRebaseOptionsMenu: M
+    return: q
