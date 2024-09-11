@@ -9,6 +9,7 @@ brew "jq"
 cask "obsidian"
 cask "raycast"
 cask "spotify"
+brew "tree"
 cask "zed"
 brew "zsh"
 
