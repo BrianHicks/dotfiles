@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import subprocess
+import re
+
+parser = argparse.ArgumentParser()
+parser.add_argument('src')
+parser.add_argument('--bin', help='taskwarrior binary', default='task')
+parser.add_argument('--no-mark-done', action='store_true')
+
+args = parser.parse_args()
+
+with open(args.src, 'r') as fh:
+    contents = fh.read()
+
+chars = list(contents)
+tasks = []
+
+for m in re.finditer(r'^ ?- \[( )\] (.+)$', contents, re.MULTILINE):
+    tasks.append(m.group(2))
+    chars[m.start(1)] = 'x'
+
+for t in tasks:
+    subprocess.check_call([args.bin, 'add', *t.split()])
+
+if not args.no_mark_done:
+    with open(args.src, 'w') as fh:
+        fh.write(''.join(chars))
