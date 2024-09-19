@@ -59,6 +59,10 @@ if test -d /opt/homebrew/bin; then
  export PATH="$PATH:/opt/homebrew/bin"
 fi
 
+if test -d "$HOME/bin"; then
+  export PATH="$PATH:$HOME/bin"
+fi
+
 # make various keybindings work
 # run `bindkey` for a list of current bindings
 # run `zle -al` to list all commands
