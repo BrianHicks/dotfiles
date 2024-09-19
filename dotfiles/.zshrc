@@ -56,7 +56,7 @@ alias gh="op plugin run -- gh"
 
 # grab Homebrew binaries if needed
 if test -d /opt/homebrew/bin; then
- export PATH="$PATH:/opt/homebrew/bin"
+  export PATH="$PATH:/opt/homebrew/bin"
 fi
 
 if test -d "$HOME/bin"; then
