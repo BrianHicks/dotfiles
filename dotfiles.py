@@ -29,6 +29,7 @@ def ensure_link(src, dest):
     elif os.path.isdir(dest):
         raise Exception(f"{dest} is already a directory. Please remove this yourself.")
 
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
     os.symlink(src, dest)
     print(f"➕ linked {dest}")
 
