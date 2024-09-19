@@ -36,7 +36,7 @@ unsetopt EXTENDED_HISTORY
 #  eval "$(/nix/store/cabxqwq1964bglm63scbjpk64v2fgh6k-fzf-0.55.0/bin/fzf --zsh)"
 # fi
 
-EDITOR=nvim
+EDITOR=hx
 export EDITOR
 
 # see `man zshoptions`
