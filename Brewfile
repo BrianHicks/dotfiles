@@ -14,6 +14,9 @@ brew "tree"
 cask "zed"
 brew "zsh"
 
+# Temporary, maybe?
+brew "go"
+
 # Git
 brew "gh"
 brew "lazygit"
