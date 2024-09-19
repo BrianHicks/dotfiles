@@ -60,6 +60,12 @@
         "options": {
           "full_name": "obs"
         }
+      },
+      "wezterm": {
+        "version": "20240203-110809,5046fc22",
+        "options": {
+          "full_name": "wezterm"
+        }
       }
     },
     "brew": {

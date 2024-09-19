@@ -13,6 +13,7 @@ cask "raycast"
 cask "spotify"
 brew "tmux"
 brew "tree"
+cask "wezterm"
 cask "zed"
 brew "zsh"
 
