@@ -44,6 +44,8 @@ report._reviewed.columns=uuid
 report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
-urgency.blocking.coefficient=1
+# Above 1, these tend to mean "more structured equals more urgent." That's not helpful to me.
+urgency.blocking.coefficient=0
+urgency.tags.coefficient=0
 
 report.next.filter=status:pending -WAITING -BLOCKED limit:page
