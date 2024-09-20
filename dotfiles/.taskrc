@@ -45,3 +45,5 @@ report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
 urgency.blocking.coefficient=1
+
+report.next.filter=status:pending -WAITING -BLOCKED limit:page
