@@ -55,6 +55,7 @@ RPROMPT=
 alias gh="op plugin run -- gh"
 
 alias tw="task"
+alias twui="taskwarrior-tui"
 
 # grab Homebrew binaries if needed
 if test -d /opt/homebrew/bin; then
