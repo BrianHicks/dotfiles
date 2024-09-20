@@ -27,7 +27,7 @@ if task is None:
     task = fzf_output.stdout.decode('utf-8').split(',')[0]
 
 template = json.loads(subprocess.run([args.bin, task, 'export'], capture_output=True).stdout)[0]
-for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'urgency', 'wait']:
+for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'urgency', 'wait', 'depends']:
     template.pop(forbidden, None)
 
 info = subprocess.run([args.bin, task, 'info'], capture_output=True).stdout.decode('utf-8')
