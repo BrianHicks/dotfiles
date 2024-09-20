@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FILTER="${1:-}"
+if test -z "$FILTER"; then
+  FILTER="end:yest"
+fi
+
+task "$FILTER" export | jq -r 'group_by(.project) | map("### \(.[0].project // "no project")\n\n\(map("- \(.description)") | join("\n"))") | join("\n")'
