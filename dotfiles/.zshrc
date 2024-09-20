@@ -54,6 +54,8 @@ RPROMPT=
 # 1password plugins
 alias gh="op plugin run -- gh"
 
+alias tw="task"
+
 # grab Homebrew binaries if needed
 if test -d /opt/homebrew/bin; then
   export PATH="$PATH:/opt/homebrew/bin"
