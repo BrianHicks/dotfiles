@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+
+parser = argparse.ArgumentParser()
+parser.add_argument('task', nargs='?')
+parser.add_argument('--bin', help='taskwarrior binary', default='task')
+parser.add_argument('--editor', default=os.getenv('EDITOR', 'vim'))
+parser.add_argument('--seq', action='store_true', help='add tasks as sequential instead of parallel')
+
+args = parser.parse_args()
+
+task = args.task
+if task is None:
+    pending = json.loads(subprocess.run([args.bin, 'status:pending', 'export'], capture_output=True).stdout)
+    fzf_input = '\n'.join([f"{t['uuid']},{t['description']} ({t.get('project', 'no project')})" for t in pending])
+    fzf_output = subprocess.run(
+        ['fzf', '--with-nth=2', '--delimiter=,', '--preview=task info {1}', '--preview-window=up'],
+        capture_output=True,
+        input=fzf_input.encode('utf-8'),
+    )
+    task = fzf_output.stdout.decode('utf-8').split(',')[0]
+
+template = json.loads(subprocess.run([args.bin, task, 'export'], capture_output=True).stdout)[0]
+for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'urgency', 'wait']:
+    template.pop(forbidden, None)
+
+info = subprocess.run([args.bin, task, 'info'], capture_output=True).stdout.decode('utf-8')
+
+with tempfile.NamedTemporaryFile() as fh:
+    for line in info.split('\n'):
+        fh.write(f"# {line}\n".encode('utf-8'))
+
+    fh.write(b'\n')
+
+    fh.flush()
+
+    subprocess.run([args.editor, fh.name])
+
+    with open(fh.name, 'rb') as rfh:
+        new_tasks = [l for l in rfh.read().decode('utf-8').split('\n') if l and not l.startswith('#')]
+
+if not new_tasks:
+    print('No new tasks to add')
+    sys.exit(0)
+
+to_import = []
+for description in new_tasks:
+    t_import = dict(template)
+    t_import['description'] = description
+    to_import.append(t_import)
+
+imported = subprocess.run([args.bin, 'import', '-'], input=json.dumps(to_import).encode('utf-8'), capture_output=True)
+
+uuids = [line.split()[1] for line in imported.stdout.decode('utf-8').split('\n')[1:-1]]
+
+subprocess.run([args.bin, task, 'modify'] + [f'depends:{uuid}' for uuid in uuids])
+
+if args.seq:
+    for (depends_on, dependent) in zip(uuids, uuids[1:]):
+        subprocess.run([args.bin, dependent, 'modify', f'depends:{depends_on}'])
