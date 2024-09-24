@@ -13,7 +13,7 @@ template = json.loads(subprocess.run(['task', args.id, 'export'], capture_output
 for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'urgency', 'wait', 'depends', 'annotations']:
     template.pop(forbidden, None)
 
-template_args = []
+template_args = [f"depends:{args.id}"]
 for k, v in template.items():
     if k == "tags":
         template_args.extend(f"+{tag}" for tag in v)
