@@ -24,16 +24,16 @@ news.version=3.1.0
 #include solarized-light-256.theme
 #include no-color.theme
 
-urgency.user.tag.mq.coefficient=3
-urgency.user.tag.sq.coefficient=1.5
+urgency.user.tag.mq.coefficient=2
+urgency.user.tag.sq.coefficient=1
 
 uda.jira.type=string
 uda.jira.label=Jira
 
 uda.priority.values=iu,inu,niu,ninu,
-urgency.uda.priority.iu.coefficient=6
-urgency.uda.priority.inu.coefficient=3
-urgency.uda.priority.niu.coefficient=2
+urgency.uda.priority.iu.coefficient=3
+urgency.uda.priority.inu.coefficient=2
+urgency.uda.priority.niu.coefficient=1.5
 urgency.uda.priority.ninu.coefficient=1
 
 uda.reviewed.type=date
@@ -47,5 +47,7 @@ report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +P
 # Above 1, these tend to mean "more structured equals more urgent." That's not helpful to me.
 urgency.blocking.coefficient=0
 urgency.tags.coefficient=0
+
+urgency.age.coefficient=4
 
 report.next.filter=status:pending -WAITING -BLOCKED limit:page
