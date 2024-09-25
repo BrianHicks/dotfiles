@@ -5,5 +5,5 @@ FILTER="${1:-status:pending}"
 
 echo 'digraph {'
 echo 'rankdir="LR";'
-task "$FILTER" export | jq -r 'map(. as $task | select(.status != "deleted") | "# \(.description)\n\"\(.uuid)\" [label=\"\(.description)\" shape=box];\n\(.depends // [] | map("\"\(.)\" -> \"\($task.uuid)\";") | join("\n"))") | join("\n\n")'
+task "$FILTER" export | jq -r 'map(. as $task | select(.status != "deleted") | "# \(.description)\n\"\(.uuid)\" [label=\"\(.description | gsub("\""; "\\\""))\" shape=box];\n\(.depends // [] | map("\"\(.)\" -> \"\($task.uuid)\";") | join("\n"))") | join("\n\n")'
 echo '}'
