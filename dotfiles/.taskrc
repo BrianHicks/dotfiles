@@ -49,5 +49,3 @@ urgency.blocking.coefficient=0
 urgency.tags.coefficient=0
 
 urgency.age.coefficient=4
-
-report.next.filter=status:pending -WAITING -BLOCKED limit:page
