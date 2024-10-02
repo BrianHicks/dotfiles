@@ -49,3 +49,8 @@ urgency.blocking.coefficient=0
 urgency.tags.coefficient=0
 
 urgency.age.coefficient=4
+
+sync.local.server_dir=/Users/brianhicks/Google Drive/My Drive
+
+uda.taskwarrior-tui.background_process=task sync
+uda.taskwarrior-tui.background_process_period=60
