@@ -202,3 +202,6 @@ alias s=run_script
 # TODO: set up zsh syntax highlighting again
 # source /nix/store/zxhgc5k56s58z3nm37fy8z9y897p90fk-zsh-syntax-highlighting-0.8.0/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
+
+# FZF
+source <(fzf --zsh)
