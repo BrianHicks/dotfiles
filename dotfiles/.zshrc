@@ -207,3 +207,8 @@ alias s=run_script
 
 # FZF
 source <(fzf --zsh)
+
+# Get linkerd, if it's there
+if test -d ~/.linkerd2; then
+  PATH="$PATH:$HOME/.linkerd2/bin"
+fi
