@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="${1:-}"
+
+if test -z "$VERSION"; then
+  echo "USAGE: ${0:-} VERSION"
+  exit 1
+fi
+
+TEMP="$(mktemp -d)"
+
+finish() {
+  rm -rf "$TEMP"
+}
+trap finish EXIT
+
+cd "$TEMP"
+
+curl -L "https://github.com/bytes-zone/beeps/releases/download/${VERSION}/beeps-aarch64-apple-darwin.tar.gz" > beeps.tar.gz
+tar -xzvf beeps.tar.gz
+
+mv beeps ~/bin/beeps
+xattr -dr com.apple.quarantine ~/bin/beeps
