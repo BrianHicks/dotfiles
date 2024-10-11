@@ -13,4 +13,3 @@ keybinding:
     mergeIntoCurrentBranch: m
   universal:
     createRebaseOptionsMenu: M
-    return: q
