@@ -36,7 +36,11 @@ unsetopt EXTENDED_HISTORY
 #  eval "$(/nix/store/cabxqwq1964bglm63scbjpk64v2fgh6k-fzf-0.55.0/bin/fzf --zsh)"
 # fi
 
-EDITOR=hx
+if test -n "$ZED_TERM"; then
+  EDITOR="zed --wait"
+else
+  EDITOR=nvim
+fi
 export EDITOR
 
 # see `man zshoptions`
