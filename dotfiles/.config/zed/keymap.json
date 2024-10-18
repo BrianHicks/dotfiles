@@ -1,0 +1,11 @@
+[
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "space g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space k": ["task::Spawn", { "task_name": "k9s" }],
+      "space r": "task::Rerun",
+      "space t": ["task::Spawn", { "task_name": "taskwarrior-tui" }]
+    }
+  }
+]
