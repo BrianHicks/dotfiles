@@ -14,5 +14,10 @@
     "mode": "system",
     "light": "Andromeda",
     "dark": "Ayu Dark"
+  },
+  "terminal": {
+    "env": {
+      "EDITOR": "zed --wait"
+    }
   }
 }
