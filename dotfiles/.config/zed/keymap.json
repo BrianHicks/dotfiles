@@ -16,5 +16,16 @@
     "bindings": {
       "f d": ["vim::SwitchMode", "Normal"]
     }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
+    }
   }
 ]
