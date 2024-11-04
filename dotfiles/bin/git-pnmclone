@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SOURCE="${1:-}"
+
+if test -z "$SOURCE"; then
+  echo "USAGE: ${0:-} ssh://gitlab.com/org/repo.git"
+  exit 1
+fi
+
+DEST="$HOME/code/paynearme/$(basename "$SOURCE" | sed "s/.git//g")"
+if test -d "$DEST"; then
+  echo "$DEST already exists!"
+  exit 1
+fi
+
+mkdir -p "$(dirname "$DEST")"
+git clone "$SOURCE" "$DEST"
+cd "$DEST"
+git config user.email brian.hicks@paynearme.com
