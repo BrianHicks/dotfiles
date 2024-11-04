@@ -13,6 +13,7 @@
 	root = "rev-parse --show-toplevel"
 	st = "status"
 	yoda = "push --force-with-lease"
+	fix-author = "rebase --exec 'git commit --amend --no-edit --reset-author' -r"
 
 [core]
 	fsmonitor = "true"
