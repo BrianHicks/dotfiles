@@ -113,6 +113,13 @@ class Issue:
 
         return self.tw_json["uuid"]
 
+    @property
+    def tw_depends(self) -> typing.List[str]:
+        if not self.tw_json:
+            raise Exception("no taskwarrior json! Create and associate tasks first.")
+
+        return self.tw_json.get("depends", [])
+
 
 class Fetcher:
     def __init__(self, base: str, username: str, token: str):
@@ -210,6 +217,17 @@ class Main:
                 self.eprint(f"updating {issue.key}: {" ".join(mods)}")
                 subprocess.run(["task", issue.tw_uuid, 'mod', *mods])
 
+    def update_dependency_relationships(self):
+        for issue in self.issues.values():
+            hierarchy = [issue]
+            while hierarchy[-1].parent:
+                hierarchy.append(self.issues[hierarchy[-1].parent.key])
+
+            top_down = list(reversed(hierarchy))
+            for (parent, child) in zip(top_down, top_down[1:]):
+                if child.tw_uuid not in parent.tw_depends:
+                    subprocess.run(["task", parent.tw_uuid, "mod", f"dep:{child.tw_uuid}"])
+
     def run(self):
         self.fetch_assigned_and_open_issues()
         self.backfill_parent_issues()
@@ -222,8 +240,9 @@ class Main:
         self.create_tasks_for_new_issues()
         self.associate_ids_from_taskwarrior()
 
-        # we're done setting up! Now we can start diffing.
+        # we're done setting up! Now we can start reconciling.
         self.update_task_attributes()
+        self.update_dependency_relationships()
 
         # print("digraph {")
         # print("rankdir=LR;")
