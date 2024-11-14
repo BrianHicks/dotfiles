@@ -30,6 +30,26 @@ urgency.user.tag.sq.coefficient=1
 uda.jira.type=string
 uda.jira.label=Jira
 
+uda.jiraparent.type=string
+uda.jiraparent.label=Jira Parent
+
+uda.jirastatus.type=string
+uda.jirastatus.label=Jira Status
+uda.jirastatus.values=backlog,in-progress,up-next,test-review,investigation
+urgency.uda.jirastatus.backlog.coefficient=1
+urgency.uda.jirastatus.up-next.coefficient=3
+urgency.uda.jirastatus.investigation.coefficient=5
+urgency.uda.jirastatus.in-progress.coefficient=5
+urgency.uda.jirastatus.test-review.coefficient=4
+
+uda.jirapriority.type=string
+uda.jirapriority.label=Jira Priority
+uda.jirapriority.values=urgent,high,normal,low
+urgency.uda.jirapriority.urgent.coefficient=8
+urgency.uda.jirapriority.high.coefficient=4
+urgency.uda.jirapriority.normal.coefficient=2
+urgency.uda.jirapriority.low.coefficient=1
+
 uda.priority.values=iu,inu,niu,ninu,
 urgency.uda.priority.iu.coefficient=3
 urgency.uda.priority.inu.coefficient=2
