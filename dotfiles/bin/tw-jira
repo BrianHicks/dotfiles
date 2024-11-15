@@ -17,6 +17,7 @@ JIRA_KEY = "jira"
 JIRA_STATUS = "jirastatus"
 JIRA_PRIORITY = "jirapriority"
 JIRA_PARENT = "jiraparent"
+JIRA_ISSUE_TYPE = "jiraissuetype"
 
 TW_DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
@@ -69,6 +70,7 @@ class Issue:
             JIRA_KEY: self.key,
             JIRA_STATUS: self.status.replace(" ", "-").lower(),
             JIRA_PRIORITY: self.priority.replace(" ", "-").lower(),
+            JIRA_ISSUE_TYPE: self.issue_type,
             "entry": self.created,
         }
 
@@ -242,7 +244,6 @@ class Main:
         for issue in self.issues.values():
             mods = issue.changes_from_existing_task()
             if mods:
-                self.eprint(issue.to_task_json())
                 self.eprint(f"updating {issue.key}: {" ".join(mods)}")
                 subprocess.run(["task", issue.tw_uuid, 'mod', *mods])
 

@@ -29,7 +29,7 @@ urgency.user.tag.sq.coefficient=1
 
 report.jira.description=Tasks from JIRA
 report.jira.filter=jira.any:
-report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,urgency
+report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,jiraissuetype,urgency
 report.jira.sort=urgency-
 
 uda.jira.type=string
@@ -55,6 +55,9 @@ urgency.uda.jirapriority.urgent.coefficient=8
 urgency.uda.jirapriority.high.coefficient=4
 urgency.uda.jirapriority.normal.coefficient=2
 urgency.uda.jirapriority.low.coefficient=1
+
+uda.jiraissuetype.type=string
+uda.jiraissuetype.label=Jira Issue Type
 
 uda.priority.values=iu,inu,niu,ninu,
 urgency.uda.priority.iu.coefficient=3
