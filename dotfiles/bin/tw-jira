@@ -268,15 +268,13 @@ class Main:
                     inherited_attrs['due'] = issue.tw_due
 
                 tags = issue.tw_tags
-                if 'mq' in tags:
+                if tags:
                     if 'tags' not in inherited_attrs:
                         inherited_attrs['tags'] = []
-                    inherited_attrs['tags'].append('mq')
 
-                if 'sq' in tags:
-                    if 'tags' not in inherited_attrs:
-                        inherited_attrs['tags'] = []
-                    inherited_attrs['tags'].append('sq')
+                    for tag in tags:
+                        if tag not in inherited_attrs['tags']:
+                            inherited_attrs['tags'].append(tag)
 
                 mods = []
                 for k, v in inherited_attrs.items():
