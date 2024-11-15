@@ -70,7 +70,7 @@ class Issue:
             JIRA_KEY: self.key,
             JIRA_STATUS: self.status.replace(" ", "-").lower(),
             JIRA_PRIORITY: self.priority.replace(" ", "-").lower(),
-            JIRA_ISSUE_TYPE: self.issue_type,
+            JIRA_ISSUE_TYPE: self.issue_type.replace(" ", "-").lower(),
             "entry": self.created,
         }
 
