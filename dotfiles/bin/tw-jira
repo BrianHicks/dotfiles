@@ -4,12 +4,12 @@ import base64
 from datetime import datetime, UTC
 import json
 import os
-import urllib.parse
-import urllib.request
 import re
 import subprocess
 import sys
 import typing
+import urllib.parse
+import urllib.request
 
 # UDAs
 JIRA_KEY = "jira"
