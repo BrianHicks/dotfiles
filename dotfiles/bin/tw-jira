@@ -4,6 +4,7 @@ import base64
 from datetime import datetime, UTC
 import json
 import os
+import pathlib
 import re
 import subprocess
 import sys
@@ -311,5 +312,15 @@ if __name__ == "__main__":
     parser.add_argument("--token", default=os.environ.get("JIRA_TOKEN", ""))
 
     args = parser.parse_args()
+
+    if not args.token:
+        try:
+            with open(os.path.join(pathlib.Path.home(), ".config", "tw-jira-config")) as fh:
+                args.token = fh.read().strip()
+        except IOError as err:
+            print("I couldn't find a Jira token in --token, JIRA_TOKEN, or in the path listed in the error below. Populate one of those and try again!", file=sys.stderr)
+            print(file=sys.stderr)
+            print(err, file=sys.stderr)
+            sys.exit(1)
 
     Main(Fetcher(args.base, args.username, args.token)).run()
