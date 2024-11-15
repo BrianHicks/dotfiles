@@ -28,7 +28,7 @@ urgency.user.tag.mq.coefficient=2
 urgency.user.tag.sq.coefficient=1
 
 report.jira.description=Tasks from JIRA
-report.jira.filter=jira.any:
+report.jira.filter=jira.any: end:
 report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,jiraissuetype,urgency
 report.jira.sort=urgency-
 
