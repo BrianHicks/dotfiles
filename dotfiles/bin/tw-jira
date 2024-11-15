@@ -120,6 +120,34 @@ class Issue:
 
         return self.tw_json.get("depends", [])
 
+    @property
+    def tw_priority(self) -> str | None:
+        if not self.tw_json:
+            raise Exception("no taskwarrior json! Create and associate tasks first.")
+
+        return self.tw_json.get("priority", None)
+
+    @property
+    def tw_project(self) -> str | None:
+        if not self.tw_json:
+            raise Exception("no taskwarrior json! Create and associate tasks first.")
+
+        return self.tw_json.get("project", None)
+
+    @property
+    def tw_due(self) -> str | None:
+        if not self.tw_json:
+            raise Exception("no taskwarrior json! Create and associate tasks first.")
+
+        return self.tw_json.get("due", None)
+
+    @property
+    def tw_tags(self) -> typing.List[str]:
+        if not self.tw_json:
+            raise Exception("no taskwarrior json! Create and associate tasks first.")
+
+        return self.tw_json.get("tags", [])
+
 
 class Fetcher:
     def __init__(self, base: str, username: str, token: str):
@@ -228,6 +256,39 @@ class Main:
                 if child.tw_uuid not in parent.tw_depends:
                     subprocess.run(["task", parent.tw_uuid, "mod", f"dep:{child.tw_uuid}"])
 
+            inherited_attrs = {}
+            for issue in top_down:
+                if 'project' not in inherited_attrs and issue.tw_project is not None:
+                    inherited_attrs['project'] = issue.tw_project
+
+                if 'priority' not in inherited_attrs and issue.tw_priority is not None:
+                    inherited_attrs['priority'] = issue.tw_priority
+
+                if 'due' not in inherited_attrs and issue.tw_due is not None:
+                    inherited_attrs['due'] = issue.tw_due
+
+                tags = issue.tw_tags
+                if 'mq' in tags:
+                    if 'tags' not in inherited_attrs:
+                        inherited_attrs['tags'] = []
+                    inherited_attrs['tags'].append('mq')
+
+                if 'sq' in tags:
+                    if 'tags' not in inherited_attrs:
+                        inherited_attrs['tags'] = []
+                    inherited_attrs['tags'].append('sq')
+
+                mods = []
+                for k, v in inherited_attrs.items():
+                    if k == 'tags':
+                        mods.extend(f"+{tag}" for tag in v)
+                    else:
+                        mods.append(f"{k}:{v}")
+
+                if mods:
+                    self.eprint(f"updating {issue.key}: {" ".join(mods)}")
+                    subprocess.run(['task', issue.tw_uuid, 'mod', *mods])
+
     def run(self):
         self.fetch_assigned_and_open_issues()
         self.backfill_parent_issues()
@@ -243,14 +304,6 @@ class Main:
         # we're done setting up! Now we can start reconciling.
         self.update_task_attributes()
         self.update_dependency_relationships()
-
-        # print("digraph {")
-        # print("rankdir=LR;")
-        # for issue in issues.values():
-        #     print(f'"{issue.key}"[label="{issue.key}: {issue.summary}"];')
-        #     if issue.parent:
-        #         print(f'"{issue.parent.key}" -> "{issue.key}";')
-        # print("}")
 
 
 if __name__ == "__main__":
