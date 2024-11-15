@@ -27,6 +27,11 @@ news.version=3.1.0
 urgency.user.tag.mq.coefficient=2
 urgency.user.tag.sq.coefficient=1
 
+report.jira.description=Tasks from JIRA
+report.jira.filter=jira.any:
+report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,urgency
+report.jira.sort=urgency-
+
 uda.jira.type=string
 uda.jira.label=Jira
 
