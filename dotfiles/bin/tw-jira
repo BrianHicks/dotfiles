@@ -124,13 +124,6 @@ class Issue:
         return self.tw_json.get("depends", [])
 
     @property
-    def tw_priority(self) -> str | None:
-        if not self.tw_json:
-            raise Exception("no taskwarrior json! Create and associate tasks first.")
-
-        return self.tw_json.get("priority", None)
-
-    @property
     def tw_project(self) -> str | None:
         if not self.tw_json:
             raise Exception("no taskwarrior json! Create and associate tasks first.")
@@ -262,9 +255,6 @@ class Main:
             for issue in top_down:
                 if 'project' not in inherited_attrs and issue.tw_project is not None:
                     inherited_attrs['project'] = issue.tw_project
-
-                if 'priority' not in inherited_attrs and issue.tw_priority is not None:
-                    inherited_attrs['priority'] = issue.tw_priority
 
                 if 'due' not in inherited_attrs and issue.tw_due is not None:
                     inherited_attrs['due'] = issue.tw_due
