@@ -31,6 +31,9 @@ urgency.user.tag.sq.coefficient=1
 # represent hidden, urgent work.
 urgency.user.tag.meta.coefficient=10
 
+# Habits are daily things that are time-sensitive by nature
+urgency.user.tag.habit.coefficient=4
+
 report.jira.description=Tasks from JIRA
 report.jira.filter=jira.any: end:
 report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,jiraissuetype,urgency
