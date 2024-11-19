@@ -29,7 +29,7 @@ urgency.user.tag.sq.coefficient=1
 
 # I should prioritize meta tasks because they usually contain planning, and may
 # represent hidden, urgent work.
-urgency.user.tag.meta.coefficient=10
+urgency.user.tag.meta.coefficient=4
 
 # Habits are daily things that are time-sensitive by nature
 urgency.user.tag.habit.coefficient=4
@@ -49,25 +49,25 @@ uda.jirastatus.type=string
 uda.jirastatus.label=Jira Status
 uda.jirastatus.values=backlog,in-progress,up-next,test-review,investigation,execution
 urgency.uda.jirastatus.backlog.coefficient=1
-urgency.uda.jirastatus.up-next.coefficient=3
-urgency.uda.jirastatus.investigation.coefficient=5
-urgency.uda.jirastatus.in-progress.coefficient=5
-urgency.uda.jirastatus.execution.coefficient=5
-urgency.uda.jirastatus.test-review.coefficient=4
+urgency.uda.jirastatus.up-next.coefficient=2
+urgency.uda.jirastatus.investigation.coefficient=2
+urgency.uda.jirastatus.in-progress.coefficient=3
+urgency.uda.jirastatus.execution.coefficient=3
+urgency.uda.jirastatus.test-review.coefficient=0.5
 
 uda.jirapriority.type=string
 uda.jirapriority.label=Jira Priority
 uda.jirapriority.values=urgent,high,normal,low
-urgency.uda.jirapriority.urgent.coefficient=8
-urgency.uda.jirapriority.high.coefficient=4
-urgency.uda.jirapriority.normal.coefficient=2
-urgency.uda.jirapriority.low.coefficient=1
+urgency.uda.jirapriority.urgent.coefficient=4
+urgency.uda.jirapriority.high.coefficient=2
+urgency.uda.jirapriority.normal.coefficient=1
+urgency.uda.jirapriority.low.coefficient=0.5
 
 uda.jiraissuetype.type=string
 uda.jiraissuetype.label=Jira Issue Type
 
 uda.priority.values=iu,inu,niu,ninu,
-urgency.uda.priority.iu.coefficient=3
+urgency.uda.priority.iu.coefficient=4
 urgency.uda.priority.inu.coefficient=2
 urgency.uda.priority.niu.coefficient=1.5
 urgency.uda.priority.ninu.coefficient=1
