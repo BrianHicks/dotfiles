@@ -19,8 +19,8 @@
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
-    "light": "Andromeda",
-    "dark": "Ayu Dark"
+    "light": "Atelier Sulphurpool Light",
+    "dark": "Andromeda"
   },
   "terminal": {
     "env": {
