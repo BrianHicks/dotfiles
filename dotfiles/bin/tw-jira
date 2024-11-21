@@ -35,6 +35,10 @@ class TaskwarriorTask:
         return f"<TaskwarriorTask {self.uuid}>"
 
     @property
+    def description(self) -> str:
+        return self.json["description"]
+
+    @property
     def uuid(self) -> str:
         return self.json["uuid"]
 
