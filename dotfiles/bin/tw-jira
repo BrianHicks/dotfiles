@@ -1,3 +1,4 @@
+from multiprocessing.dummy import Value
 #!/usr/bin/env python3
 import argparse
 import base64
@@ -323,6 +324,17 @@ class Main:
             in set(self.issues).union(set(self.tasks))
         }
 
+    def drop_non_pending(self):
+        non_pending = [
+            key
+            for key, value
+            in self.reconcilers.items()
+            if value.task and value.task.status != "pending"
+        ]
+
+        for key in non_pending:
+            del self.reconcilers[key]
+
     def create_new_tasks(self):
         for reconciler in self.reconcilers.values():
             if reconciler.needs_creation():
@@ -380,6 +392,9 @@ class Main:
         # now that we have the information from both sides, associate them to
         # create our reconcilers
         self.associate()
+
+        # drop tasks that aren't pending, then backfill anything else we can
+        self.drop_non_pending()
 
         # create any tasks that are in Jira but not Taskwarrior
         self.create_new_tasks()
