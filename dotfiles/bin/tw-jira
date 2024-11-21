@@ -251,33 +251,36 @@ class Main:
                 if child.tw_uuid not in parent.tw_depends:
                     subprocess.run(["task", parent.tw_uuid, "mod", f"dep:{child.tw_uuid}"])
 
-            inherited_attrs = {}
-            for issue in top_down:
-                if 'project' not in inherited_attrs and issue.tw_project is not None:
-                    inherited_attrs['project'] = issue.tw_project
+            self.__inherit_attrs(top_down)
 
-                if 'due' not in inherited_attrs and issue.tw_due is not None:
-                    inherited_attrs['due'] = issue.tw_due
+    def __inherit_attrs(self, hierarchy: typing.List[Issue]):
+        inherited_attrs = {}
+        for issue in hierarchy:
+            if 'project' not in inherited_attrs and issue.tw_project is not None:
+                inherited_attrs['project'] = issue.tw_project
 
-                tags = issue.tw_tags
-                if tags:
-                    if 'tags' not in inherited_attrs:
-                        inherited_attrs['tags'] = []
+            if 'due' not in inherited_attrs and issue.tw_due is not None:
+                inherited_attrs['due'] = issue.tw_due
 
-                    for tag in tags:
-                        if tag not in inherited_attrs['tags']:
-                            inherited_attrs['tags'].append(tag)
+            tags = issue.tw_tags
+            if tags:
+                if 'tags' not in inherited_attrs:
+                    inherited_attrs['tags'] = []
 
-                mods = []
-                for k, v in inherited_attrs.items():
-                    if k == 'tags':
-                        mods.extend(f"+{tag}" for tag in v)
-                    else:
-                        mods.append(f"{k}:{v}")
+                for tag in tags:
+                    if tag not in inherited_attrs['tags']:
+                        inherited_attrs['tags'].append(tag)
 
-                if mods:
-                    self.eprint(f"updating {issue.key}: {" ".join(mods)}")
-                    subprocess.run(['task', issue.tw_uuid, 'mod', *mods])
+            mods = []
+            for k, v in inherited_attrs.items():
+                if k == 'tags':
+                    mods.extend(f"+{tag}" for tag in v)
+                else:
+                    mods.append(f"{k}:{v}")
+
+            if mods:
+                self.eprint(f"updating {issue.key}: {" ".join(mods)}")
+                subprocess.run(['task', issue.tw_uuid, 'mod', *mods])
 
     def run(self):
         self.fetch_assigned_and_open_issues()
