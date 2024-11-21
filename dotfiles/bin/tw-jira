@@ -64,7 +64,7 @@ class TaskwarriorTask:
         return datetime.strptime(self.entry, "%Y%m%dT%H%M%SZ")
 
 
-class Issue:
+class JiraIssue:
     def __init__(self, issue_json: dict):
         self.json = issue_json
         self.__tw: TaskwarriorTask | None = None
@@ -102,9 +102,9 @@ class Issue:
         return self.fields["summary"]
 
     @property
-    def parent(self) -> typing.Optional['Issue']:
+    def parent(self) -> typing.Optional['JiraIssue']:
         if "parent" in self.fields and self.fields["parent"]:
-            return Issue(self.fields["parent"])
+            return JiraIssue(self.fields["parent"])
         else:
             return None
 
@@ -183,20 +183,20 @@ class Fetcher:
             data = response.read()
             return json.loads(data)
 
-    def search(self, query: str) -> typing.List[Issue]:
+    def search(self, query: str) -> typing.List[JiraIssue]:
         encoded_jql = urllib.parse.quote(query)
 
         tasks = self.__get(f"/rest/api/2/search?jql={encoded_jql}")
-        return [Issue(blob) for blob in tasks["issues"]]
+        return [JiraIssue(blob) for blob in tasks["issues"]]
 
-    def issue(self, id: str) -> Issue:
-        return Issue(self.__get(f"/rest/api/2/issue/{id}"))
+    def issue(self, id: str) -> JiraIssue:
+        return JiraIssue(self.__get(f"/rest/api/2/issue/{id}"))
 
 
 class Main:
     def __init__(self, fetcher: Fetcher):
         self.fetcher = fetcher
-        self.issues: typing.Dict[str, Issue] = {}
+        self.issues: typing.Dict[str, JiraIssue] = {}
 
     def eprint(self, *args, **kwargs):
         print(*args, **kwargs, file=sys.stderr)
@@ -269,7 +269,7 @@ class Main:
 
             self.__inherit_attrs(top_down)
 
-    def __inherit_attrs(self, hierarchy: typing.List[Issue]):
+    def __inherit_attrs(self, hierarchy: typing.List[JiraIssue]):
         inherited_attrs: dict[str, str] = {}
         inherited_tags: list[str] = []
         for issue in hierarchy:
@@ -303,16 +303,16 @@ class Main:
         self.backfill_parent_issues()
 
         # get information we already have
-        self.associate_ids_from_taskwarrior()
+        # self.associate_ids_from_taskwarrior()
 
         # create new tasks (that is, ones whose information we don't have
         # already) and then get a full update to get the task bodies
-        self.create_tasks_for_new_issues()
-        self.associate_ids_from_taskwarrior()
+        # self.create_tasks_for_new_issues()
+        # self.associate_ids_from_taskwarrior()
 
         # we're done setting up! Now we can start reconciling.
-        self.update_task_attributes()
-        self.update_dependency_relationships()
+        # self.update_task_attributes()
+        # self.update_dependency_relationships()
 
 
 if __name__ == "__main__":
