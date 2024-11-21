@@ -19,7 +19,7 @@ JIRA_PRIORITY = "jirapriority"
 JIRA_PARENT = "jiraparent"
 JIRA_ISSUE_TYPE = "jiraissuetype"
 
-TW_DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+TW_DATE_FORMAT = "%Y%m%dT%H%M%SZ"
 
 
 class TaskwarriorTask:
@@ -169,7 +169,6 @@ class Reconciler:
 
         # Due
         if self.desired_due and self.desired_due != self.task.due:
-            print(self.desired_due, self.task.due)
             mods.append(f"due:{self.desired_due}")
 
         # Tags
