@@ -224,14 +224,14 @@ class Main:
 
     def associate_ids_from_taskwarrior(self):
         """associate existing UUIDs from taskwarrior"""
-        existing = {
-            task[JIRA_KEY]: task
+        tasks_by_jira_key = {
+            task[JIRA_KEY]: TaskwarriorTask(task)
             for task in
             json.loads(subprocess.run(["task", "export"], capture_output=True).stdout.decode('utf-8'))
             if JIRA_KEY in task
         }
-        for key in set(self.issues).intersection(set(existing)):
-            self.issues[key].set_tw(TaskwarriorTask(existing[key]))
+        for key in set(self.issues).intersection(set(tasks_by_jira_key)):
+            self.issues[key].set_tw(tasks_by_jira_key[key])
 
     def create_tasks_for_new_issues(self):
         new_tasks = [
