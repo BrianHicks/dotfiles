@@ -189,6 +189,11 @@ class Reconciler:
             elif key not in self.task or self.task[key] != base[key]:
                 mods.append(f"{key}:{value}")
 
+        if self.task.status != "pending":
+            # all the issues we get are open, which means that if an issue is
+            # reopened in Jira it needs to be reopened in taskwarrior too
+            mods.extend(["status:pending", "end:"])
+
         return mods
 
     def reconcile(self):
