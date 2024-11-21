@@ -31,6 +31,9 @@ class TaskwarriorTask:
     def __getitem__(self, k) -> str:
         return self.json[k]
 
+    def __repr__(self):
+        return f"<TaskwarriorTask {self.uuid}>"
+
     @property
     def uuid(self) -> str:
         return self.json["uuid"]
