@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 import os
 import pathlib
+import re
 import subprocess
 import sys
 import typing
@@ -74,19 +75,9 @@ class TaskwarriorTask:
 class JiraIssue:
     def __init__(self, issue_json: dict):
         self.json = issue_json
-        self.__tw: TaskwarriorTask | None = None
 
     def __repr__(self):
         return f'<Issue {self.key}>'
-
-    def set_tw(self, tw: TaskwarriorTask):
-        self.__tw = tw
-
-    def tw(self) -> TaskwarriorTask:
-        if not self.__tw:
-            raise Exception("task not set. Associate first!")
-
-        return self.__tw
 
     @property
     def key(self) -> str:
@@ -123,49 +114,135 @@ class JiraIssue:
     def created(self) -> str:
         return datetime.fromisoformat(self.fields["created"]).replace(microsecond=0, tzinfo=None).strftime(TW_DATE_FORMAT)
 
-    def to_task_json(self) -> dict:
+
+class Reconciler:
+    def __init__(self, issue: JiraIssue | None, task: TaskwarriorTask | None):
+        self.issue = issue
+        self.task = task
+
+        # desired state
+        self.desired_dependencies: set[str] = set()
+        self.desired_project: str | None = None
+        self.desired_due: str | None = None
+        self.desired_tags: set[str] = set()
+
+    def __repr__(self):
+        return f"<Reconciler {self.issue} {self.task}>"
+
+    def needs_creation(self) -> bool:
+        return self.task is None
+
+    def base_task_template(self) -> dict[str, str]:
+        if self.issue is None:
+            raise Exception("cannot make a base task template with a missing issue")
+
         out = {
-            "description": self.summary,
-            JIRA_KEY: self.key,
-            JIRA_STATUS: self.status.replace(" ", "-").lower(),
-            JIRA_PRIORITY: self.priority.replace(" ", "-").lower(),
-            JIRA_ISSUE_TYPE: self.issue_type.replace(" ", "-").lower(),
-            "entry": self.created,
+            "description": self.issue.summary,
+            JIRA_KEY: self.issue.key,
+            JIRA_STATUS: self.issue.status.replace(" ", "-").lower(),
+            JIRA_PRIORITY: self.issue.priority.replace(" ", "-").lower(),
+            JIRA_ISSUE_TYPE: self.issue.issue_type.replace(" ", "-").lower(),
+            "entry": self.issue.created,
         }
 
-        if self.parent:
-            out[JIRA_PARENT] = self.parent.key
+        if self.issue.parent:
+            out[JIRA_PARENT] = self.issue.parent.key
 
         return out
 
-    def changes_from_existing_task(self) -> typing.List[str]:
-        tw = self.tw()
+    def mods(self) -> list[str]:
+        if self.issue is None or self.task is None:
+            raise Exception("need both issue and task to make mods")
 
-        mods = []
+        mods: list[str] = []
 
-        for (key, value) in self.to_task_json().items():
-            if key == "entry":
-                comp = tw.entry_dt.strftime(TW_DATE_FORMAT)
-                if value != comp:
-                    mods.append(f"{key}:{value}")
+        # Dependencies
+        mods.extend(
+            f"dep:{dep}"
+            for dep
+            in self.desired_dependencies - set(self.task.depends)
+        )
 
-            elif key not in tw or tw[key] != value:
-                if key == "description":
-                    mods.append(value)
-                else:
-                    mods.append(f"{key}:{value}")
+        # Project
+        if self.desired_project and self.desired_project != self.task.project:
+            mods.append(f"pro:{self.desired_project}")
 
-        # we currently just assume that all tasks in Jira are pending (and
-        # that's all we query for, in fact) so if something is done in
-        # taskwarrior but not in Jira we want to reconcile to the Jira state.
-        if tw.status == "completed":
-            mods.extend(["status:pending", "end:"])
+        # Due
+        if self.desired_due and self.desired_due != self.task.due:
+            print(self.desired_due, self.task.due)
+            mods.append(f"due:{self.desired_due}")
+
+        # Tags
+        mods.extend(
+            f"+{tag}"
+            for tag
+            in self.desired_tags - set(self.task.tags)
+        )
+
+        base = self.base_task_template()
+        for (key, value) in base.items():
+            if key == 'description' and value != self.task.description:
+                mods.append(value)
+            elif key not in self.task or self.task[key] != base[key]:
+                mods.append(f"{key}:{value}")
 
         return mods
 
+    def reconcile(self):
+        if self.issue is None or self.task is None:
+            raise Exception("need both issue and task to reconcile")
+
+        mods = self.mods()
+        if mods:
+            eprint(f"updating {self.issue.key}: {" ".join(mods)}")
+            subprocess.run(["task", self.task.uuid, "mod", *mods])
+
+    def create(self):
+        if self.issue is None or self.task is not None:
+            raise Exception("need to be missing issue and not missing task")
+
+        eprint(f"creating task for {self.issue.key}")
+        output = subprocess.run(
+            ["task", "import"],
+            capture_output=True,
+            input=json.dumps(self.base_task_template()).encode("utf-8")
+        ).stdout.decode("utf-8")
+
+        match = re.match("^ add  ([^ ]+?) ", output.split("\n")[1])
+        if not match:
+            raise Exception(f"no UUID matched in `{output}`")
+
+        self.task = TaskwarriorTask(json.loads(
+            subprocess.run(
+                ["task", match.groups()[0], "export"],
+                capture_output=True,
+            ).stdout.decode("utf-8")
+        )[0])
+
+    def add_dependency(self, other: typing.Self):
+        if not other.task:
+            raise Exception("cannot set a dependency with a missing task")
+
+        self.desired_dependencies.add(other.task.uuid)
+
+    def set_project(self, project: str):
+        self.desired_project = project
+
+    def set_due(self, due: str):
+        self.desired_due = due
+
+    def add_tags(self, tags: set[str]):
+        for tag in tags:
+            self.desired_tags.add(tag)
+
+    # Accessors for setting hierarchy
+
     @property
-    def exists_in_tw(self) -> bool:
-        return self.tw is not None
+    def jira_parent(self) -> JiraIssue | None:
+        if self.issue is None:
+            raise Exception("missing issue")
+
+        return self.issue.parent
 
 
 class Fetcher:
@@ -203,13 +280,14 @@ class Fetcher:
 class Main:
     def __init__(self, fetcher: Fetcher):
         self.fetcher = fetcher
-        self.issues: typing.Dict[str, JiraIssue] = {}
 
-    def eprint(self, *args, **kwargs):
-        print(*args, **kwargs, file=sys.stderr)
+        # all of these are indexed by the Jira key
+        self.issues: typing.Dict[str, JiraIssue] = {}
+        self.tasks: typing.Dict[str, TaskwarriorTask] = {}
+        self.reconcilers: typing.Dict[str, Reconciler] = {}
 
     def fetch_assigned_and_open_issues(self):
-        self.eprint("fetching assigned and open issues")
+        eprint("fetching assigned and open issues")
         self.issues = {
             issue.key: issue
             for issue in
@@ -225,101 +303,98 @@ class Main:
             for issue in list(self.issues.values()):
                 if issue.parent and issue.parent.key not in self.issues:
                     new_issue = self.fetcher.issue(issue.parent.key)
-                    self.eprint(f"backfilling {new_issue.key}")
+                    eprint(f"backfilling {new_issue.key}")
                     self.issues[new_issue.key] = new_issue
                     backfilled = False
 
-    def associate_ids_from_taskwarrior(self):
-        """associate existing UUIDs from taskwarrior"""
-        tasks_by_jira_key = {
+    def fetch_tasks(self):
+        """fetch Jira tasks from Taskwarrior"""
+        eprint("fetching Taskwarrior tasks")
+        self.tasks = {
             task[JIRA_KEY]: TaskwarriorTask(task)
             for task in
             json.loads(subprocess.run(["task", "export"], capture_output=True).stdout.decode('utf-8'))
             if JIRA_KEY in task
         }
-        for key in set(self.issues).intersection(set(tasks_by_jira_key)):
-            self.issues[key].set_tw(tasks_by_jira_key[key])
 
-    def create_tasks_for_new_issues(self):
-        new_tasks = [
-            issue.to_task_json()
-            for issue
-            in self.issues.values()
-            if not issue.exists_in_tw
-        ]
+    def associate(self):
+        self.reconcilers = {
+            key: Reconciler(self.issues.get(key), self.tasks.get(key))
+            for key
+            in set(self.issues).union(set(self.tasks))
+        }
 
-        if not new_tasks:
-            return
+    def create_new_tasks(self):
+        for reconciler in self.reconcilers.values():
+            if reconciler.needs_creation():
+                reconciler.create()
 
-        subprocess.run(
-            ["task", "import"],
-            input=json.dumps(new_tasks).encode('utf-8')
-        )
-
-    def update_task_attributes(self):
-        for issue in self.issues.values():
-            mods = issue.changes_from_existing_task()
-            if mods:
-                self.eprint(f"updating {issue.key}: {" ".join(mods)}")
-                subprocess.run(["task", issue.tw().uuid, 'mod', *mods])
-
-    def update_dependency_relationships(self):
-        for issue in self.issues.values():
+    def set_inheritance(self):
+        for issue in self.reconcilers.values():
             hierarchy = [issue]
-            while hierarchy[-1].parent:
-                hierarchy.append(self.issues[hierarchy[-1].parent.key])
+            while hierarchy[-1].jira_parent:
+                hierarchy.append(self.reconcilers[hierarchy[-1].jira_parent.key])
 
-            top_down = list(reversed(hierarchy))
-            for (parent, child) in zip(top_down, top_down[1:]):
-                if child.tw().uuid not in parent.tw().depends:
-                    subprocess.run(["task", parent.tw().uuid, "mod", f"dep:{child.tw().uuid}"])
+            # go from child -> parent to parent -> child
+            hierarchy.reverse()
 
-            self.__inherit_attrs(top_down)
+            self.__set_dependency_hierarchy(hierarchy)
+            self.__set_attribute_hierarchy(hierarchy)
 
-    def __inherit_attrs(self, hierarchy: typing.List[JiraIssue]):
-        inherited_attrs: dict[str, str] = {}
-        inherited_tags: list[str] = []
-        for issue in hierarchy:
-            tw = issue.tw()
+    def __set_dependency_hierarchy(self, hierarchy: list[Reconciler]):
+        for (parent, child) in zip(hierarchy, hierarchy[1:]):
+            parent.add_dependency(child)
 
-            if 'project' not in inherited_attrs and tw.project is not None:
-                inherited_attrs['project'] = tw.project
+    def __set_attribute_hierarchy(self, hierarchy: list[Reconciler]):
+        project: str | None = None
+        due: str | None = None
+        tags: set[str] = set()
 
-            if 'due' not in inherited_attrs and tw.due is not None:
-                inherited_attrs['due'] = tw.due
+        for reconciler in hierarchy:
+            task = reconciler.task
+            if task is None:
+                raise Exception("can't inherit attrs with a missing task")
 
-            for tag in issue.tw().tags:
-                if tag not in inherited_tags:
-                    inherited_tags.append(tag)
+            # Project
+            if project is None and task.project is not None:
+                project = task.project
+            if project is not None:
+                reconciler.set_project(project)
 
-            mods: list[str] = []
-            for k, v in inherited_attrs.items():
-                if k == 'tags':
-                    mods.extend(f"+{tag}" for tag in v)
-                else:
-                    mods.append(f"{k}:{v}")
+            # Due
+            if due is None and task.due is not None:
+                due = task.due
+            if due is not None:
+                reconciler.set_due(due)
 
-            mods.extend(inherited_tags)
-
-            if mods:
-                self.eprint(f"updating {issue.key}: {" ".join(mods)}")
-                subprocess.run(['task', issue.tw().uuid, 'mod', *mods])
+            # Tags
+            for tag in task.tags:
+                tags.add(tag)
+            if tags:
+                reconciler.add_tags(tags)
 
     def run(self):
         self.fetch_assigned_and_open_issues()
         self.backfill_parent_issues()
+        self.fetch_tasks()
 
-        # get information we already have
-        # self.associate_ids_from_taskwarrior()
+        # now that we have the information from both sides, associate them to
+        # create our reconcilers
+        self.associate()
 
-        # create new tasks (that is, ones whose information we don't have
-        # already) and then get a full update to get the task bodies
-        # self.create_tasks_for_new_issues()
-        # self.associate_ids_from_taskwarrior()
+        # create any tasks that are in Jira but not Taskwarrior
+        self.create_new_tasks()
 
-        # we're done setting up! Now we can start reconciling.
-        # self.update_task_attributes()
-        # self.update_dependency_relationships()
+        # pass dependencies, projects, tags, etc down from parent to child tasks
+        self.set_inheritance()
+
+        # update all the tasks that need it
+        for reconciler in self.reconcilers.values():
+            reconciler.reconcile()
+
+
+def eprint(*args, **kwargs):
+    print(*args, **kwargs, file=sys.stderr)
 
 
 if __name__ == "__main__":
