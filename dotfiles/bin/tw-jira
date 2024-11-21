@@ -341,6 +341,17 @@ class Main:
             in set(self.issues).union(set(self.tasks))
         }
 
+    def drop_complete_tasks(self):
+        to_drop = [
+            key
+            for key, reconciler
+            in self.reconcilers.items()
+            if not reconciler.issue and reconciler.task and reconciler.task.status != "pending"
+        ]
+
+        for key in to_drop:
+            del self.reconcilers[key]
+
     def create_new_tasks(self):
         for reconciler in self.reconcilers.values():
             if reconciler.needs_creation():
@@ -398,6 +409,10 @@ class Main:
         # now that we have the information from both sides, associate them to
         # create our reconcilers
         self.associate()
+
+        # drop any tasks for which we don't have an issue where the task is
+        # already done
+        self.drop_complete_tasks()
 
         # grab any tasks that didn't match our earlier filters
         self.backfill_tasks_in_tw_but_not_jira()
