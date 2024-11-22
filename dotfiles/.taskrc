@@ -47,12 +47,13 @@ uda.jiraparent.label=Jira Parent
 
 uda.jirastatus.type=string
 uda.jirastatus.label=Jira Status
-uda.jirastatus.values=backlog,in-progress,up-next,test-review,investigation,execution,resolved,closed
+uda.jirastatus.values=backlog,in-progress,up-next,code-review,test-review,investigation,execution,resolved,closed
 urgency.uda.jirastatus.backlog.coefficient=1
 urgency.uda.jirastatus.up-next.coefficient=2
 urgency.uda.jirastatus.investigation.coefficient=2
 urgency.uda.jirastatus.in-progress.coefficient=3
 urgency.uda.jirastatus.execution.coefficient=3
+urgency.uda.jirastatus.code-review.coefficient=0.5
 urgency.uda.jirastatus.test-review.coefficient=0.5
 
 uda.jirapriority.type=string
