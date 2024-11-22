@@ -212,3 +212,5 @@ source <(fzf --zsh)
 if test -d ~/.linkerd2; then
   PATH="$PATH:$HOME/.linkerd2/bin"
 fi
+
+export GOPRIVATE=gitlab.com/paynearme
