@@ -4,12 +4,14 @@ import random
 import subprocess
 import sys
 
-tasks_proc = subprocess.run(["task", "export", "ready"], capture_output=True)
-tasks = json.loads(tasks_proc.stdout.decode('utf-8'))
+tasks = json.loads(
+    subprocess.run(
+        ["task", "export", "ready"],
+        capture_output=True,
+    ).stdout.decode('utf-8')
+)
 
-total_urgency = sum(task["urgency"] for task in tasks)
-
-skip_urgency = random.random() * total_urgency
+skip_urgency = random.random() * sum(task["urgency"] for task in tasks)
 
 for task in tasks:
     skip_urgency -= task["urgency"]
