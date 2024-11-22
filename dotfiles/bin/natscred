@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+awk 'NR==2 { print $0 }' $@ | jwt
