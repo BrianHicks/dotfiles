@@ -213,4 +213,8 @@ if test -d ~/.linkerd2; then
   PATH="$PATH:$HOME/.linkerd2/bin"
 fi
 
+if which go > /dev/null; then
+  PATH="$PATH:$(go env GOPATH)/bin"
+fi
+
 export GOPRIVATE=gitlab.com/paynearme
