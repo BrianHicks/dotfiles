@@ -93,3 +93,6 @@ sync.local.server_dir=/Users/brianhicks/Google Drive/My Drive
 
 uda.taskwarrior-tui.background_process=task sync
 uda.taskwarrior-tui.background_process_period=60
+
+# Don't nag me when more urgent tasks exist. Real life doesn't work like that, taskwarrior!
+nag=
