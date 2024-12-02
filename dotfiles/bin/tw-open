@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ID="${1:-}"
+if test -z "$ID"; then
+  echo "Usage: ${0:-} TASK_ID"
+  exit 1
+fi
+
+URLS="$(task "$ID" export | jq -r 'first | (.annotations // [] | map(.description | select(test("://")))) + (if .jira then ["https://paynearme.atlassian.net/browse/\(.jira)"] else [] end) | join("\n")')"
+LINES="$(wc -l <<< "$URLS" | tr -d ' ')"
+
+case "$(wc -l <<< "$URLS" | tr -d ' ')" in
+  0)
+    echo "No URLs found in task $ID"
+    ;;
+  1)
+    open "$URLS"
+    ;;
+  *)
+    SELECTED="$(fzf <<< "$URLS")"
+    open "$SELECTED"
+    ;;
+esac
