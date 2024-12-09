@@ -4,11 +4,12 @@ set -euo pipefail
 SOURCE="${1:-}"
 
 if test -z "$SOURCE"; then
-  echo "USAGE: ${0:-} ssh://gitlab.com/org/repo.git"
+  echo "USAGE: ${0:-} git@gitlab.com/org/repo.git"
   exit 1
 fi
 
-DEST="$HOME/code/paynearme/$(basename "$SOURCE" | sed "s/.git//g")"
+DEST="$HOME/code/$(printf '%s' "$SOURCE" | sed 's/.git//g' | sed -EH 's|^.+:||' )"
+
 if test -d "$DEST"; then
   echo "$DEST already exists!"
   exit 1
