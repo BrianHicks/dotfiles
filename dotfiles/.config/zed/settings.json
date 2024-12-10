@@ -25,6 +25,7 @@
   "terminal": {
     "env": {
       "EDITOR": "zed --wait"
-    }
+    },
+    "line_height": "standard"
   }
 }
