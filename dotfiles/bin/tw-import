@@ -23,6 +23,7 @@ for m in re.finditer(r'^ ?- \[( )\] (.+)$', contents, re.MULTILINE):
 
 for t in tasks:
     subprocess.check_call([args.bin, 'add', *t.split()])
+    subprocess.check_call([args.bin, '+LATEST', 'annotate', f'obsidian://adv-uri?openmode=true&filepath={args.src}'])
 
 if not args.no_mark_done:
     with open(args.src, 'w') as fh:
