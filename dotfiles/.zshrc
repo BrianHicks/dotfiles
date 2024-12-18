@@ -217,4 +217,8 @@ if which go > /dev/null; then
   PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
+if test -f "$HOME/.cargo/env"; then
+  source "$HOME/.cargo/env"
+fi
+
 export GOPRIVATE=gitlab.com/paynearme
