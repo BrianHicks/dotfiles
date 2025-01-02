@@ -89,6 +89,11 @@ urgency.age.coefficient=4
 
 sync.local.server_dir=/Users/brianhicks/Google Drive/My Drive
 
+# task-sched configuration
+
+uda.estimate.type=duration
+uda.estimate.label=Estimate
+
 # taskwarrior-tui configuration
 
 uda.taskwarrior-tui.background_process=task sync
