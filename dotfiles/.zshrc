@@ -222,3 +222,7 @@ if test -f "$HOME/.cargo/env"; then
 fi
 
 export GOPRIVATE=gitlab.com/paynearme
+
+if test -f "$HOME/.zshrc.secrets"; then
+  source "$HOME/.zshrc.secrets"
+fi
