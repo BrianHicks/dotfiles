@@ -16,7 +16,10 @@ cask "spotify"
 brew "tmux"
 brew "tree"
 cask "zed"
+
+# shell
 brew "zsh"
+brew "zsh-autosuggestions"
 
 # Temporary, maybe?
 brew "go"
