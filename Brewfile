@@ -21,9 +21,6 @@ cask "zed"
 brew "zsh"
 brew "zsh-autosuggestions"
 
-# Temporary, maybe?
-brew "go"
-
 # Git
 brew "gh"
 brew "lazygit"
