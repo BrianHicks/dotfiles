@@ -8,7 +8,7 @@ if test -z "$SOURCE"; then
   exit 1
 fi
 
-DEST="$HOME/code/$(printf '%s' "$SOURCE" | sed 's/.git//g' | sed -EH 's|^.+:||' )"
+DEST="$HOME/code/$(printf '%s' "$SOURCE" | sed 's/\.git//g' | sed -EH 's|^.+:||' )"
 
 if test -d "$DEST"; then
   echo "$DEST already exists!"
