@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import argparse
+import os
 import subprocess
 import re
 
 parser = argparse.ArgumentParser()
 parser.add_argument('src')
 parser.add_argument('--bin', help='taskwarrior binary', default='task')
+parser.add_argument('--notes-base', default=os.path.expanduser('~/Notes/'))
 parser.add_argument('--no-mark-done', action='store_true')
 
 args = parser.parse_args()
@@ -20,9 +22,11 @@ for m in re.finditer(r'^ ?- \[( )\] (.+)$', contents, re.MULTILINE):
     tasks.append(m.group(2))
     chars[m.start(1)] = 'x'
 
+filepath = args.src.replace(args.notes_base, '')
+
 for t in tasks:
     subprocess.check_call([args.bin, 'add', *t.split()])
-    subprocess.check_call([args.bin, '+LATEST', 'annotate', f'obsidian://adv-uri?openmode=true&filepath={args.src}'])
+    subprocess.check_call([args.bin, '+LATEST', 'annotate', f'obsidian://adv-uri?openmode=true&filepath={filepath}'])
 
 if not args.no_mark_done:
     with open(args.src, 'w') as fh:
