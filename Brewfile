@@ -22,9 +22,11 @@ brew "zsh"
 brew "zsh-autosuggestions"
 
 # Git
-brew "gh"
-brew "lazygit"
 brew "difftastic"
+brew "gh"
+brew "git"
+brew "git-lfs"
+brew "lazygit"
 
 # Cloud
 brew "awscli"
