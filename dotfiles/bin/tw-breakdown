@@ -59,7 +59,7 @@ imported = subprocess.run([args.bin, 'import', '-'], input=json.dumps(to_import)
 
 uuids = [line.split()[1] for line in imported.stdout.decode('utf-8').split('\n')[1:-1]]
 
-subprocess.run([args.bin, task, 'modify'] + [f'depends:{uuid}' for uuid in uuids])
+subprocess.run([args.bin, task, 'modify', '+meta'] + [f'depends:{uuid}' for uuid in uuids])
 
 if args.seq:
     for (depends_on, dependent) in zip(uuids, uuids[1:]):
