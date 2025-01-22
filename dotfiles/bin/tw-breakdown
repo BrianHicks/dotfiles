@@ -35,6 +35,11 @@ with tempfile.NamedTemporaryFile() as fh:
     for line in info.split('\n'):
         fh.write(f"# {line}\n".encode('utf-8'))
 
+    if args.seq:
+        fh.write(b"# tasks will be added sequentially\n")
+    else:
+        fh.write(b"# tasks will be added in parallel\n")
+
     fh.write(b'\n')
 
     fh.flush()
