@@ -112,7 +112,7 @@ uda.taskwarrior-tui.background_process=task sync
 uda.taskwarrior-tui.background_process_period=60
 
 uda.taskwarrior-tui.shortcuts.1=tw-open
-uda.taskwarrior-tui.shortcuts.2=tw-breakdown
+uda.taskwarrior-tui.shortcuts.2=tw-breakdown --seq
 uda.taskwarrior-tui.shortcuts.3=/bin/bash -c tw-jira
 
 # Don't nag me when more urgent tasks exist. Real life doesn't work like that, taskwarrior!
