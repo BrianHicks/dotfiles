@@ -383,7 +383,9 @@ class Main:
         due: str | None = None
         tags: set[str] = set()
 
-        for reconciler in hierarchy:
+        last_index = len(hierarchy) - 1
+
+        for i, reconciler in enumerate(hierarchy):
             task = reconciler.task
             if task is None:
                 raise Exception("can't inherit attrs with a missing task")
@@ -405,6 +407,9 @@ class Main:
                 tags.add(tag)
             if tags:
                 reconciler.add_tags(tags)
+
+            if i != last_index:
+                reconciler.add_tags({"meta"})
 
     def run(self):
         self.fetch_assigned_and_open_issues()
