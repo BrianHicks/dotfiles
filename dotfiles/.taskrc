@@ -87,7 +87,7 @@ report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +P
 
 report.lint.description=Tasks which need to have missing metadata added.
 report.lint.columns=id,priority,estimate,project,tags,description,urgency
-report.lint.filter=( estimate: or priority: ) and ( +PENDING or +WAITING )
+report.lint.filter=( estimate: or priority: ) and ( +PENDING or +WAITING ) and -meta
 
 report.jiradone.description=Tasks which are marked done in Jira but still pending in TW
 report.jiradone.columns=id,depends,project,jira,description,jirastatus,jiraissuetype
