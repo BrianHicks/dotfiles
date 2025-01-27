@@ -122,6 +122,15 @@ class JiraIssue:
     def created(self) -> str:
         return datetime.fromisoformat(self.fields["created"]).replace(microsecond=0, tzinfo=None).strftime(TW_DATE_FORMAT)
 
+    @property
+    def due(self) -> str | None:
+        due = self.fields["duedate"]
+
+        if due is not None:
+            return datetime.fromisoformat(due).replace(microsecond=0, tzinfo=None).strftime(TW_DATE_FORMAT)
+        else:
+            return None
+
 
 class Reconciler:
     def __init__(self, issue: JiraIssue | None, task: TaskwarriorTask | None):
@@ -154,6 +163,9 @@ class Reconciler:
             "entry": self.issue.created,
         }
 
+        if self.issue.due:
+            out["due"] = self.issue.due
+
         if self.issue.parent:
             out[JIRA_PARENT] = self.issue.parent.key
 
@@ -177,7 +189,7 @@ class Reconciler:
             mods.append(f"pro:{self.desired_project}")
 
         # Due
-        if self.desired_due and self.desired_due != self.task.due:
+        if self.desired_due != self.task.due:
             mods.append(f"due:{self.desired_due}")
 
         # Target
@@ -245,7 +257,7 @@ class Reconciler:
     def set_project(self, project: str):
         self.desired_project = project
 
-    def set_due(self, due: str):
+    def set_due(self, due: str | None):
         self.desired_due = due
 
     def set_target(self, due: str):
