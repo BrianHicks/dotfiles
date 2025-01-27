@@ -56,6 +56,10 @@ class TaskwarriorTask:
         return self.json.get("due", None)
 
     @property
+    def target(self) -> str | None:
+        return self.json.get("target", None)
+
+    @property
     def tags(self) -> typing.List[str]:
         return self.json.get("tags", [])
 
@@ -128,6 +132,7 @@ class Reconciler:
         self.desired_dependencies: set[str] = set()
         self.desired_project: str | None = None
         self.desired_due: str | None = None
+        self.desired_target: str | None = None
         self.desired_tags: set[str] = set()
 
     def __repr__(self):
@@ -174,6 +179,10 @@ class Reconciler:
         # Due
         if self.desired_due and self.desired_due != self.task.due:
             mods.append(f"due:{self.desired_due}")
+
+        # Target
+        if self.desired_target and self.desired_target != self.task.target:
+            mods.append(f"target:{self.desired_target}")
 
         # Tags
         mods.extend(
@@ -238,6 +247,9 @@ class Reconciler:
 
     def set_due(self, due: str):
         self.desired_due = due
+
+    def set_target(self, due: str):
+        self.desired_target = due
 
     def add_tags(self, tags: set[str]):
         for tag in tags:
@@ -381,6 +393,7 @@ class Main:
     def __set_attribute_hierarchy(self, hierarchy: list[Reconciler]):
         project: str | None = None
         due: str | None = None
+        target: str | None = None
         tags: set[str] = set()
 
         last_index = len(hierarchy) - 1
@@ -401,6 +414,12 @@ class Main:
                 due = task.due
             if due is not None:
                 reconciler.set_due(due)
+
+            # Target
+            if target is None and task.target is not None:
+                target = task.target
+            if target is not None:
+                reconciler.set_target(target)
 
             # Tags
             for tag in task.tags:
