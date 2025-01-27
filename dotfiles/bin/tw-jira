@@ -404,7 +404,11 @@ class Main:
 
             # Tags
             for tag in task.tags:
+                if tag == 'meta':
+                    continue
+
                 tags.add(tag)
+
             if tags:
                 reconciler.add_tags(tags)
 
