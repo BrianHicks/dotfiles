@@ -29,6 +29,9 @@ template = json.loads(subprocess.run([args.bin, task, 'export'], capture_output=
 for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'urgency', 'wait', 'depends', 'jira', 'jiraparent', 'estimate']:
     template.pop(forbidden, None)
 
+if 'tags' in template:
+    template['tags'].pop('meta', None)
+
 info = subprocess.run([args.bin, task, 'info'], capture_output=True).stdout.decode('utf-8')
 
 with tempfile.NamedTemporaryFile() as fh:
