@@ -106,6 +106,9 @@ sync.local.server_dir=/Users/brianhicks/Google Drive/My Drive
 uda.estimate.type=duration
 uda.estimate.label=Estimate
 
+uda.target.type=date
+uda.target.label=Target
+
 # taskwarrior-tui configuration
 
 uda.taskwarrior-tui.background_process=task sync
