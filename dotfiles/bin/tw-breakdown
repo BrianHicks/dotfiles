@@ -30,7 +30,7 @@ for forbidden in ['id', 'uuid', 'description', 'entry', 'modified', 'status', 'u
     template.pop(forbidden, None)
 
 if 'tags' in template:
-    template['tags'].pop('meta', None)
+    template['tags'] = [tag for tag in template['tags'] if tag != 'meta']
 
 info = subprocess.run([args.bin, task, 'info'], capture_output=True).stdout.decode('utf-8')
 
