@@ -15,7 +15,7 @@ now = datetime.now(UTC)
 
 start = max(
     datetime.fromisoformat(store["document"]["pings"][0]),
-    now - timedelta(weeks=8)
+    now - timedelta(weeks=4)
 )
 
 days = (now - start).days
