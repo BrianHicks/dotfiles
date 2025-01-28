@@ -21,7 +21,6 @@ start = max(
 days = (now - start).days
 
 num_pings = len([ping for ping in document['pings'] if datetime.fromisoformat(ping) >= start])
-# num_pings = len([ping for ping in document['tags'].keys() if datetime.fromisoformat(ping) >= start])
 
 lambda_ = 45
 
