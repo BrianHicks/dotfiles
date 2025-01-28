@@ -29,6 +29,9 @@ minutes_per_day = num_pings * lambda_ / days
 
 tags = Counter()
 for ping in document['pings']:
+    if datetime.fromisoformat(ping) < start:
+        continue
+
     tag = document['tags'].get(ping)
 
     if tag is None or tag['value'] is None:
