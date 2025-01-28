@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+from collections import Counter
+from datetime import datetime, timedelta, UTC
+import json
+import math
+import os
+import os.path
+
+with open(os.path.join(os.environ["HOME"], "Library", "Application Support", "zone.bytes.beeps", "store.json"), "r") as fh:
+    store = json.load(fh)
+
+document = store['document']
+
+now = datetime.now(UTC)
+
+start = max(
+    datetime.fromisoformat(store["document"]["pings"][0]),
+    now - timedelta(weeks=8)
+)
+
+days = (now - start).days
+
+num_pings = len([ping for ping in document['pings'] if datetime.fromisoformat(ping) >= start])
+# num_pings = len([ping for ping in document['tags'].keys() if datetime.fromisoformat(ping) >= start])
+
+lambda_ = 45
+
+minutes_per_day = num_pings * lambda_ / days
+
+tags = Counter()
+for ping in document['pings']:
+    tag = document['tags'].get(ping)
+
+    if tag is None or tag['value'] is None:
+        tags['unknown'] += 1
+        continue
+
+    parts = tag['value'].split('.')
+    for i in range(len(parts)):
+        tags['.'.join(parts[:i+1])] += 1
+
+for tag, count in tags.most_common(20):
+    if count <= 2:
+        continue
+
+    pct = float(count) / float(num_pings)
+
+    error = 1.96 * math.sqrt((pct * (1 - pct)) / num_pings)
+
+    daily_minutes = timedelta(minutes=minutes_per_day * pct)
+
+    daily_error = timedelta(minutes=round(error * minutes_per_day))
+
+    print(f"{tag}: {daily_minutes} per day, ± {daily_error}")
