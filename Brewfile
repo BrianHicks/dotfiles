@@ -26,6 +26,7 @@ brew "difftastic"
 brew "gh"
 brew "git"
 brew "git-lfs"
+brew "glab"
 brew "lazygit"
 
 # Cloud

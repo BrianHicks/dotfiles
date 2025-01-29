@@ -53,6 +53,7 @@ RPROMPT=
 
 # 1password plugins
 alias gh="op plugin run -- gh"
+alias glab="op plugin run -- glab"
 
 alias tw="task"
 alias twui="taskwarrior-tui"
