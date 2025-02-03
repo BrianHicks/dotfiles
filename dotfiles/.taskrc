@@ -1,6 +1,5 @@
 # [Created by task 3.1.0 9/17/2024 12:38:23]
 data.location=/Users/brianhicks/.task
-news.version=3.1.0
 
 # To use the default location of the XDG directories,
 # move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
@@ -121,3 +120,7 @@ uda.taskwarrior-tui.shortcuts.4=tasksh
 
 # Don't nag me when more urgent tasks exist. Real life doesn't work like that, taskwarrior!
 nag=
+
+# "task news" has a bug that it nags even if you have the current version set
+# (as of 3.3.0). Setting to just past that seems to take care of it.
+news.version=3.3.1
