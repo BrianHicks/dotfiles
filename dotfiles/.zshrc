@@ -232,3 +232,6 @@ AUTOSUGGESTIONS="/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 if test -f "$AUTOSUGGESTIONS"; then
   source "$AUTOSUGGESTIONS"
 fi
+
+# Aliases for `glab`
+alias glab.mr="glab mr create --assignee brianhicks-pnm --push"
