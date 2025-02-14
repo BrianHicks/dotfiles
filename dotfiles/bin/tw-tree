@@ -35,7 +35,9 @@ def format_task(uuid: str) -> str:
     identifiers = []
     description = task['description']
 
-    if task.get('status', '') == 'completed':
+    completed = task.get('status', '') == 'completed'
+
+    if completed:
         symbol = 'x'
         identifiers.append(task['uuid'][:8])
     else:
@@ -44,6 +46,8 @@ def format_task(uuid: str) -> str:
 
     if 'jira' in task:
         identifiers.append(task['jira'])
+        if not completed and task.get('jirastatus', None) == 'closed':
+            symbol = '!'
 
     title = [f"[{symbol}]", description]
     if identifiers:
