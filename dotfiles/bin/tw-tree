@@ -31,13 +31,25 @@ def format_task(uuid: str) -> str:
     if task is None:
         return f"not found (maybe a filtering problem?): {uuid}"
 
-    title = None
-    if task.get('status', '') == 'completed':
-        title = f"[x] {task['description']} ({task['uuid'][:8]})"
-    else:
-        title = f"[ ] {task['description']} ({task['id']})"
+    symbol = None
+    identifiers = []
+    description = task['description']
 
-    lines = [title]
+    if task.get('status', '') == 'completed':
+        symbol = 'x'
+        identifiers.append(task['uuid'][:8])
+    else:
+        symbol = ' '
+        identifiers.append(str(task['id']))
+
+    if 'jira' in task:
+        identifiers.append(task['jira'])
+
+    title = [f"[{symbol}]", description]
+    if identifiers:
+        title.append('(' + ', '.join(identifiers) + ')')
+
+    lines = [' '.join(title)]
 
     if uuid not in shown:
         for dep in task.get('depends', []):
