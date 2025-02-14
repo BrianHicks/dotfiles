@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+import json
+import subprocess
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('filter', nargs='?', default='')
+
+args = parser.parse_args()
+
+if not isinstance(args.filter, list):
+    args.filter = [args.filter]
+
+args.filter.append('status.not:deleted')
+
+task_output = subprocess.check_output(['task', *args.filter, 'export'])
+tasks = json.loads(task_output)
+
+tasks = {task['uuid']: task for task in tasks}
+
+roots = set(tasks.keys())
+for uuid, task in tasks.items():
+    roots -= set(task.get('depends', []))
+    if uuid in roots and task['status'] != 'pending':
+        roots.remove(uuid)
+
+shown = set()
+
+def format_task(uuid: str) -> str:
+    task = tasks.get(uuid, None)
+    if task is None:
+        return f"not found (maybe a filtering problem?): {uuid}"
+
+    title = None
+    if task.get('status', '') == 'completed':
+        title = f"[x] {task['description']} ({task['uuid'][:8]})"
+    else:
+        title = f"[ ] {task['description']} ({task['id']})"
+
+    lines = [title]
+
+    if uuid not in shown:
+        for dep in task.get('depends', []):
+            if tasks.get(dep, {}).get('status', None) != 'pending':
+                continue
+
+            lines.append(f"    {format_task(dep).replace("\n", "\n    ")}")
+
+        shown.add(uuid)
+    else:
+        lines.append('    ...')
+
+
+    return '\n'.join(lines)
+
+for id in roots:
+    print(format_task(id))
+    print()
