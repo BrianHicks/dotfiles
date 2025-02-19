@@ -57,6 +57,7 @@ alias glab="op plugin run -- glab"
 
 alias tw="task"
 alias twui="taskwarrior-tui"
+alias tw-rand="task-rand"
 
 alias lg=lazygit
 
