@@ -14,18 +14,13 @@
   {
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
-      "f d": ["vim::SwitchMode", "Normal"]
+      "f d": "vim::SwitchToNormalMode"
     }
   },
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "shift-s": [
-        "vim::PushOperator",
-        {
-          "AddSurrounds": {}
-        }
-      ]
+      "shift-s": ["vim::PushAddSurrounds", {}]
     }
   }
 ]
