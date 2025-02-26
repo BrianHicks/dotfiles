@@ -236,3 +236,4 @@ fi
 
 # Aliases for `glab`
 alias glab.mr="glab mr create --assignee brianhicks-pnm --push"
+alias glab.ready="glab mr update --ready"
