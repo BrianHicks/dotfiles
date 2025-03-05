@@ -59,7 +59,21 @@ if not new_tasks:
 to_import = []
 for description in new_tasks:
     t_import = dict(template)
-    t_import['description'] = description
+
+    to_update = json.loads(subprocess.check_output(
+        ['task-add-json'] + description.strip().split(),
+        encoding='utf-8',
+    ))
+
+    for (k, v) in to_update.items():
+        if k == 'tags' and 'tags' in t_import:
+            t_import['tags'].extend(
+                tag for tag in v
+                if tag not in t_import['tags']
+            )
+        else:
+            t_import[k] = v
+
     to_import.append(t_import)
 
 imported = subprocess.run([args.bin, 'import', '-'], input=json.dumps(to_import).encode('utf-8'), capture_output=True)
