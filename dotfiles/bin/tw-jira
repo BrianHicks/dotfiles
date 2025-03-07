@@ -329,7 +329,7 @@ class Main:
         self.issues = {
             issue.key: issue
             for issue in
-            self.fetcher.search('assignee = currentUser() AND status != "Closed" AND status != "Resolved" AND status != "Done"')
+            self.fetcher.search('assignee = currentUser() AND status != "Closed" AND status != "Ready for QA" AND status != "Done"')
         }
 
     def backfill_parent_issues(self):
