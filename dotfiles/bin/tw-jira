@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import typing
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -295,9 +296,14 @@ class Fetcher:
         request.add_header('Authorization', f'Basic {encoded_credentials}')
         request.add_header('Content-Type', 'application/json')
 
-        with urllib.request.urlopen(request) as response:
-            data = response.read()
-            return json.loads(data)
+        try:
+            with urllib.request.urlopen(request) as response:
+                data = response.read()
+                return json.loads(data)
+        except urllib.error.HTTPError as e:
+            print(json.loads(e.fp.read().decode('utf-8')))
+            print(f"HTTP error: {e.code} - {e.reason}")
+            sys.exit(1)
 
     def search(self, query: str) -> typing.List[JiraIssue]:
         encoded_jql = urllib.parse.quote(query)
