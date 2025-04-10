@@ -142,8 +142,6 @@ jump() {
 
 alias j=jump
 
-alias t=tmux-jump
-
 alias mark-safe="xattr -dr com.apple.quarantine"
 
 ## jump to the root directory of a project
