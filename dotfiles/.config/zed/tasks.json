@@ -8,10 +8,5 @@
     "label": "k9s",
     "command": "k9s",
     "hide": "on_success"
-  },
-  {
-    "label": "taskwarrior-tui",
-    "command": "taskwarrior-tui",
-    "hide": "on_success"
   }
 ]
