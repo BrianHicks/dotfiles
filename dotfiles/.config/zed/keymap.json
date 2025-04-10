@@ -7,13 +7,12 @@
       "space t": ["task::Spawn", { "task_name": "taskwarrior-tui" }],
 
       // Git
-      "space g o": ["task::Spawn", { "task_name": "lazygit" }],
-      "space g d": "git::Diff",
-      "space g s": "git::ToggleStaged",
-      "space g c": "git::Commit",
-      "space g p": "git::Pull",
-      "space g P": "git::Push",
-      "space g b": "git::Branch",
+      "space G": ["task::Spawn", { "task_name": "lazygit" }],
+      "space g": "git::Diff",
+      "space c": "git::Commit",
+      "space p": "git::Pull",
+      "space P": "git::Push",
+      "space b": "git::Branch",
 
       // Tasks
       "space r": "task::Rerun"
