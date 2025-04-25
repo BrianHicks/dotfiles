@@ -9,9 +9,11 @@
       "space G": ["task::Spawn", { "task_name": "lazygit" }],
       "space g": "git::Diff",
       "space c": "git::Commit",
+      "cmd-enter": "git::Commit",
       "space p": "git::Pull",
       "space P": "git::Push",
       "space b": "git::Branch",
+      "space s": "git::ToggleStaged",
 
       // Tasks
       "space r": "task::Rerun"
