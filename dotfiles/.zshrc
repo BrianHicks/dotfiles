@@ -235,3 +235,7 @@ fi
 # Aliases for `glab`
 alias glab.mr="glab mr create --assignee brianhicks-pnm --push"
 alias glab.ready="glab mr update --ready"
+
+# source nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
