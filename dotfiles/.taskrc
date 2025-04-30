@@ -34,8 +34,8 @@ urgency.user.tag.meta.coefficient=4
 urgency.user.tag.habit.coefficient=4
 
 # remove backlogged tasks from next report
-report.next.filter=status:pending -WAITING jirastatus.not:backlog limit:page
-report.ready.filter=+READY jirastatus.not:backlog
+report.next.filter=status:pending -WAITING jirastatus.not:backlog jirastatus.not:icebox limit:page
+report.ready.filter=+READY jirastatus.not:backlog jirastatus.not:icebox
 
 report.jira.description=Tasks from JIRA
 report.jira.filter=jira.any: end:
