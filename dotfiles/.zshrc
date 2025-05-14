@@ -233,7 +233,7 @@ if test -f "$AUTOSUGGESTIONS"; then
 fi
 
 # Aliases for `glab`
-alias glab.mr="glab mr create --assignee brianhicks-pnm --push"
+alias glab.mr="glab mr create --push"
 alias glab.ready="glab mr update --ready"
 
 # source nvm
