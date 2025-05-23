@@ -124,12 +124,12 @@ lazy_nvm() {
 
 node() {
   lazy_nvm
-  node $@
+  node "$@"
 }
 
 npm() {
   lazy_nvm
-  npm $@
+  npm "$@"
 }
 
 # don't expand square brackets for Ruby/Rake stuff
