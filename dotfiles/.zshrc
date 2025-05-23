@@ -242,7 +242,19 @@ alias glab.mr="glab mr create --push"
 alias glab.ready="glab mr update --ready"
 
 # source nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+lazy_nvm() {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+}
+
+node() {
+  lazy_nvm
+  node $@
+}
+
+npm() {
+  lazy_nvm
+  npm $@
+}
 
 # zprof
