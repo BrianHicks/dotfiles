@@ -69,20 +69,6 @@ bindkey "^[[3~" delete-char
 
 ## finding files quickly
 
-find_and_edit() {
- if git status > /dev/null; then
-   SOURCE="$(git ls-files --others --cached --exclude-standard)"
- else
-   SOURCE="$(find . -type f)"
- fi
-
- files="$(fzf --preview='bat --color=always --paging=never --style=changes {}' --select-1 --multi --query="$@" <<< "$SOURCE")"
- if [[ "$?" != "0" ]]; then return 1; fi
- $EDITOR $files
-}
-
-alias e=find_and_edit
-
 fzf-package-widget() {
  local project_root="$(git rev-parse --show-toplevel)"
  local project_packages="$(find "$project_root" -maxdepth 3 -name 'package.json' | grep -v "${project_root}/package.json" | sed -E 's|/package.json$||g' | sed -E "s|${project_root}/(.+)|\0:\1|")"
