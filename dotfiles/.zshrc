@@ -82,7 +82,7 @@ function rubofix() {
        | grep -v 'schema.rb' \
        | cut -c 3- \
        | sed "s|^|$TOPLEVEL/|g" \
-       | xargs rubocop --autocorrect
+       | xargs bundle exec rubocop --autocorrect
 }
 
 # Every project has little utility scripts you need to run
