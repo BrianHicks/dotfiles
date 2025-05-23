@@ -28,11 +28,6 @@ unsetopt HIST_EXPIRE_DUPS_FIRST
 setopt SHARE_HISTORY
 unsetopt EXTENDED_HISTORY
 
-# TODO: set up fzf again
-# if [[ $options[zle] = on ]]; then
-#  eval "$(/nix/store/cabxqwq1964bglm63scbjpk64v2fgh6k-fzf-0.55.0/bin/fzf --zsh)"
-# fi
-
 EDITOR=nvim
 export EDITOR
 
