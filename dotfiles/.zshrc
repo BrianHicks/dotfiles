@@ -67,23 +67,10 @@ fi
 # run `zle -al` to list all commands
 bindkey "^[[3~" delete-char
 
-# jumping around between projects
-jump() {
-   BASE="$HOME/code"
-   SELECTED=$(find "$BASE" -mindepth 2 -maxdepth 2 -type d | sed "s|$BASE/||g" | fzf --tiebreak=end --select-1 --query="$1")
-
-   if [[ "$?" != 0 ]]; then echo "cancelling!"; return 1; fi
-
-   # TODO: make this a ZSH widget instead of just `cd`ing
-   cd "$BASE/$SELECTED"
-}
-
-alias j=jump
-
+## mark a binary safe without having to open it in finder to right click on it etc
 alias mark-safe="xattr -dr com.apple.quarantine"
 
 ## jump to the root directory of a project
-
 alias root='cd "$(git rev-parse --show-toplevel)"'
 
 # fix rubocop errors automatically
