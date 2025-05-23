@@ -35,5 +35,10 @@
       "EDITOR": "zed --wait"
     },
     "line_height": "standard"
+  },
+  "languages": {
+    "Ruby": {
+      "language_servers": ["!solargraph", "..."]
+    }
   }
 }
