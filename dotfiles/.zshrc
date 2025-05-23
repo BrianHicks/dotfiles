@@ -132,4 +132,8 @@ npm() {
   npm $@
 }
 
+# don't expand square brackets for Ruby/Rake stuff
+alias rake="noglob rake"
+alias bundle="noglob bundle"
+
 # zprof
