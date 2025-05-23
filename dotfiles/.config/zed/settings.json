@@ -8,16 +8,17 @@
 // command palette
 {
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "copilot"
   },
-  "assistant": {
+  "agent": {
+    "default_profile": "write",
     "inline_assistant_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-thinking-latest"
+      "provider": "copilot_chat",
+      "model": "claude-3.7-sonnet-thought"
     },
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-thinking-latest"
+      "provider": "copilot_chat",
+      "model": "claude-3.5-sonnet"
     },
     "version": "2"
   },
