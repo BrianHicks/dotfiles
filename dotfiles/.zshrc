@@ -228,10 +228,6 @@ fi
 
 export GOPRIVATE=gitlab.com/paynearme
 
-if test -f "$HOME/.zshrc.secrets"; then
-  source "$HOME/.zshrc.secrets"
-fi
-
 AUTOSUGGESTIONS="/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 if test -f "$AUTOSUGGESTIONS"; then
   source "$AUTOSUGGESTIONS"
