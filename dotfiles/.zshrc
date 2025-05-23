@@ -13,14 +13,6 @@ typeset -U path cdpath fpath manpath
 #  source "$HOME/.config/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
 # fi
 
-# TODO: set up autosuggestions again
-# Oh-My-Zsh/Prezto calls compinit during initialization,
-# calling it twice causes slight start up slowdown
-# as all $fpath entries will be traversed again.
-# autoload -U compinit && compinit
-# source /nix/store/26w3vxk2c28h5ish260jj65wgzam87b6-zsh-autosuggestions-0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# ZSH_AUTOSUGGEST_STRATEGY=(history)
-
 HISTSIZE="10000"
 SAVEHIST="10000"
 
