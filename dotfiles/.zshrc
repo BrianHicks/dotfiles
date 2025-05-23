@@ -85,9 +85,6 @@ function rubofix() {
        | xargs bundle exec rubocop --autocorrect
 }
 
-# TODO: set up direnv again?
-# eval "$(/nix/store/439f5yi8i1akxl2669f5mam6iacisycv-direnv-2.34.0/bin/direnv hook zsh)"
-
 # TODO: set up zsh syntax highlighting again
 # source /nix/store/zxhgc5k56s58z3nm37fy8z9y897p90fk-zsh-syntax-highlighting-0.8.0/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
