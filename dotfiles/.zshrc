@@ -116,7 +116,7 @@ fi
 alias glab.mr="glab mr create --push"
 alias glab.ready="glab mr update --ready"
 
-# source nvm
+# source nvm lazily. It adds 1s+ to shell start time if loaded eagerly.
 lazy_nvm() {
     export NVM_DIR="$HOME/.nvm"
     [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
