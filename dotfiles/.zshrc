@@ -1,3 +1,8 @@
+# If the shell gets slow, uncomment the following `zmodload` and `zprof` at the
+# bottom. Zsh will then spit out where it took the most time. Very direct way of
+# figuring out where the problem is!
+# zmodload zsh/zprof
+
 typeset -U path cdpath fpath manpath
 
 # TODO: set up fzf-tab again
@@ -239,3 +244,5 @@ alias glab.ready="glab mr update --ready"
 # source nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+
+# zprof
