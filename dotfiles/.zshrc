@@ -85,10 +85,6 @@ function rubofix() {
        | xargs bundle exec rubocop --autocorrect
 }
 
-# TODO: set up zsh syntax highlighting again
-# source /nix/store/zxhgc5k56s58z3nm37fy8z9y897p90fk-zsh-syntax-highlighting-0.8.0/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
-
 # FZF
 source <(fzf --zsh)
 
@@ -135,5 +131,8 @@ npm() {
 # don't expand square brackets for Ruby/Rake stuff
 alias rake="noglob rake"
 alias bundle="noglob bundle"
+
+# this needs to stay very near the end of zshrc so it can pick up on all hooks.
+source "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # zprof

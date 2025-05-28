@@ -21,6 +21,7 @@ cask "zed"
 # shell
 brew "zsh"
 brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
 
 # Git
 brew "difftastic"
