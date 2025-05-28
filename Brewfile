@@ -18,6 +18,9 @@ brew "tmux"
 brew "tree"
 cask "zed"
 
+# meta tools
+brew "mise"
+
 # shell
 brew "zsh"
 brew "zsh-autosuggestions"
