@@ -41,6 +41,13 @@
   "languages": {
     "Ruby": {
       "language_servers": ["!solargraph", "..."]
+    },
+    "YAML": {
+      // By default, the yaml-language-server is enabled. However, it does not
+      // deal with multi-doc YAML files well, and I encounter quite a few of
+      // those in my day-to-day work. Instead of dealing with the whole buffer
+      // being red squigglies, I find it better to just disable the server.
+      "language_servers": []
     }
   }
 }
