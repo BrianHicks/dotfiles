@@ -19,6 +19,7 @@ JIRA_STATUS = "jirastatus"
 JIRA_PRIORITY = "jirapriority"
 JIRA_PARENT = "jiraparent"
 JIRA_ISSUE_TYPE = "jiraissuetype"
+JIRA_ASSIGNEE = "jiraassignee"
 
 TW_DATE_FORMAT = "%Y%m%dT%H%M%SZ"
 
@@ -132,6 +133,13 @@ class JiraIssue:
         else:
             return None
 
+    @property
+    def assignee(self) -> str | None:
+        if "assignee" in self.fields and self.fields["assignee"]:
+            return self.fields["assignee"]["displayName"]
+        else:
+            return None
+
 
 class Reconciler:
     def __init__(self, issue: JiraIssue | None, task: TaskwarriorTask | None):
@@ -161,6 +169,7 @@ class Reconciler:
             JIRA_STATUS: self.issue.status.replace(" ", "-").lower(),
             JIRA_PRIORITY: self.issue.priority.replace(" ", "-").lower(),
             JIRA_ISSUE_TYPE: self.issue.issue_type.replace(" ", "-").lower(),
+            JIRA_ASSIGNEE: self.issue.assignee,
             "entry": self.issue.created,
         }
 

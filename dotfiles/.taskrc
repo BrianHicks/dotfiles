@@ -39,7 +39,7 @@ report.ready.filter=+READY jirastatus.not:icebox
 
 report.jira.description=Tasks from JIRA
 report.jira.filter=jira.any: end:
-report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,jiraissuetype,urgency
+report.jira.columns=id,depends,project,tags,jira,description,jirapriority,jirastatus,jiraissuetype,jiraassignee,urgency
 report.jira.sort=urgency-
 
 uda.jira.type=string
@@ -47,6 +47,9 @@ uda.jira.label=Jira
 
 uda.jiraparent.type=string
 uda.jiraparent.label=Jira Parent
+
+uda.jiraassignee.type=string
+uda.jiraassignee.label=Jira Assignee
 
 uda.jirastatus.type=string
 uda.jirastatus.label=Jira Status
