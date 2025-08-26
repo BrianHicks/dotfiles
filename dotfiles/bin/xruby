@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+COMMAND=("${@:-}")
+if test "$#" -eq 0; then
+    COMMAND=("bundle" "install" "-j" "$(nproc)")
+fi
+
+# It isn't strictly necessary to prefix `mise exec` here, but it's helpful if
+# the script is being run in an environment without shims set up properly.
+mise exec -- "${COMMAND[@]}"
+
+for BUNDLE_GEMFILE in Gemfile.next.*; do
+    if grep -q '.lock' <<< "$BUNDLE_GEMFILE"; then continue; fi
+
+    RUBY_VERSION="$(sed -EH 's/^Gemfile\.next\.(\d)_(\d)_(\d)/\1.\2.\3/' <<< "$BUNDLE_GEMFILE")"
+
+    BUNDLE_GEMFILE="$BUNDLE_GEMFILE" mise exec "ruby@$RUBY_VERSION" -- "${COMMAND[@]}"
+done
