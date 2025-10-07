@@ -6,8 +6,8 @@
       "space k": ["task::Spawn", { "task_name": "k9s" }],
 
       // Git
-      "space G": ["task::Spawn", { "task_name": "lazygit" }],
-      "space g": "git::Diff",
+      "space g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space G": "git::Diff",
       "space c": "git::Commit",
       "cmd-enter": "git::Commit",
       "space p": "git::Pull",
