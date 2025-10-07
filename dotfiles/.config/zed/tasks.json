@@ -2,7 +2,8 @@
   {
     "label": "lazygit",
     "command": "lazygit",
-    "hide": "on_success"
+    "hide": "on_success",
+    "reveal_target": "center"
   },
   {
     "label": "k9s",
