@@ -13,6 +13,6 @@
   {
     "label": "GitLab MR",
     "command": "glab.mr",
-    "hide": "on_success"
+    "hide": "never"
   }
 ]
