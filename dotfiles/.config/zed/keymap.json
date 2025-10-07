@@ -12,6 +12,7 @@
       "cmd-enter": "git::Commit",
       "space p": "git::Pull",
       "space P": "git::Push",
+      "space l": ["task::Spawn", { "task_name": "GitLab MR" }],
       "space b": "git::Branch",
       "space s": "git::ToggleStaged",
 
