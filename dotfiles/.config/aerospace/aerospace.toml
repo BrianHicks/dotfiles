@@ -119,6 +119,12 @@ on-mode-changed = []
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
+    # See: https://nikitabobko.github.io/AeroSpace/commands#join-with
+    alt-shift-u = 'join-with left'
+    alt-shift-i = 'join-with down'
+    alt-shift-o = 'join-with up'
+    alt-shift-p = 'join-with right'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     alt-leftSquareBracket  = 'resize smart -50'
     alt-rightSquareBracket = 'resize smart +50'
@@ -163,8 +169,3 @@ on-mode-changed = []
 
     # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
     #s = ['layout sticky tiling', 'mode main']
-
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
